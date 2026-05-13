@@ -13,6 +13,12 @@
     <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
     <!-- Font Awesome Icons CDN -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
+    <!-- MAIN NAVBAR CSS -->
+    <link rel="stylesheet" href="{{ asset('assets/css/navbar.css') }}">
+    <!-- MAIN FOOTER CSS -->
+    <link rel="stylesheet" href="{{ asset('assets/css/footer.css') }}">
+     <!-- MAIN HOME CSS -->
+    <link rel="stylesheet" href="{{ asset('assets/css/home.css') }}">
 
     <style>
         body {
@@ -54,15 +60,17 @@
 </head>
 <body>
 
-    @include('partials.navbar')
+    @include('frontend.partials.navbar')
 
     @yield('content')
 
-    @include('partials.footer')
+    @include('frontend.partials.footer')
 
+@stack('scripts')
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-
 <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+<!-- NAVBAR JS -->
+<script src="{{ asset('assets/js/navbar.js') }}"></script>
 
 <script>
     AOS.init();
