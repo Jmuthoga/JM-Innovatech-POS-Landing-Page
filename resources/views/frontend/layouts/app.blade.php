@@ -13,12 +13,15 @@
     <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
     <!-- Font Awesome Icons CDN -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
-    <!-- MAIN NAVBAR CSS -->
+    <!-- Google Fonts for a more premium look -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- CUSTOM CSS -->
     <link rel="stylesheet" href="{{ asset('assets/css/navbar.css') }}">
-    <!-- MAIN FOOTER CSS -->
     <link rel="stylesheet" href="{{ asset('assets/css/footer.css') }}">
-     <!-- MAIN HOME CSS -->
     <link rel="stylesheet" href="{{ asset('assets/css/home.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/shop.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/product.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/cart.css') }}">
 
     <style>
         body {

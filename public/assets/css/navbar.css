@@ -1,8 +1,8 @@
 :root {
-    --jpos-blue: #0B4FA3;
-    --jpos-blue-light: #0B4FA3;
-    --jpos-green: #2E7D32;
-    --jpos-green-light: #4CAF50;
+    --jpos-blue: #0b4fa3;
+    --jpos-blue-light: #0b4fa3;
+    --jpos-green: #2e7d32;
+    --jpos-green-light: #4caf50;
 }
 
 /* =========================
@@ -90,13 +90,17 @@
 }
 
 .btn-started {
-    background: linear-gradient(135deg, var(--jpos-green), var(--jpos-green-light));
+    background: linear-gradient(
+        135deg,
+        var(--jpos-green),
+        var(--jpos-green-light)
+    );
     color: white;
     font-weight: 600;
     border: none;
     border-radius: 10px;
     padding: 10px 24px;
-    box-shadow: 0 10px 25px rgba(46,125,50,0.18);
+    box-shadow: 0 10px 25px rgba(46, 125, 50, 0.18);
     transition: 0.3s;
 }
 
@@ -145,7 +149,7 @@
     background: #ffffff;
     position: relative;
     overflow: hidden;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
 }
 
 .search-wrapper-new input {
@@ -248,7 +252,7 @@
     width: 320px;
     background: white;
     border-radius: 18px;
-    box-shadow: 0 20px 50px rgba(0,0,0,0.12);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.12);
     padding: 18px;
     display: none;
     z-index: 1000;
@@ -343,7 +347,7 @@
     padding: 0;
     display: none;
     margin-top: 10px;
-    box-shadow: 0 20px 60px rgba(0,0,0,0.12);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.12);
     animation: fadeIn 0.25s ease;
 }
 
@@ -353,7 +357,7 @@
 }
 
 .mega-badge {
-    background: rgba(11,79,163,0.08);
+    background: rgba(11, 79, 163, 0.08);
     color: var(--jpos-blue);
     font-size: 11px;
     font-weight: 700;
@@ -390,7 +394,11 @@
 .mega-icon {
     width: 48px;
     height: 48px;
-    background: linear-gradient(135deg, rgba(11,79,163,0.12), rgba(46,125,50,0.12));
+    background: linear-gradient(
+        135deg,
+        rgba(11, 79, 163, 0.12),
+        rgba(46, 125, 50, 0.12)
+    );
     border-radius: 14px;
     color: var(--jpos-blue);
     display: flex;
@@ -466,7 +474,6 @@
 ========================= */
 
 @media (max-width: 992px) {
-
     .navbar-collapse {
         max-height: 90vh;
         overflow-y: auto;
@@ -537,7 +544,6 @@
 }
 
 @media (max-width: 768px) {
-
     .navbar .nav-link {
         margin: 8px 0;
     }
@@ -584,7 +590,6 @@
 }
 
 @media (max-width: 576px) {
-
     .top-actions {
         width: 100%;
         justify-content: center !important;
@@ -604,7 +609,6 @@
 }
 
 @media (max-width: 480px) {
-
     .logo-box {
         width: 36px;
         height: 36px;
@@ -618,4 +622,555 @@
     .mega-item p {
         font-size: 11px;
     }
+}
+
+/* Custom styling for the action links to ensure Icon-over-Text layout */
+.action-link {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 2px;
+    font-size: 11px !important; /* Smaller text for mobile bar */
+    text-transform: capitalize;
+}
+
+.action-link i {
+    font-size: 20px;
+    margin-bottom: 2px;
+}
+
+/* Mobile Sticky Bottom Bar Logic */
+@media (max-width: 991px) {
+    .top-actions {
+        position: fixed !important;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        top: auto; /* Remove top positioning */
+        background: #ffffff;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around !important; /* Space items evenly */
+        padding: 10px 0 12px 0;
+        box-shadow: 0 -2px 15px rgba(0, 0, 0, 0.1);
+        z-index: 1030 !important;
+        width: 100%;
+        margin: 0;
+    }
+
+    .action-item {
+        flex: 1;
+        text-align: center;
+    }
+
+    /* Hide dropdowns on mobile to prevent layout breaking, or adjust them */
+    .action-item:hover .custom-dropdown {
+        display: none;
+    }
+
+    /* Add padding to body so content doesn't get hidden behind the bottom bar */
+    body {
+        padding-bottom: 70px;
+    }
+}
+
+/* Adjust Desktop View to keep them on the right */
+@media (min-width: 992px) {
+    .top-actions {
+        position: absolute;
+        right: 0;
+        display: flex;
+        gap: 25px;
+    }
+
+    .action-link {
+        font-size: 13px !important;
+    }
+}
+
+/* Offcanvas Custom Styling */
+.offcanvas {
+    width: 380px !important;
+    max-width: 100%;
+    border: none;
+    border-left: none;
+    box-shadow: -5px 0 25px rgba(0, 0, 0, 0.1);
+}
+
+@media (max-width: 576px) {
+    #offcanvasAccount.offcanvas-end {
+        width: 100%;
+    }
+}
+
+.offcanvas-header {
+    background: #f8fbff;
+}
+
+/* Category List Styling */
+#offcanvasCategories .list-group-item {
+    border-left: 3px solid transparent;
+    font-weight: 600;
+    color: #374151;
+    transition: 0.2s;
+}
+
+#offcanvasCategories .list-group-item:hover {
+    background: #f0f7ff;
+    border-left-color: var(--jpos-blue);
+    color: var(--jpos-blue);
+}
+
+#offcanvasCategories i {
+    width: 25px;
+    text-align: center;
+}
+
+/* Ensure the cart-product inside offcanvas matches your layout */
+.offcanvas-body .cart-product {
+    display: flex;
+    align-items: center;
+}
+
+/* Ensure Offcanvas is above everything */
+.offcanvas {
+    z-index: 2050 !important;
+    border: none !important;
+}
+.offcanvas-backdrop {
+    z-index: 2040 !important;
+}
+
+.navbar.fixed-top {
+    z-index: 1020 !important;
+}
+
+/* Professional Category Grid (3 per row) */
+.category-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    padding: 20px;
+}
+
+.category-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    text-decoration: none;
+    padding: 15px 5px;
+    border-radius: 12px;
+    background: #f8fbff;
+    transition: 0.3s;
+    border: 1px solid #eef2f7;
+}
+
+.category-card:hover {
+    background: white;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+    transform: translateY(-3px);
+    border-color: var(--jpos-blue);
+}
+
+.category-card i {
+    font-size: 24px;
+    margin-bottom: 8px;
+    color: var(--jpos-blue);
+}
+
+.category-card span {
+    font-size: 11px;
+    font-weight: 700;
+    color: #374151;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Wishlist "Add to Cart" link styling */
+.wishlist-item-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.add-to-cart-link {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--jpos-green);
+    text-decoration: none;
+    transition: 0.2s;
+}
+
+.add-to-cart-link:hover {
+    color: var(--jpos-blue);
+    text-decoration: underline;
+}
+
+/* =========================
+   ACCOUNT
+========================= */
+
+.account-item {
+    position: relative;
+}
+
+.account-icon-wrapper {
+    position: relative;
+}
+
+.online-dot {
+    width: 9px;
+    height: 9px;
+    background: #22c55e;
+    border: 2px solid white;
+    border-radius: 50%;
+    position: absolute;
+    top: 1px;
+    right: -1px;
+}
+
+.account-dropdown {
+    position: absolute;
+    top: 125%;
+    right: 0;
+    width: 260px;
+    background: white;
+    border-radius: 18px;
+    padding: 14px;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08);
+    border: 1px solid #eef2f7;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px);
+    transition: 0.25s ease;
+    z-index: 1200;
+}
+
+.account-item:hover .account-dropdown {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.account-dropdown-header {
+    padding-bottom: 12px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.account-dropdown-header h6 {
+    margin: 0;
+    font-size: 15px;
+    font-weight: 700;
+    color: #111827;
+}
+
+.account-dropdown-header p {
+    margin: 4px 0 0;
+    font-size: 12px;
+    color: #6b7280;
+}
+
+.account-dropdown-link {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+    color: #374151;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 11px 12px;
+    border-radius: 12px;
+    transition: 0.2s ease;
+}
+
+.account-dropdown-link:hover {
+    background: #f8fbff;
+    color: var(--jpos-blue);
+}
+
+.account-dropdown-link i {
+    width: 18px;
+    text-align: center;
+    font-size: 14px;
+}
+
+.account-user-box {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding-bottom: 12px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.account-avatar {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--jpos-blue), var(--jpos-green));
+    color: white;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+}
+
+.account-user-box h6 {
+    margin: 0;
+    font-size: 14px;
+    font-weight: 700;
+    color: #111827;
+}
+
+.account-user-box small {
+    color: #6b7280;
+    font-size: 11px;
+}
+
+.account-logout-btn {
+    width: 100%;
+    border: none;
+    background: #fff5f5;
+    color: #dc2626;
+    font-size: 14px;
+    font-weight: 600;
+    border-radius: 12px;
+    padding: 11px;
+    margin-top: 8px;
+    transition: 0.2s ease;
+}
+
+.account-logout-btn:hover {
+    background: #fee2e2;
+}
+
+/* =========================
+   MOBILE BOTTOM NAVIGATION
+========================= */
+
+@media (max-width: 991px) {
+    .top-actions {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        background: #ffffff;
+        border-top: 1px solid #e5e7eb;
+        padding: 8px 0;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        z-index: 1035;
+        box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.06);
+    }
+
+    .action-item {
+        flex: 1;
+        display: flex;
+        justify-content: center;
+    }
+
+    .action-link {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 9px;
+        text-decoration: none;
+        color: #1f2937;
+        font-weight: 600;
+        font-size: 15px;
+        transition: 0.3s ease;
+    }
+
+    .action-link i {
+        font-size: 18px;
+        margin: 0;
+    }
+
+    .cart-count {
+        top: -6px;
+        right: -8px;
+    }
+
+    body {
+        padding-bottom: 80px;
+    }
+}
+
+/* =========================
+   ACCOUNT OFFCANVAS STYLING
+========================= */
+
+#offcanvasAccount {
+    width: 360px;
+    max-width: 100%;
+    background: #ffffff;
+}
+
+/* Header */
+#offcanvasAccount .offcanvas-header {
+    background: linear-gradient(135deg, #f8fbff, #ffffff);
+    border-bottom: 1px solid #eef2f7;
+    padding: 18px 20px;
+}
+
+#offcanvasAccount .offcanvas-header h5 {
+    font-size: 16px;
+    font-weight: 800;
+    color: #111827;
+}
+
+/* Body */
+#offcanvasAccount .offcanvas-body {
+    padding: 18px;
+}
+
+/* =========================
+   GUEST VIEW CARD
+========================= */
+
+.mobile-account-card {
+    text-align: center;
+    padding: 20px 14px;
+    background: #f8fbff;
+    border: 1px solid #eef2f7;
+    border-radius: 16px;
+    margin-bottom: 18px;
+}
+
+.mobile-account-icon {
+    width: 60px;
+    height: 60px;
+    margin: 0 auto 12px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--jpos-blue), var(--jpos-green));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 28px;
+}
+
+.mobile-account-card h5 {
+    font-size: 16px;
+    font-weight: 800;
+    margin-bottom: 6px;
+    color: #111827;
+}
+
+.mobile-account-card p {
+    font-size: 13px;
+    color: #6b7280;
+    margin: 0;
+}
+
+/* =========================
+   LINKS
+========================= */
+
+.mobile-account-link {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 14px;
+    margin-bottom: 10px;
+    border-radius: 12px;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+    color: #374151;
+    background: #ffffff;
+    border: 1px solid #eef2f7;
+    transition: 0.2s ease;
+}
+
+.mobile-account-link i {
+    width: 22px;
+    text-align: center;
+    font-size: 16px;
+    color: var(--jpos-blue);
+}
+
+.mobile-account-link:hover {
+    background: #f8fbff;
+    border-color: var(--jpos-blue);
+    color: var(--jpos-blue);
+    transform: translateX(3px);
+}
+
+/* =========================
+   USER BOX
+========================= */
+
+.mobile-user-box {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 16px;
+    border-radius: 16px;
+    background: linear-gradient(135deg, #f8fbff, #ffffff);
+    border: 1px solid #eef2f7;
+    margin-bottom: 18px;
+}
+
+.mobile-user-avatar {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--jpos-blue), var(--jpos-green));
+    color: #fff;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+}
+
+.mobile-user-box h6 {
+    margin: 0;
+    font-size: 15px;
+    font-weight: 700;
+    color: #111827;
+}
+
+.mobile-user-box p {
+    margin: 2px 0 0;
+    font-size: 12px;
+    color: #6b7280;
+}
+
+/* =========================
+   LOGOUT BUTTON
+========================= */
+
+.mobile-logout-btn {
+    width: 100%;
+    padding: 12px 14px;
+    border-radius: 12px;
+    border: none;
+    background: #fff5f5;
+    color: #dc2626;
+    font-size: 14px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    transition: 0.2s ease;
+}
+
+.mobile-logout-btn:hover {
+    background: #fee2e2;
+    transform: translateY(-1px);
+}
+
+/* Offcanvas shadow upgrade */
+#offcanvasAccount {
+    box-shadow: -10px 0 30px rgba(0, 0, 0, 0.08);
 }

@@ -1,64 +1,47 @@
 @extends('frontend.layouts.app')
 
 @section('content')
-<!-- ================= HERO (UNCHANGED) ================= -->
+
+<!-- ================= HERO (DYNAMIC) ================= -->
 <section class="hero-section"
     style="background: url('{{ asset('assets/images/background.png') }}') no-repeat center center; background-size: cover;">
     <div class="container hero-container">
         <div class="row g-0 hero-row">
 
+            <!-- LEFT: Categories -->
             <div class="col-lg-3 hero-categories">
                 <h5 class="category-title">BROWSE CATEGORIES</h5>
                 <div class="category-list">
-                    <a href="#">POS Systems</a>
-                    <a href="#">POS Accessories</a>
-                    <a href="#">Barcode Scanners</a>
-                    <a href="#">Receipt Printers</a>
-                    <a href="#">Cash Drawers</a>
-                    <a href="#">ETIMS Devices</a>
-                    <a href="#">Starlink Setup</a>
-                    <a href="#">Networking Equipment</a>
-                    <a href="#">Software Licenses</a>
+                    @foreach($categories as $category)
+                        {{-- If category is an object from DB, use $category->name --}}
+                        <a href="{{ route('shop', ['category' => is_array($category) ? $category['name'] : $category]) }}">
+                            {{ is_array($category) ? $category['name'] : $category }}
+                        </a>
+                    @endforeach
                 </div>
             </div>
 
+            <!-- RIGHT: Slider -->
             <div class="col-lg-9 hero-slider">
                 <button class="slider-btn slider-prev">&#10094;</button>
                 <button class="slider-btn slider-next">&#10095;</button>
 
                 <div class="slider-track">
-                    <div class="slide active">
+                    @foreach($sliders as $index => $slide)
+                    <div class="slide {{ $index == 0 ? 'active' : '' }}">
                         <div class="slide-text">
-                            <h2>Order POS Hardware Now</h2>
-                            <p>Get high-quality POS machines, printers, and accessories delivered fast across Kenya.</p>
-                            <a href="#" class="btn btn-primary">Shop Now</a>
+                            <h2>{{ $slide['title'] }}</h2>
+                            <p>{{ $slide['desc'] }}</p>
+                            <a href="{{route('shop')}}" class="btn btn-primary" 
+                               style="background-color: #0B4FA3; border: none;">
+                               {{ $slide['btn_text'] }}
+                            </a>
                         </div>
                         <div class="slide-image">
-                            <img src="{{ asset('assets/images/poster.png') }}">
+                            <img src="{{ $slide['image'] }}" alt="{{ $slide['title'] }}">
                         </div>
                     </div>
-
-                    <div class="slide">
-                        <div class="slide-text">
-                            <h2>Get Starlink Internet</h2>
-                            <p>Fast, reliable satellite internet for your business anywhere in Kenya.</p>
-                            <a href="#" class="btn btn-primary">Get Starlink Now</a>
-                        </div>
-                        <div class="slide-image">
-                            <img src="{{ asset('assets/images/starlink.webp') }}">
-                        </div>
-                    </div>
-
-                    <div class="slide">
-                        <div class="slide-text">
-                            <h2>ETIMS Devices Ready</h2>
-                            <p>Compliant eTIMS solutions for seamless tax integration and reporting.</p>
-                            <a href="#" class="btn btn-primary">Order Now</a>
-                        </div>
-                        <div class="slide-image">
-                            <img src="{{ asset('assets/images/etims.jpg') }}">
-                        </div>
-                    </div>
+                    @endforeach
                 </div>
             </div>
 
@@ -68,61 +51,58 @@
 
 <!-- ================= HOT DEALS ================= -->
 <section class="hot-deals-section">
-
     <div class="container">
-
-        <div class="section-top">
-
+        <div class="section-top d-flex justify-content-between align-items-center flex-wrap gap-2 mb-4">
             <div class="section-title">
-                <h2>Hot Deals For You</h2>
-                <p>High-performance refurbished laptops at best prices</p>
+                <h2 class="h4 mb-1" style="color: var(--brand-navy); font-weight: 700;">Hot Deals For You</h2>
+                <p class="small mb-0" style="color: var(--text-muted);">High-performance refurbished laptops</p>
             </div>
 
+            <!-- VIEW ALL BUTTON -->
+            <a href="{{ route('shop') }}" class="view-all-link">
+                View All <i class="fas fa-arrow-right ms-1"></i>
+            </a>
         </div>
 
         <!-- GRID (8 ITEMS = 4x2) -->
         <div class="deals-grid">
-
-            @for($i = 0; $i < 8; $i++)
+            @foreach($hotDeals as $deal)
             <div class="deal-card">
+                @php
+                    $discount = round((($deal['old_price'] - $deal['new_price']) / $deal['old_price']) * 100);
+                @endphp
+                
+                <span class="discount-badge">-{{ $discount }}%</span>
 
-                <span class="discount-badge">-10%</span>
-
-                <a href="" class="wishlist-btn">
+                <a href="#" class="wishlist-btn">
                     <i class="far fa-heart"></i>
                 </a>
 
-                <a href="#" class="deal-image">
-                    <img src="https://via.placeholder.com/500x350">
+                <a href="{{ route('product.show', $loop->iteration) }}" class="deal-image">
+                    <img src="{{ $deal['image'] }}" alt="">
                 </a>
 
                 <div class="deal-content">
+                    <div class="deal-category">{{ $deal['category'] }}</div>
 
-                    <div class="deal-category">Apple • Refurbished</div>
-
-                    <h4 class="deal-name">MacBook Pro Retina</h4>
+                    <h4 class="deal-name">{{ $deal['name'] }}</h4>
 
                     <div class="deal-price">
-                        <span class="new-price">KSh 35,000</span>
-                        <span class="old-price">KSh 39,000</span>
+                        <span class="new-price">KSh {{ number_format($deal['new_price']) }}</span>
+                        <span class="old-price">KSh {{ number_format($deal['old_price']) }}</span>
                     </div>
 
                     <div class="deal-actions">
-                        <button class="btn-cart">Add To Cart</button>
-                        <a href="https://wa.me/254700000000" class="btn-whatsapp">
+                        <button class="btn-cart">Buy Now</button>
+                        <a href="https://wa.me/254700000000?text={{ urlencode('I am interested in: ' . $deal['name']) }}" class="btn-whatsapp">
                             <i class="fab fa-whatsapp"></i>
                         </a>
                     </div>
-
                 </div>
-
             </div>
-            @endfor
-
+            @endforeach
         </div>
-
     </div>
-
 </section>
 
 <!-- ================= POS BANNER ================= -->
@@ -186,126 +166,119 @@
 
 <!-- ================= POS EQUIPMENT================= -->
 <section class="hot-deals-section">
-
     <div class="container">
 
         <!-- HEADER -->
-        <div class="section-top">
-
+        <div class="section-top" style="display: flex; justify-content: space-between; align-items: center;">
             <div class="section-title">
                 <h2>Point of Sale Equipment</h2>
                 <p>Complete hardware for just KSh 50,000 POS Bundle</p>
             </div>
-
+            <!-- VIEW ALL LINK -->
+            <a href="{{ route('shop', ['category' => 'Point of Sale Equipment']) }}" style="color: #0B4FA3; font-weight: 600; text-decoration: none; white-space: nowrap;">
+                View All <i class="fas fa-arrow-right ms-1"></i>
+            </a>
         </div>
 
         <!-- GRID 6 × 2 = 12 ITEMS -->
         <div class="pos-grid">
-
-            @for($i = 0; $i < 12; $i++)
+            @foreach($posEquipment as $item)
             <div class="deal-card">
+                @php
+                    $discount = round((($item['old_price'] - $item['new_price']) / $item['old_price']) * 100);
+                @endphp
 
-                <span class="discount-badge">-10%</span>
+                <span class="discount-badge">-{{ $discount }}%</span>
 
-                <a href="#" class="deal-image">
-                    <img src="https://via.placeholder.com/500x350">
+                <a href="{{ route('product.show', $loop->iteration) }}" class="deal-image">
+                    <img src="{{ file_exists(public_path('assets/images/' . $item['image'])) ? asset('assets/images/' . $item['image']) : 'https://via.placeholder.com/500x350' }}" 
+                        alt="">
                 </a>
 
                 <div class="deal-content">
-
                     <div class="deal-category">POS Equipment</div>
 
-                    <h4 class="deal-name">POS Item {{ $i + 1 }}</h4>
+                    <h4 class="deal-name">{{ $item['name'] }}</h4>
 
                     <div class="deal-price">
-                        <span class="new-price">KSh 10,000</span>
-                        <span class="old-price">KSh 12,000</span>
+                        <span class="new-price">KSh {{ number_format($item['new_price']) }}</span>
+                        <span class="old-price">KSh {{ number_format($item['old_price']) }}</span>
                     </div>
-
                 </div>
-
             </div>
-            @endfor
-
+            @endforeach
         </div>
-
     </div>
-
 </section>
 
 <!-- ================= PRINTERS ON SALE ================= -->
 <section class="hot-deals-section">
-
     <div class="container">
 
-        <div class="section-top">
-
+        <div class="section-top" style="display: flex; justify-content: space-between; align-items: center;">
             <div class="section-title">
                 <h2>Quality Printers On Sale</h2>
                 <p>Print, Copy, Scan & Wireless Printers at Affordable Prices</p>
             </div>
-
+            <!-- VIEW ALL LINK -->
+            <a href="{{ route('shop', ['category' => 'Printers']) }}" style="color: #0B4FA3; font-weight: 600; text-decoration: none; white-space: nowrap;">
+                View All <i class="fas fa-arrow-right ms-1"></i>
+            </a>
         </div>
 
         <!-- GRID -->
         <div class="deals-grid">
-
-            @for($i = 0; $i < 8; $i++)
+            @foreach($printers as $printer)
             <div class="deal-card">
+                @php
+                    $discount = round((($printer['old_price'] - $printer['new_price']) / $printer['old_price']) * 100);
+                @endphp
 
-                <span class="discount-badge">-15%</span>
+                <span class="discount-badge">-{{ $discount }}%</span>
 
                 <a href="" class="wishlist-btn">
                     <i class="far fa-heart"></i>
                 </a>
 
-                <a href="#" class="deal-image">
-                    <img src="https://via.placeholder.com/500x350" alt="Printer">
+                <a href="{{ route('product.show', $loop->iteration) }}" class="deal-image">
+                    <img src="{{ file_exists(public_path('assets/images/' . $printer['image'])) ? asset('assets/images/' . $printer['image']) : 'https://via.placeholder.com/500x350' }}" 
+                         alt="">
                 </a>
 
                 <div class="deal-content">
-
                     <div class="deal-category">
-                        HP • Wireless Printer
+                        {{ $printer['category'] }}
                     </div>
 
                     <h4 class="deal-name">
-                        HP Smart Tank Printer
+                        {{ $printer['name'] }}
                     </h4>
 
                     <div class="deal-features">
-                        PRINT • COPY • SCAN • WIFI
+                        {{ $printer['features'] }}
                     </div>
 
                     <div class="deal-price">
-                        <span class="new-price">KSh 18,500</span>
-                        <span class="old-price">KSh 22,000</span>
+                        <span class="new-price">KSh {{ number_format($printer['new_price']) }}</span>
+                        <span class="old-price">KSh {{ number_format($printer['old_price']) }}</span>
                     </div>
 
                     <div class="deal-actions">
-
                         <button class="btn-cart">
                             Buy Now
                         </button>
-
-                        <a href="https://wa.me/254700000000" class="btn-whatsapp">
+                        <a href="https://wa.me/254700000000?text={{ urlencode('I am interested in: ' . $printer['name']) }}" class="btn-whatsapp">
                             <i class="fab fa-whatsapp"></i>
                         </a>
-
                     </div>
-
                 </div>
-
             </div>
-            @endfor
-
+            @endforeach
         </div>
-
     </div>
-
 </section>
 
-<!-- ================= POS EQUIPMENT BANNER (NEW DESIGN) ================= -->
+<!-- ================= POS EQUIPMENT BANNER ================= -->
 <section class="hardware-banner">
     <div class="hw-wrapper">
         
@@ -345,131 +318,121 @@
 
 <!-- ================= PAPERS, ROLLS & LABELS ================= -->
 <section class="hot-deals-section">
-
     <div class="container">
 
         <!-- HEADER -->
-        <div class="section-top">
-
-            <div class="section-title" style="text-align: center;">
+        <div class="section-top" style="display: flex; justify-content: space-between; align-items: center;">
+            <div class="section-title">
                 <h2>Computer Papers, Rolls & Labels</h2>
                 <p>Premium Quality Materials For Crisp Printing Results</p>
             </div>
-
+            <!-- VIEW ALL LINK -->
+            <a href="{{ route('shop', ['category' => 'Printing Supplies']) }}" style="color: #0B4FA3; font-weight: 600; text-decoration: none; white-space: nowrap;">
+                View All <i class="fas fa-arrow-right ms-1"></i>
+            </a>
         </div>
 
         <!-- GRID -->
         <div class="pos-grid">
-
-            @for($i = 0; $i < 12; $i++)
+            @foreach($supplies as $item)
             <div class="deal-card">
+                @php
+                    $discount = round((($item['old_price'] - $item['new_price']) / $item['old_price']) * 100);
+                @endphp
 
-                <span class="discount-badge">-8%</span>
+                <span class="discount-badge">-{{ $discount }}%</span>
 
-                <a href="#" class="deal-image">
-                    <img src="https://via.placeholder.com/500x350" alt="">
+                <a href="{{ route('product.show', $loop->iteration) }}" class="deal-image">
+                    <img src="{{ file_exists(public_path('assets/images/' . $item['image'])) ? asset('assets/images/' . $item['image']) : 'https://via.placeholder.com/500x350' }}" 
+                         alt="">
                 </a>
 
                 <div class="deal-content">
+                    <div class="deal-category">Printing Supplies</div>
 
-                    <div class="deal-category">
-                        Printing Supplies
-                    </div>
-
-                    <h4 class="deal-name">
-                        Thermal Receipt Rolls
-                    </h4>
+                    <h4 class="deal-name">{{ $item['name'] }}</h4>
 
                     <div class="deal-features">
-                        HIGH QUALITY • DURABLE • CLEAR PRINT
+                        {{ $item['features'] }}
                     </div>
 
                     <div class="deal-price">
-                        <span class="new-price">KSh 350</span>
-                        <span class="old-price">KSh 450</span>
+                        <span class="new-price">KSh {{ number_format($item['new_price']) }}</span>
+                        <span class="old-price">KSh {{ number_format($item['old_price']) }}</span>
                     </div>
-
                 </div>
-
             </div>
-            @endfor
-
+            @endforeach
         </div>
 
     </div>
-
 </section>
 
 <!-- ================= TONERS ON SALE ================= -->
 <section class="hot-deals-section">
-
     <div class="container">
 
-        <div class="section-top">
-
-            <div class="section-title" style="text-align: center;">
+        <div class="section-top" style="display: flex; justify-content: space-between; align-items: center;">
+            <div class="section-title">
                 <h2>Original And Compatible Toners</h2>
                 <p>Save 20% On Your Print Cost</p>
             </div>
-
+            <!-- VIEW ALL LINK -->
+            <a href="{{ route('shop', ['category' => 'Toners']) }}" style="color: #0B4FA3; font-weight: 600; text-decoration: none; white-space: nowrap;">
+                View All <i class="fas fa-arrow-right ms-1"></i>
+            </a>
         </div>
 
         <!-- GRID -->
         <div class="deals-grid">
-
-            @for($i = 0; $i < 8; $i++)
+            @foreach($toners as $toner)
             <div class="deal-card">
+                @php
+                    $discount = round((($toner['old_price'] - $toner['new_price']) / $toner['old_price']) * 100);
+                @endphp
 
-                <span class="discount-badge">-20%</span>
+                <span class="discount-badge">-{{ $discount }}%</span>
 
                 <a href="" class="wishlist-btn">
                     <i class="far fa-heart"></i>
                 </a>
 
-                <a href="#" class="deal-image">
-                    <img src="https://via.placeholder.com/500x350" alt="">
+                <a href="{{ route('product.show', $loop->iteration) }}" class="deal-image">
+                    <img src="{{ file_exists(public_path('assets/images/' . $toner['image'])) ? asset('assets/images/' . $toner['image']) : 'https://via.placeholder.com/500x350?text=Toner' }}" 
+                         alt="">
                 </a>
 
                 <div class="deal-content">
-
                     <div class="deal-category">
-                        HP • Canon • Epson
+                        {{ $toner['brand'] }}
                     </div>
 
                     <h4 class="deal-name">
-                        Compatible Laser Toner Cartridge
+                        {{ $toner['name'] }}
                     </h4>
 
                     <div class="deal-features">
-                        HIGH YIELD • SHARP PRINT • LONG LASTING
+                        {{ $toner['features'] }}
                     </div>
 
                     <div class="deal-price">
-                        <span class="new-price">KSh 2,500</span>
-                        <span class="old-price">KSh 3,200</span>
+                        <span class="new-price">KSh {{ number_format($toner['new_price']) }}</span>
+                        <span class="old-price">KSh {{ number_format($toner['old_price']) }}</span>
                     </div>
 
                     <div class="deal-actions">
-
                         <button class="btn-cart">
                             Add To Cart
                         </button>
-
-                        <a href="https://wa.me/254700000000" class="btn-whatsapp">
+                        <a href="https://wa.me/254700000000?text={{ urlencode('I am interested in: ' . $toner['name']) }}" class="btn-whatsapp">
                             <i class="fab fa-whatsapp"></i>
                         </a>
-
                     </div>
-
                 </div>
-
             </div>
-            @endfor
-
+            @endforeach
         </div>
-
     </div>
-
 </section>
 
 @endsection
