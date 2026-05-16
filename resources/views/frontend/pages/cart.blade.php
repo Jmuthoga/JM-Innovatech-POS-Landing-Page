@@ -3,7 +3,7 @@
 @section('content')
 
 <div class="container cart-container py-4">
-    <form action="{{ url('/checkout/process') }}" method="POST">
+    <form action="{{ route('checkout.process') }}" method="POST">
         @csrf
         <div class="row g-3">
             
@@ -19,88 +19,113 @@
                         <div class="row g-3">
                             <div class="col-md-6">
                                 <label class="form-label">First Name</label>
-                                <input type="text" name="first_name" class="form-control form-control-sm shadow-none" placeholder="John" required>
+                                <input type="text" name="first_name" value="{{ old('first_name', $user['first_name']) }}" class="form-control form-control-sm shadow-none" required>
                             </div>
                             <div class="col-md-6">
                                 <label class="form-label">Last Name</label>
-                                <input type="text" name="last_name" class="form-control form-control-sm shadow-none" placeholder="Doe" required>
+                                <input type="text" name="last_name" value="{{ old('last_name', $user['last_name']) }}" class="form-control form-control-sm shadow-none" placeholder="Doe" required>
                             </div>
                             <div class="col-md-6">
                                 <label class="form-label">Email Address</label>
-                                <input type="email" name="email" class="form-control form-control-sm shadow-none" placeholder="john@example.com" required>
+                                <input type="email" name="email" value="{{ old('email', $user['email']) }}" class="form-control form-control-sm shadow-none" placeholder="john@gmail.com" required>
                             </div>
                             <div class="col-md-6">
                                 <label class="form-label">Phone Number</label>
                                 <div class="input-group input-group-sm">
                                     <span class="input-group-text bg-light text-muted">+254</span>
-                                    <input type="tel" name="phone" class="form-control shadow-none" placeholder="712345678" required>
+                                    <input type="tel" name="phone" value="{{ old('phone', $user['phone']) }}" class="form-control shadow-none" placeholder="712345678" required>
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <label class="form-label">Street Address / Apartment / Estate</label>
-                                <input type="text" name="address" class="form-control form-control-sm shadow-none" placeholder="e.g. Garden City, Apt 4B" required>
+                                <input type="text" name="address" value="{{ old('address', $user['address']) }}" class="form-control form-control-sm shadow-none" placeholder="e.g. Garden City, Apt 4B" required>
                             </div>
                             <div class="col-md-6">
                                 <label class="form-label">County</label>
-                                <select class="form-select form-select-sm shadow-none" name="county" required>
+
+                                @php
+                                    $counties = [
+                                        'baringo' => 'Baringo',
+                                        'bomet' => 'Bomet',
+                                        'bungoma' => 'Bungoma',
+                                        'busia' => 'Busia',
+                                        'elgeyo-marakwet' => 'Elgeyo Marakwet',
+                                        'embu' => 'Embu',
+                                        'garissa' => 'Garissa',
+                                        'homa-bay' => 'Homa Bay',
+                                        'isiolo' => 'Isiolo',
+                                        'kajiado' => 'Kajiado',
+                                        'kakamega' => 'Kakamega',
+                                        'kericho' => 'Kericho',
+                                        'kiambu' => 'Kiambu',
+                                        'kilifi' => 'Kilifi',
+                                        'kirinyaga' => 'Kirinyaga',
+                                        'kisii' => 'Kisii',
+                                        'kisumu' => 'Kisumu',
+                                        'kitui' => 'Kitui',
+                                        'kwale' => 'Kwale',
+                                        'laikipia' => 'Laikipia',
+                                        'lamu' => 'Lamu',
+                                        'machakos' => 'Machakos',
+                                        'makueni' => 'Makueni',
+                                        'mandera' => 'Mandera',
+                                        'marsabit' => 'Marsabit',
+                                        'meru' => 'Meru',
+                                        'migori' => 'Migori',
+                                        'mombasa' => 'Mombasa',
+                                        'muranga' => "Murang'a",
+                                        'nairobi' => 'Nairobi',
+                                        'nakuru' => 'Nakuru',
+                                        'nandi' => 'Nandi',
+                                        'narok' => 'Narok',
+                                        'nyamira' => 'Nyamira',
+                                        'nyandarua' => 'Nyandarua',
+                                        'nyeri' => 'Nyeri',
+                                        'samburu' => 'Samburu',
+                                        'siaya' => 'Siaya',
+                                        'taita-taveta' => 'Taita Taveta',
+                                        'tana-river' => 'Tana River',
+                                        'tharaka-nithi' => 'Tharaka-Nithi',
+                                        'trans-nzoia' => 'Trans Nzoia',
+                                        'turkana' => 'Turkana',
+                                        'uasin-gishu' => 'Uasin Gishu',
+                                        'vihiga' => 'Vihiga',
+                                        'wajir' => 'Wajir',
+                                        'west-pokot' => 'West Pokot',
+                                        'others' => 'Other',
+                                    ];
+                                @endphp
+
+                                <select class="form-select form-select-sm shadow-none"
+                                        name="county"
+                                        required>
+
                                     <option value="">Select County</option>
-                                    <option value="baringo">Baringo</option>
-                                    <option value="bomet">Bomet</option>
-                                    <option value="bungoma">Bungoma</option>
-                                    <option value="busia">Busia</option>
-                                    <option value="elgeyo-marakwet">Elgeyo Marakwet</option>
-                                    <option value="embu">Embu</option>
-                                    <option value="garissa">Garissa</option>
-                                    <option value="homa-bay">Homa Bay</option>
-                                    <option value="isiolo">Isiolo</option>
-                                    <option value="kajiado">Kajiado</option>
-                                    <option value="kakamega">Kakamega</option>
-                                    <option value="kericho">Kericho</option>
-                                    <option value="kiambu">Kiambu</option>
-                                    <option value="kilifi">Kilifi</option>
-                                    <option value="kirinyaga">Kirinyaga</option>
-                                    <option value="kisii">Kisii</option>
-                                    <option value="kisumu">Kisumu</option>
-                                    <option value="kitui">Kitui</option>
-                                    <option value="kwale">Kwale</option>
-                                    <option value="laikipia">Laikipia</option>
-                                    <option value="lamu">Lamu</option>
-                                    <option value="machakos">Machakos</option>
-                                    <option value="makueni">Makueni</option>
-                                    <option value="mandera">Mandera</option>
-                                    <option value="marsabit">Marsabit</option>
-                                    <option value="meru">Meru</option>
-                                    <option value="migori">Migori</option>
-                                    <option value="mombasa">Mombasa</option>
-                                    <option value="muranga">Murang'a</option>
-                                    <option value="nairobi">Nairobi</option>
-                                    <option value="nakuru">Nakuru</option>
-                                    <option value="nandi">Nandi</option>
-                                    <option value="narok">Narok</option>
-                                    <option value="nyamira">Nyamira</option>
-                                    <option value="nyandarua">Nyandarua</option>
-                                    <option value="nyeri">Nyeri</option>
-                                    <option value="samburu">Samburu</option>
-                                    <option value="siaya">Siaya</option>
-                                    <option value="taita-taveta">Taita Taveta</option>
-                                    <option value="tana-river">Tana River</option>
-                                    <option value="tharaka-nithi">Tharaka-Nithi</option>
-                                    <option value="trans-nzoia">Trans Nzoia</option>
-                                    <option value="turkana">Turkana</option>
-                                    <option value="uasin-gishu">Uasin Gishu</option>
-                                    <option value="vihiga">Vihiga</option>
-                                    <option value="wajir">Wajir</option>
-                                    <option value="west-pokot">West Pokot</option>
-                                    <option value="others">Other</option>
+
+                                    @foreach($counties as $value => $label)
+
+                                        <option value="{{ $value }}"
+                                            {{ old('county', $user['county']) == $value ? 'selected' : '' }}>
+
+                                            {{ $label }}
+
+                                        </option>
+
+                                    @endforeach
+
                                 </select>
                             </div>
                             <div class="col-md-6">
                                 <label class="form-label">Town / Area</label>
-                                <input type="text" name="town" class="form-control form-control-sm shadow-none" placeholder="e.g. Westlands" required>
+                                <input type="text" name="town" value="{{ old('town', $user['town']) }}" class="form-control form-control-sm shadow-none" placeholder="e.g. Westlands" required>
                             </div>
                             <div class="col-md-12">
                                 <label class="form-label">Order Notes (Optional)</label>
-                                <textarea name="notes" class="form-control form-control-sm shadow-none" rows="2" placeholder="Instructions for delivery..."></textarea>
+                                <textarea name="notes"
+                                        class="form-control form-control-sm shadow-none"
+                                        rows="2"
+                                        placeholder="Instructions for delivery...">{{ old('notes', $user['notes']) }}</textarea>
+
                             </div>
                         </div>
                     </div>
@@ -115,29 +140,77 @@
                     @foreach($cartItems as $item)
                         @php
                             $discount = round((($item['old_price'] - $item['price']) / $item['old_price']) * 100);
+                            $lineTotal = $item['price'] * $item['qty'];
                         @endphp
                         <div class="cart-item">
                             <div class="row align-items-center g-3">
+
+                                <!-- IMAGE -->
                                 <div class="col-auto">
-                                    <img src="{{ $item['image'] }}" class="item-img border" alt="product">
+                                    <img src="{{ $item['image'] }}"
+                                        class="item-img border"
+                                        alt="product">
                                 </div>
+
+                                <!-- PRODUCT -->
                                 <div class="col">
-                                    <span class="brand-tag">{{ $item['brand'] }}</span>
-                                    <a href="#" class="item-name mb-1 text-truncate" style="max-width: 250px;">{{ $item['name'] }}</a>
-                                    <a href="#" class="remove-link"><i class="fas fa-trash-alt me-1"></i> Remove</a>
+                                    <span class="brand-tag">
+                                        {{ $item['brand'] ?? 'Premium Product' }}
+                                    </span>
+                                    <a href="{{ route('product.show', $item['id']) }}"
+                                        class="item-name mb-1 text-truncate"
+                                        style="max-width: 250px;">
+                                            {{ $item['name'] }}
+                                    </a>
                                 </div>
+
+                                <!-- QUANTITY -->
                                 <div class="col-auto">
                                     <div class="qty-box">
-                                        <button type="button" class="qty-btn">-</button>
-                                        <input type="text" class="qty-input" value="{{ $item['qty'] }}" readonly>
-                                        <button type="button" class="qty-btn">+</button>
+
+                                        <!-- DECREASE -->
+                                        <form method="POST"
+                                            action="{{ route('cart.decrease', $item['id']) }}"
+                                            class="d-inline">
+                                            @csrf
+                                            <button type="submit"
+                                                    class="qty-btn">
+                                                -
+                                            </button>
+                                        </form>
+
+                                        <!-- QTY -->
+                                        <input type="text"
+                                            class="qty-input"
+                                            value="{{ $item['qty'] }}"
+                                            readonly>
+
+                                        <!-- INCREASE -->
+                                        <form method="POST"
+                                            action="{{ route('cart.increase', $item['id']) }}"
+                                            class="d-inline">
+                                            @csrf
+                                            <button type="submit"
+                                                    class="qty-btn">
+                                                +
+                                            </button>
+                                        </form>
                                     </div>
                                 </div>
-                                <div class="col-auto text-end" style="min-width: 120px;">
-                                    <span class="current-price">KES {{ number_format($item['price']) }}</span>
+
+                                <!-- PRICE -->
+                                <div class="col-auto text-end"
+                                    style="min-width: 120px;">
+                                    <span class="current-price">
+                                        KES {{ number_format($lineTotal) }}
+                                    </span>
                                     <div class="d-flex justify-content-end align-items-center gap-2">
-                                        <span class="old-price">KES {{ number_format($item['old_price']) }}</span>
-                                        <span class="discount-pill">-{{ $discount }}%</span>
+                                        <span class="old-price">
+                                            KES {{ number_format($item['old_price']) }}
+                                        </span>
+                                        <span class="discount-pill">
+                                            -{{ $discount }}%
+                                        </span>
                                     </div>
                                 </div>
                             </div>
@@ -150,34 +223,59 @@
             <div class="col-lg-4">
                 <div class="summary-sidebar">
                     
-                <!-- Promo Code -->
-                <div class="cart-card p-3 mb-3">
-                    <h2 class="section-title mb-3" style="font-size: 1rem;">Vouchers & Promos</h2>
-                    <div class="input-group">
-                        <input type="text" class="form-control promo-input shadow-none" placeholder="Enter Promo Code">
-                        <button type="button" class="btn promo-btn shadow-none">APPLY</button>
+                    <!-- Promo Code Section (Form tags removed) -->
+                    <div class="cart-card p-3 mb-3">
+                        <h2 class="section-title mb-3" style="font-size: 1rem;">Vouchers & Promos</h2>
+
+                        <div class="input-group">
+                            <input type="text"
+                                name="promo_code"
+                                value="{{ old('promo_code', $appliedPromo['code'] ?? request('promo_code')) }}"
+                                class="form-control promo-input shadow-none"
+                                placeholder="Enter Promo Code">
+
+                            <!-- This button triggers a Javascript switch or alternative route submission -->
+                            <button type="submit" 
+                                    formaction="{{ route('checkout.apply_promo') }}" 
+                                    formmethod="POST" 
+                                    class="btn promo-btn shadow-none">
+                                APPLY
+                            </button>
+                        </div>
+
+                        @if(isset($appliedPromo) && $appliedPromo)
+                            <div class="alert alert-success mt-3 mb-0 py-2 small">
+                                Congratulations! Promo Applied: <strong>{{ $appliedPromo['code'] }}</strong>. Your special discount has been deducted from your order summary total.
+                            </div>
+                        @endif
+                        
+                        @if(isset($promoError) && $promoError)
+                            <div class="alert alert-danger mt-3 mb-0 py-2 small">
+                                {{ $promoError }}
+                            </div>
+                        @endif
                     </div>
-                </div>
 
                     <!-- Summary Details -->
                     <div class="cart-card p-3">
                         <h2 class="section-title mb-3" style="font-size: 1rem;">Order Summary</h2>
-                        
-                        @php
-                            $subtotal = collect($cartItems)->sum(fn($i) => $i['price'] * $i['qty']);
-                            $shipping_fee = 250; 
-                            $total = $subtotal + $shipping_fee;
-                        @endphp
 
                         <div class="d-flex justify-content-between mb-2">
                             <span class="summary-label">Subtotal</span>
                             <span class="summary-value">KES {{ number_format($subtotal) }}</span>
                         </div>
-                        
+
                         <div class="d-flex justify-content-between mb-2">
                             <span class="summary-label">Shipping Fee</span>
-                            <span class="summary-value text-dark">KES {{ number_format($shipping_fee) }}</span>
+                            <span class="summary-value text-dark">KES {{ number_format($shippingFee) }}</span>
                         </div>
+
+                        @if($discountAmount > 0)
+                        <div class="d-flex justify-content-between mb-2">
+                            <span class="summary-label text-success">Promo Discount</span>
+                            <span class="summary-value text-success">-KES {{ number_format($discountAmount) }}</span>
+                        </div>
+                        @endif
 
                         <hr class="my-3">
 
@@ -188,6 +286,7 @@
                             </span>
                         </div>
 
+                        <!-- Main Checkout Submission -->
                         <button type="submit" class="btn btn-checkout w-100 mb-3">
                             Complete Purchase
                         </button>

@@ -112,19 +112,54 @@
 
                     <!-- ACTION BUTTONS -->
                     <div class="action-buttons">
-                        <a href="#"class="btn-action btn-cart me-2"><i class="fas fa-shopping-bag"></i>
-                            Add To Cart
-                        </a>
-                        <a href="https://wa.me/254700000000"class="btn-action btn-buy me-2"target="_blank"><i class="fab fa-whatsapp"></i>
+
+                        <!-- ADD TO CART -->
+                        <form action="{{ route('cart.add') }}" method="POST" class="d-inline m-0 p-0">
+                            @csrf
+
+                            <input type="hidden" name="id" value="{{ $product['id'] }}">
+                            <input type="hidden" name="name" value="{{ $product['name'] }}">
+                            <input type="hidden" name="price" value="{{ $product['new_price'] }}">
+                            <input type="hidden" name="old_price" value="{{ $product['old_price'] }}">
+                            <input type="hidden" name="image" value="{{ $product['image'] }}">
+                            <input type="hidden" name="qty" id="cartQty" value="1">
+
+                            <button type="submit" class="btn-action btn-cart me-2">
+                                <i class="fas fa-shopping-bag"></i>
+                                Add To Cart
+                            </button>
+                        </form>
+
+                        <!-- WHATSAPP ORDER -->
+                        <a href="https://wa.me/254700000000?text={{ urlencode(
+                            "Hello JM Innovatech 👋 I want to order this product:\n\n" .
+                            "Product: " . $product['name'] . "\n" .
+                            "Price: KES " . number_format($product['new_price']) . "\n" .
+                            "Link: " . url()->current() . "\n\n" .
+                            "Kindly confirm availability and delivery."
+                        ) }}"
+                        class="btn-action btn-buy me-2"
+                        target="_blank">
+
+                            <i class="fab fa-whatsapp"></i>
                             Order via WhatsApp
                         </a>
-                        <a href="#" class="btn-action btn-outline me-2" title="Add to Wishlist">
+
+                        <!-- WISHLIST (UNCHANGED FUNCTIONALITY PLACEHOLDER) -->
+                        <a href="#"
+                        class="btn-action btn-outline me-2"
+                        title="Add to Wishlist">
                             <i class="far fa-heart"></i>
                         </a>
 
-                        <a href="#" class="btn-action btn-outline" title="Share Product">
+                        <!-- SHARE PRODUCT -->
+                        <a href="#"
+                        class="btn-action btn-outline"
+                        title="Share Product"
+                        onclick="shareProduct(event)">
                             <i class="fas fa-share-alt"></i>
                         </a>
+
                     </div>
                 </div>
             </div>
@@ -285,6 +320,50 @@
     slider.addEventListener('mouseleave', () => {
         startAutoSlide();
     });
+</script>
+
+<script>
+function shareProduct(e) {
+    e.preventDefault();
+
+    const url = window.location.href;
+
+    const shareData = {
+        title: @json($product['name']),
+        text: "Check out this product: {{ $product['name'] }} for KSh {{ number_format($product['new_price']) }}",
+        url: url
+    };
+
+    // Try native share (mobile)
+    if (navigator.share) {
+        navigator.share(shareData)
+            .catch(err => console.log("Share cancelled", err));
+        return;
+    }
+
+    // Fallback 1: Clipboard API
+    if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(url)
+            .then(() => {
+                alert("Link copied! Share it anywhere.");
+            })
+            .catch(() => fallbackCopy(url));
+    } else {
+        fallbackCopy(url);
+    }
+}
+
+// Fallback 2: older browsers
+function fallbackCopy(text) {
+    const temp = document.createElement("input");
+    document.body.appendChild(temp);
+    temp.value = text;
+    temp.select();
+    document.execCommand("copy");
+    document.body.removeChild(temp);
+
+    alert("Link copied to clipboard!");
+}
 </script>
 
 @endsection

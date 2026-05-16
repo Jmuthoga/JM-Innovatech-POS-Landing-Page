@@ -74,9 +74,19 @@
                 
                 <span class="discount-badge">-{{ $discount }}%</span>
 
-                <a href="#" class="wishlist-btn">
-                    <i class="far fa-heart"></i>
-                </a>
+                <form action="{{ route('wishlist.add') }}" method="POST" class="wishlist-btn m-0">
+                    @csrf
+
+                    <input type="hidden" name="id" value="hot-{{ $loop->iteration }}">
+                    <input type="hidden" name="name" value="{{ $deal['name'] }}">
+                    <input type="hidden" name="price" value="{{ $deal['new_price'] }}">
+                    <input type="hidden" name="old_price" value="{{ $deal['old_price'] }}">
+                    <input type="hidden" name="image" value="{{ $deal['image'] }}">
+
+                    <button type="submit" style="background:none;border:0;">
+                        <i class="far fa-heart"></i>
+                    </button>
+                </form>
 
                 <a href="{{ route('product.show', $loop->iteration) }}" class="deal-image">
                     <img src="{{ $deal['image'] }}" alt="">
@@ -92,11 +102,39 @@
                         <span class="old-price">KSh {{ number_format($deal['old_price']) }}</span>
                     </div>
 
-                    <div class="deal-actions">
-                        <button class="btn-cart">Buy Now</button>
-                        <a href="https://wa.me/254700000000?text={{ urlencode('I am interested in: ' . $deal['name']) }}" class="btn-whatsapp">
+                    <div class="deal-actions d-flex gap-2">
+
+                        <!-- BUY NOW (ADD TO CART) -->
+                        <form action="{{ route('cart.add') }}"
+                            method="POST"
+                            class="flex-fill m-0 p-0">
+                            @csrf
+
+                            <input type="hidden" name="id" value="{{ $loop->iteration }}">
+                            <input type="hidden" name="name" value="{{ $deal['name'] }}">
+                            <input type="hidden" name="price" value="{{ $deal['new_price'] }}">
+                            <input type="hidden" name="old_price" value="{{ $deal['old_price'] }}">
+                            <input type="hidden" name="image" value="{{ $deal['image'] }}">
+
+                            <button type="submit"
+                                    class="btn-cart w-100 d-flex align-items-center justify-content-center">
+                                Buy Now
+                            </button>
+                        </form>
+
+                        <!-- WHATSAPP -->
+                        <a href="https://wa.me/254700000000?text={{ urlencode(
+                            "Hello JM Innovatech 👋 I am interested in:\n\n" .
+                            "Product: " . $deal['name'] . "\n" .
+                            "Price: KES " . number_format($deal['new_price']) . "\n\n" .
+                            "Kindly assist me with availability and ordering."
+                        ) }}"
+                        target="_blank"
+                        class="btn-whatsapp flex-fill d-flex align-items-center justify-content-center">
+
                             <i class="fab fa-whatsapp"></i>
                         </a>
+
                     </div>
                 </div>
             </div>
@@ -189,6 +227,19 @@
                 @endphp
 
                 <span class="discount-badge">-{{ $discount }}%</span>
+                <form action="{{ route('wishlist.add') }}" method="POST" class="wishlist-btn m-0">
+                    @csrf
+
+                    <input type="hidden" name="id" value="pos-{{ $loop->iteration }}">
+                    <input type="hidden" name="name" value="{{ $item['name'] }}">
+                    <input type="hidden" name="price" value="{{ $item['new_price'] }}">
+                    <input type="hidden" name="old_price" value="{{ $item['old_price'] }}">
+                    <input type="hidden" name="image" value="{{ $item['image'] }}">
+
+                    <button type="submit" style="background:none;border:0;">
+                        <i class="far fa-heart"></i>
+                    </button>
+                </form>
 
                 <a href="{{ route('product.show', $loop->iteration) }}" class="deal-image">
                     <img src="{{ file_exists(public_path('assets/images/' . $item['image'])) ? asset('assets/images/' . $item['image']) : 'https://via.placeholder.com/500x350' }}" 
@@ -236,9 +287,19 @@
 
                 <span class="discount-badge">-{{ $discount }}%</span>
 
-                <a href="" class="wishlist-btn">
-                    <i class="far fa-heart"></i>
-                </a>
+                <form action="{{ route('wishlist.add') }}" method="POST" class="wishlist-btn m-0">
+                    @csrf
+
+                    <input type="hidden" name="id" value="printer-{{ $loop->iteration }}">
+                    <input type="hidden" name="name" value="{{ $printer['name'] }}">
+                    <input type="hidden" name="price" value="{{ $printer['new_price'] }}">
+                    <input type="hidden" name="old_price" value="{{ $printer['old_price'] }}">
+                    <input type="hidden" name="image" value="{{ $printer['image'] }}">
+
+                    <button type="submit" style="background:none;border:0;">
+                        <i class="far fa-heart"></i>
+                    </button>
+                </form>
 
                 <a href="{{ route('product.show', $loop->iteration) }}" class="deal-image">
                     <img src="{{ file_exists(public_path('assets/images/' . $printer['image'])) ? asset('assets/images/' . $printer['image']) : 'https://via.placeholder.com/500x350' }}" 
@@ -263,13 +324,39 @@
                         <span class="old-price">KSh {{ number_format($printer['old_price']) }}</span>
                     </div>
 
-                    <div class="deal-actions">
-                        <button class="btn-cart">
-                            Buy Now
-                        </button>
-                        <a href="https://wa.me/254700000000?text={{ urlencode('I am interested in: ' . $printer['name']) }}" class="btn-whatsapp">
+                    <div class="deal-actions d-flex gap-2">
+
+                        <!-- BUY NOW -->
+                        <form action="{{ route('cart.add') }}"
+                            method="POST"
+                            class="flex-fill m-0 p-0">
+                            @csrf
+
+                            <input type="hidden" name="id" value="printer-{{ $loop->iteration }}">
+                            <input type="hidden" name="name" value="{{ $printer['name'] }}">
+                            <input type="hidden" name="price" value="{{ $printer['new_price'] }}">
+                            <input type="hidden" name="old_price" value="{{ $printer['old_price'] }}">
+                            <input type="hidden" name="image" value="{{ $printer['image'] }}">
+
+                            <button type="submit"
+                                    class="btn-cart w-100 d-flex align-items-center justify-content-center">
+                                Buy Now
+                            </button>
+                        </form>
+
+                        <!-- WHATSAPP ORDER -->
+                        <a href="https://wa.me/254700000000?text={{ urlencode(
+                            "Hello JM Innovatech 👋 I want to order:\n\n" .
+                            "Product: " . $printer['name'] . "\n" .
+                            "Price: KES " . number_format($printer['new_price']) . "\n\n" .
+                            "Kindly confirm availability and delivery."
+                        ) }}"
+                        target="_blank"
+                        class="btn-whatsapp flex-fill d-flex align-items-center justify-content-center">
+
                             <i class="fab fa-whatsapp"></i>
                         </a>
+
                     </div>
                 </div>
             </div>
@@ -342,6 +429,20 @@
 
                 <span class="discount-badge">-{{ $discount }}%</span>
 
+                <form action="{{ route('wishlist.add') }}" method="POST" class="wishlist-btn m-0">
+                    @csrf
+
+                    <input type="hidden" name="id" value="supply-{{ $loop->iteration }}">
+                    <input type="hidden" name="name" value="{{ $item['name'] }}">
+                    <input type="hidden" name="price" value="{{ $item['new_price'] }}">
+                    <input type="hidden" name="old_price" value="{{ $item['old_price'] }}">
+                    <input type="hidden" name="image" value="{{ $item['image'] }}">
+
+                    <button type="submit" style="background:none;border:0;">
+                        <i class="far fa-heart"></i>
+                    </button>
+                </form>
+
                 <a href="{{ route('product.show', $loop->iteration) }}" class="deal-image">
                     <img src="{{ file_exists(public_path('assets/images/' . $item['image'])) ? asset('assets/images/' . $item['image']) : 'https://via.placeholder.com/500x350' }}" 
                          alt="">
@@ -393,9 +494,19 @@
 
                 <span class="discount-badge">-{{ $discount }}%</span>
 
-                <a href="" class="wishlist-btn">
-                    <i class="far fa-heart"></i>
-                </a>
+                <form action="{{ route('wishlist.add') }}" method="POST" class="wishlist-btn m-0">
+                    @csrf
+
+                    <input type="hidden" name="id" value="toner-{{ $loop->iteration }}">
+                    <input type="hidden" name="name" value="{{ $toner['name'] }}">
+                    <input type="hidden" name="price" value="{{ $toner['new_price'] }}">
+                    <input type="hidden" name="old_price" value="{{ $toner['old_price'] }}">
+                    <input type="hidden" name="image" value="{{ $toner['image'] }}">
+
+                    <button type="submit" style="background:none;border:0;">
+                        <i class="far fa-heart"></i>
+                    </button>
+                </form>
 
                 <a href="{{ route('product.show', $loop->iteration) }}" class="deal-image">
                     <img src="{{ file_exists(public_path('assets/images/' . $toner['image'])) ? asset('assets/images/' . $toner['image']) : 'https://via.placeholder.com/500x350?text=Toner' }}" 
@@ -420,13 +531,39 @@
                         <span class="old-price">KSh {{ number_format($toner['old_price']) }}</span>
                     </div>
 
-                    <div class="deal-actions">
-                        <button class="btn-cart">
-                            Add To Cart
-                        </button>
-                        <a href="https://wa.me/254700000000?text={{ urlencode('I am interested in: ' . $toner['name']) }}" class="btn-whatsapp">
+                    <div class="deal-actions d-flex gap-2">
+
+                        <!-- ADD TO CART -->
+                        <form action="{{ route('cart.add') }}"
+                            method="POST"
+                            class="flex-fill m-0 p-0">
+                            @csrf
+
+                            <input type="hidden" name="id" value="toner-{{ $loop->iteration }}">
+                            <input type="hidden" name="name" value="{{ $toner['name'] }}">
+                            <input type="hidden" name="price" value="{{ $toner['new_price'] }}">
+                            <input type="hidden" name="old_price" value="{{ $toner['old_price'] }}">
+                            <input type="hidden" name="image" value="{{ $toner['image'] }}">
+
+                            <button type="submit"
+                                    class="btn-cart w-100 d-flex align-items-center justify-content-center">
+                                Add To Cart
+                            </button>
+                        </form>
+
+                        <!-- WHATSAPP ORDER -->
+                        <a href="https://wa.me/254700000000?text={{ urlencode(
+                            "Hello JM Innovatech 👋 I want to order:\n\n" .
+                            "Product: " . $toner['name'] . "\n" .
+                            "Price: KES " . number_format($toner['new_price']) . "\n\n" .
+                            "Kindly assist me with availability and delivery."
+                        ) }}"
+                        target="_blank"
+                        class="btn-whatsapp flex-fill d-flex align-items-center justify-content-center">
+
                             <i class="fab fa-whatsapp"></i>
                         </a>
+
                     </div>
                 </div>
             </div>

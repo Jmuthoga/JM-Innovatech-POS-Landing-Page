@@ -106,9 +106,19 @@
                             <div class="discount-badge">-{{ $discount }}%</div>
                         @endif
 
-                        <a href="#" class="wishlist-btn" title="Add to Wishlist">
-                            <i class="far fa-heart"></i>
-                        </a>
+                        <form action="{{ route('wishlist.add') }}" method="POST" class="wishlist-btn">
+                            @csrf
+
+                            <input type="hidden" name="id" value="{{ $product['id'] }}">
+                            <input type="hidden" name="name" value="{{ $product['name'] }}">
+                            <input type="hidden" name="price" value="{{ $product['new_price'] }}">
+                            <input type="hidden" name="old_price" value="{{ $product['old_price'] }}">
+                            <input type="hidden" name="image" value="{{ $product['image'] }}">
+
+                            <button type="submit" style="background:none;border:0;">
+                                <i class="far fa-heart"></i>
+                            </button>
+                        </form>
 
                         @if(isset($product['id']))
                             <a href="{{ route('product.show', $product['id']) }}" class="deal-image">
@@ -127,9 +137,40 @@
                                 <span class="new-price">KSh {{ number_format($product['new_price']) }}</span>
                                 <span class="old-price">KSh {{ number_format($product['old_price']) }}</span>
                             </div>
-                            <div class="deal-actions">
-                                <button class="btn-cart">Add to Cart</button>
-                                <a href="#" class="btn-whatsapp"><i class="fab fa-whatsapp"></i></a>
+                            <div class="deal-actions d-flex gap-2">
+
+                                <!-- ADD TO CART -->
+                                <form action="{{ route('cart.add') }}"
+                                    method="POST"
+                                    class="flex-fill m-0 p-0">
+                                    @csrf
+
+                                    <input type="hidden" name="id" value="{{ $product['id'] }}">
+                                    <input type="hidden" name="name" value="{{ $product['name'] }}">
+                                    <input type="hidden" name="price" value="{{ $product['new_price'] }}">
+                                    <input type="hidden" name="old_price" value="{{ $product['old_price'] }}">
+                                    <input type="hidden" name="image" value="{{ $product['image'] }}">
+
+                                    <button type="submit"
+                                            class="btn-cart w-100 d-flex align-items-center justify-content-center">
+                                        Add to Cart
+                                    </button>
+                                </form>
+
+                                <!-- WHATSAPP ORDER -->
+                                <a href="https://wa.me/254700000000?text={{ urlencode(
+                                    "Hello JM Innovatech 👋 I want to order:\n\n" .
+                                    "Product: " . $product['name'] . "\n" .
+                                    "Price: KES " . number_format($product['new_price']) . "\n" .
+                                    "Product ID: " . $product['id'] . "\n\n" .
+                                    "Kindly assist me with availability and delivery."
+                                ) }}"
+                                target="_blank"
+                                class="btn-whatsapp flex-fill d-flex align-items-center justify-content-center">
+
+                                    <i class="fab fa-whatsapp"></i>
+                                </a>
+
                             </div>
                         </div>
                     </div>

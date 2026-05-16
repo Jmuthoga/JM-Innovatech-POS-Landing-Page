@@ -17,6 +17,12 @@
 
 @endphp
 
+@php
+    $miniCart = session()->get('cart', []);
+    $miniCartCount = collect($miniCart)->sum('qty');
+    $miniSubtotal = collect($miniCart)->sum(fn($i) => $i['price'] * $i['qty']);
+@endphp
+
 <!-- FIRST NAVBAR -->
 <nav class="navbar navbar-expand-lg fixed-top py-3">
     <div class="container">
@@ -305,7 +311,7 @@
 
                         <div class="position-relative">
                             <i class="fas fa-shopping-cart"></i>
-                            <span class="cart-count">5</span>
+                            <span class="cart-count">{{ $miniCartCount }}</span>
                         </div>
 
                         <span>Cart</span>
@@ -322,7 +328,7 @@
 
                         <div class="position-relative">
                             <i class="fas fa-heart"></i>
-                            <span class="cart-count">2</span>
+                            <span class="cart-count">{{ $wishlistCount ?? 0 }}</span>
                         </div>
 
                         <span>Wishlist</span>
@@ -343,106 +349,77 @@
                     </a>
                 </div>
 
-<!-- DESKTOP ACCOUNT -->
-<div class="action-item account-item d-none d-lg-block">
+                <!-- DESKTOP ACCOUNT -->
+                <div class="action-item account-item d-none d-lg-block">
 
-    <a href="javascript:void(0)"
-       class="action-link account-btn">
+                    <a href="javascript:void(0)" class="action-link account-btn">
+                        <div class="account-icon-wrapper">
+                            <i class="fas fa-user-circle"></i>
+                            @auth
+                                <span class="online-dot"></span>
+                            @endauth
+                        </div>
+                        <span>Account</span>
+                    </a>
 
-        <div class="account-icon-wrapper">
+                    <!-- ACCOUNT DROPDOWN -->
+                    <div class="account-dropdown">
 
-            <i class="fas fa-user-circle"></i>
+                        @guest
+                            <div class="account-dropdown-header">
+                                <h6>Welcome</h6>
+                                <p>Access your account and orders.</p>
+                            </div>
 
-            @auth
-                <span class="online-dot"></span>
-            @endauth
+                            <a href="{{ route('login') }}" class="account-dropdown-link">
+                                <i class="fas fa-sign-in-alt"></i> Sign In
+                            </a>
 
-        </div>
+                            <a href="{{ route('signup') }}" class="account-dropdown-link">
+                                <i class="fas fa-user-plus"></i> Create Account
+                            </a>
+                        @else
+                            <div class="account-user-box">
+                                <div class="account-avatar">
+                                    {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
+                                </div>
+                                <div>
+                                    <h6>{{ auth()->user()->name }}</h6>
+                                    <small>{{ auth()->user()->email }}</small>
+                                </div>
+                            </div>
 
-        <span>Account</span>
+                            <a href="{{ route('customer.account') }}" class="account-dropdown-link">
+                                <i class="fas fa-user"></i> My Account
+                            </a>
 
-    </a>
+                            <a href="{{ route('customer.account') }}#orders" class="account-dropdown-link">
+                                <i class="fas fa-shopping-bag"></i> Orders
+                            </a>
 
-    <!-- ACCOUNT DROPDOWN -->
-    <div class="account-dropdown">
+                            <a href="#" class="account-dropdown-link">
+                                <i class="fas fa-heart"></i> Wishlist
+                            </a>
 
-        @guest
+                            <!-- Authentic Secure Logout Form Submit Wrapper -->
+                            <form action="{{ route('logout') }}" method="POST" class="d-inline w-100">
+                                @csrf
+                                <button type="submit" class="account-logout-btn w-100 border-0 bg-transparent text-start text-danger">
+                                    <i class="fas fa-sign-out-alt"></i> Logout
+                                </button>
+                            </form>
+                        @endguest
 
-            <div class="account-dropdown-header">
-
-                <h6>Welcome</h6>
-
-                <p>
-                    Access your account and orders.
-                </p>
-
-            </div>
-
-            <a href="" class="account-dropdown-link">
-                <i class="fas fa-sign-in-alt"></i>
-                Sign In
-            </a>
-
-            <a href="" class="account-dropdown-link">
-                <i class="fas fa-user-plus"></i>
-                Create Account
-            </a>
-
-        @else
-
-            <div class="account-user-box">
-
-                <div class="account-avatar">
-                    {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
+                    </div>
                 </div>
 
-                <div>
-                    <h6>{{ auth()->user()->name }}</h6>
-                    <small>{{ auth()->user()->email }}</small>
+                <!-- MOBILE ACCOUNT -->
+                <div class="action-item d-lg-none">
+                    <a href="{{ auth()->check() ? route('customer.account') : route('login') }}" class="action-link">
+                        <i class="fas fa-user-circle"></i>
+                        <span>Account</span>
+                    </a>
                 </div>
-
-            </div>
-
-            <a href="#" class="account-dropdown-link">
-                <i class="fas fa-user"></i>
-                My Account
-            </a>
-
-            <a href="#" class="account-dropdown-link">
-                <i class="fas fa-shopping-bag"></i>
-                Orders
-            </a>
-
-            <a href="#" class="account-dropdown-link">
-                <i class="fas fa-heart"></i>
-                Wishlist
-            </a>
-
-            <button class="account-logout-btn">
-                <i class="fas fa-sign-out-alt"></i>
-                Logout
-            </button>
-
-        @endguest
-
-    </div>
-
-</div>
-
-<!-- MOBILE ACCOUNT -->
-<div class="action-item d-lg-none">
-
-    <a href="javascript:void(0)"
-       class="action-link"
-       data-bs-toggle="offcanvas"
-       data-bs-target="#offcanvasAccount">
-
-        <i class="fas fa-user-circle"></i>
-        <span>Account</span>
-
-    </a>
-
-</div>
 
             </div>
 
@@ -466,7 +443,7 @@
 
         <div>
             <h5 class="fw-bold m-0">
-                My Cart (3)
+                My Cart ({{ $miniCartCount }})
             </h5>
 
             <small class="text-muted">
@@ -498,252 +475,115 @@
 
         </div>
 
-        <!-- ================= ITEM ================= -->
-        <div class="cart-product bg-white d-flex align-items-start gap-3 p-3 mb-3 rounded-4 border shadow-sm">
+        <!-- ================= ITEMS ================= -->
+        @forelse($miniCart as $item)
+            @php
+                $lineTotal = $item['price'] * $item['qty'];
+                $old = $item['old_price'] ?? $item['price'];
+            @endphp
 
-            <!-- IMAGE -->
-            <div class="position-relative">
+            <div class="cart-product bg-white d-flex align-items-start gap-3 p-3 mb-3 rounded-4 border shadow-sm">
 
-                <img src="{{ asset('assets/images/pos.png') }}"
-                     class="rounded-3"
-                     style="width:80px;height:80px;object-fit:cover;"
-                     alt="Product">
+                <!-- IMAGE -->
+                <div class="position-relative">
 
-            </div>
+                    <img src="{{ $item['image'] }}"
+                         class="rounded-3"
+                         style="width:80px;height:80px;object-fit:cover;"
+                         alt="Product">
 
-            <!-- CONTENT -->
-            <div class="flex-grow-1">
+                </div>
 
-                <div class="d-flex justify-content-between align-items-start">
+                <!-- CONTENT -->
+                <div class="flex-grow-1">
 
-                    <div>
+                    <div class="d-flex justify-content-between align-items-start">
 
-                        <small class="text-success fw-semibold d-block mb-1">
-                            In Stock
-                        </small>
+                        <div>
 
-                        <h6 class="mb-1 fw-bold">
-                            Barcode Scanner
-                        </h6>
+                            <small class="text-success fw-semibold d-block mb-1">
+                                In Stock
+                            </small>
 
-                        <small class="text-muted">
-                            Honeywell Voyager
-                        </small>
+                            <h6 class="mb-1 fw-bold">
+                                {{ $item['name'] }}
+                            </h6>
+
+                            <small class="text-muted">
+                                {{ $item['brand'] ?? '' }}
+                            </small>
+
+                        </div>
+
+                        <form method="POST" action="{{ route('cart.remove', $item['id']) }}">
+                            @csrf
+                            @method('DELETE')
+
+                            <button class="btn btn-sm btn-light border rounded-circle">
+                                <i class="fas fa-times text-danger small"></i>
+                            </button>
+                        </form>
 
                     </div>
 
-                    <button class="btn btn-sm btn-light border rounded-circle">
-                        <i class="fas fa-times text-danger small"></i>
-                    </button>
+                    <!-- PRICE -->
+                    <div class="mt-2 d-flex align-items-center gap-2">
 
-                </div>
-
-                <!-- PRICE -->
-                <div class="mt-2 d-flex align-items-center gap-2">
-
-                    <span class="fw-bold"
-                          style="color: var(--jpos-blue);">
-                        KES 4,500
-                    </span>
-
-                    <small class="text-muted text-decoration-line-through">
-                        KES 5,300
-                    </small>
-
-                </div>
-
-                <!-- QTY -->
-                <div class="d-flex justify-content-between align-items-center mt-3">
-
-                    <div class="d-flex align-items-center border rounded-pill overflow-hidden">
-
-                        <button class="btn btn-sm px-3 text-white border-0"
-                                style="background: var(--jpos-blue);">
-                            -
-                        </button>
-
-                        <span class="px-3 fw-bold">
-                            1
+                        <span class="fw-bold" style="color: var(--jpos-blue);">
+                            KES {{ number_format($item['price']) }}
                         </span>
 
-                        <button class="btn btn-sm px-3 text-white border-0"
-                                style="background: var(--jpos-green);">
-                            +
-                        </button>
+                        @if(isset($item['old_price']))
+                            <small class="text-muted text-decoration-line-through">
+                                KES {{ number_format($item['old_price']) }}
+                            </small>
+                        @endif
 
                     </div>
 
-                    <div class="fw-bold">
-                        KES 4,500
-                    </div>
+                    <!-- QTY -->
+                    <div class="d-flex justify-content-between align-items-center mt-3">
 
-                </div>
+                        <div class="d-flex align-items-center border rounded-pill overflow-hidden">
 
-            </div>
+                            <form method="POST" action="{{ route('cart.decrease', $item['id']) }}">
+                                @csrf
+                                <button class="btn btn-sm px-3 text-white border-0"
+                                        style="background: var(--jpos-blue);">
+                                    -
+                                </button>
+                            </form>
 
-        </div>
+                            <span class="px-3 fw-bold">
+                                {{ $item['qty'] }}
+                            </span>
 
-        <!-- ================= ITEM ================= -->
-        <div class="cart-product bg-white d-flex align-items-start gap-3 p-3 mb-3 rounded-4 border shadow-sm">
+                            <form method="POST" action="{{ route('cart.increase', $item['id']) }}">
+                                @csrf
+                                <button class="btn btn-sm px-3 text-white border-0"
+                                        style="background: var(--jpos-green);">
+                                    +
+                                </button>
+                            </form>
 
-            <div class="position-relative">
+                        </div>
 
-                <img src="{{ asset('assets/images/poster.png') }}"
-                     class="rounded-3"
-                     style="width:80px;height:80px;object-fit:cover;"
-                     alt="Product">
+                        <div class="fw-bold">
+                            KES {{ number_format($lineTotal) }}
+                        </div>
 
-            </div>
-
-            <div class="flex-grow-1">
-
-                <div class="d-flex justify-content-between align-items-start">
-
-                    <div>
-
-                        <small class="text-success fw-semibold d-block mb-1">
-                            In Stock
-                        </small>
-
-                        <h6 class="mb-1 fw-bold">
-                            POS Thermal Printer
-                        </h6>
-
-                        <small class="text-muted">
-                            Epson TM-T20III
-                        </small>
-
-                    </div>
-
-                    <button class="btn btn-sm btn-light border rounded-circle">
-                        <i class="fas fa-times text-danger small"></i>
-                    </button>
-
-                </div>
-
-                <div class="mt-2 d-flex align-items-center gap-2">
-
-                    <span class="fw-bold"
-                          style="color: var(--jpos-blue);">
-                        KES 12,000
-                    </span>
-
-                    <small class="text-muted text-decoration-line-through">
-                        KES 15,000
-                    </small>
-
-                </div>
-
-                <div class="d-flex justify-content-between align-items-center mt-3">
-
-                    <div class="d-flex align-items-center border rounded-pill overflow-hidden">
-
-                        <button class="btn btn-sm px-3 text-white border-0"
-                                style="background: var(--jpos-blue);">
-                            -
-                        </button>
-
-                        <span class="px-3 fw-bold">
-                            1
-                        </span>
-
-                        <button class="btn btn-sm px-3 text-white border-0"
-                                style="background: var(--jpos-green);">
-                            +
-                        </button>
-
-                    </div>
-
-                    <div class="fw-bold">
-                        KES 12,000
                     </div>
 
                 </div>
 
             </div>
 
-        </div>
-
-        <!-- ================= ITEM ================= -->
-        <div class="cart-product bg-white d-flex align-items-start gap-3 p-3 mb-4 rounded-4 border shadow-sm">
-
-            <div class="position-relative">
-
-                <img src="{{ asset('assets/images/pos.png') }}"
-                     class="rounded-3"
-                     style="width:80px;height:80px;object-fit:cover;"
-                     alt="Product">
-
+        @empty
+            <div class="text-center py-5 text-muted">
+                <i class="fas fa-shopping-cart fs-3 mb-2"></i>
+                <p>Your cart is empty</p>
             </div>
-
-            <div class="flex-grow-1">
-
-                <div class="d-flex justify-content-between align-items-start">
-
-                    <div>
-
-                        <small class="text-success fw-semibold d-block mb-1">
-                            In Stock
-                        </small>
-
-                        <h6 class="mb-1 fw-bold">
-                            Cash Drawer
-                        </h6>
-
-                        <small class="text-muted">
-                            Heavy Duty POS Drawer
-                        </small>
-
-                    </div>
-
-                    <button class="btn btn-sm btn-light border rounded-circle">
-                        <i class="fas fa-times text-danger small"></i>
-                    </button>
-
-                </div>
-
-                <div class="mt-2 d-flex align-items-center gap-2">
-
-                    <span class="fw-bold"
-                          style="color: var(--jpos-blue);">
-                        KES 8,500
-                    </span>
-
-                    <small class="text-muted text-decoration-line-through">
-                        KES 10,000
-                    </small>
-
-                </div>
-
-                <div class="d-flex justify-content-between align-items-center mt-3">
-
-                    <div class="d-flex align-items-center border rounded-pill overflow-hidden">
-
-                        <button class="btn btn-sm px-3 text-white border-0"
-                                style="background: var(--jpos-blue);">
-                            -
-                        </button>
-
-                        <span class="px-3 fw-bold">
-                            1
-                        </span>
-
-                        <button class="btn btn-sm px-3 text-white border-0"
-                                style="background: var(--jpos-green);">
-                            +
-                        </button>
-
-                    </div>
-
-                    <div class="fw-bold">
-                        KES 8,500
-                    </div>
-
-                </div>
-
-            </div>
-
-        </div>
+        @endforelse
 
         <!-- SUMMARY -->
         <div class="bg-white rounded-4 border shadow-sm p-3">
@@ -755,7 +595,7 @@
                 </span>
 
                 <span class="fw-semibold">
-                    KES 25,000
+                    KES {{ number_format($miniSubtotal) }}
                 </span>
 
             </div>
@@ -771,7 +611,7 @@
                 <span class="fw-bold fs-5"
                       style="color: var(--jpos-blue);">
 
-                    KES 25,000
+                    KES {{ number_format($miniSubtotal) }}
 
                 </span>
 
@@ -786,15 +626,20 @@
 
         <div class="d-grid gap-2">
 
-            <!-- CHECKOUT -->
-            <a href="{{ route('cart.index') }}"
+        <!-- VIEW FULL CART -->
+        <a href="{{ auth()->check() ? route('cart.index') : route('login') }}"
             class="btn text-white fw-bold rounded-pill py-3"
             style="background: linear-gradient(135deg, var(--jpos-blue), var(--jpos-green));">
 
+            @auth
                 View Full Cart
-                <i class="fas fa-arrow-right ms-2"></i>
+            @else
+                Login to View Cart
+            @endauth
 
-            </a>
+            <i class="fas fa-arrow-right ms-2"></i>
+
+        </a>
 
         </div>
 
@@ -812,7 +657,7 @@
 
         <div>
             <h5 class="fw-bold m-0">
-                My Wishlist (3)
+                My Wishlist ({{ $wishlistCount ?? 0 }})
             </h5>
 
             <small class="text-muted">
@@ -845,284 +690,152 @@
 
         </div>
 
-        <!-- ================= ITEM ================= -->
-        <div class="wishlist-product bg-white d-flex align-items-start gap-3 p-3 mb-3 rounded-4 border shadow-sm">
+        <!-- ================= ITEMS ================= -->
+        @forelse($wishlist as $item)
 
-            <!-- IMAGE -->
-            <div class="position-relative">
+            @php
+                $lineTotal = $item['price'] * ($item['qty'] ?? 1);
+            @endphp
 
-                <img src="{{ asset('assets/images/pos.png') }}"
-                     class="rounded-3"
-                     style="width:80px;height:80px;object-fit:cover;"
-                     alt="Product">
+            <div class="wishlist-product bg-white d-flex align-items-start gap-3 p-3 mb-3 rounded-4 border shadow-sm">
 
-            </div>
+                <!-- IMAGE -->
+                <div class="position-relative">
 
-            <!-- CONTENT -->
-            <div class="flex-grow-1">
+                    <img src="{{ $item['image'] }}"
+                         class="rounded-3"
+                         style="width:80px;height:80px;object-fit:cover;"
+                         alt="Product">
 
-                <!-- TOP -->
-                <div class="d-flex justify-content-between align-items-start">
+                </div>
 
-                    <div>
+                <!-- CONTENT -->
+                <div class="flex-grow-1">
 
-                        <small class="text-success fw-semibold d-block mb-1">
-                            In Stock
-                        </small>
+                    <div class="d-flex justify-content-between align-items-start">
 
-                        <h6 class="mb-1 fw-bold">
-                            Receipt Printer
-                        </h6>
+                        <div>
 
-                        <small class="text-muted">
-                            Epson Thermal Printer
-                        </small>
+                            <small class="text-success fw-semibold d-block mb-1">
+                                In Stock
+                            </small>
+
+                            <h6 class="mb-1 fw-bold">
+                                {{ $item['name'] }}
+                            </h6>
+
+                            <small class="text-muted">
+                                {{ $item['brand'] ?? '' }}
+                            </small>
+
+                        </div>
+
+                        <!-- REMOVE FROM WISHLIST -->
+                        <form method="POST" action="{{ route('wishlist.remove', $item['id']) }}">
+                            @csrf
+                            @method('DELETE')
+
+                            <button class="btn btn-sm btn-light border rounded-circle flex-shrink-0">
+                                <i class="fas fa-times text-danger small"></i>
+                            </button>
+                        </form>
 
                     </div>
 
-                    <button class="btn btn-sm btn-light border rounded-circle flex-shrink-0">
-                        <i class="fas fa-times text-danger small"></i>
-                    </button>
+                    <!-- PRICE -->
+                    <div class="mt-2 d-flex align-items-center gap-2">
 
-                </div>
+                        <span class="fw-bold" style="color: var(--jpos-blue);">
+                            KES {{ number_format($item['price']) }}
+                        </span>
 
-                <!-- PRICE -->
-                <div class="mt-2 d-flex align-items-center gap-2">
-
-                    <span class="fw-bold"
-                          style="color: var(--jpos-blue);">
-
-                        KES 8,000
-
-                    </span>
-
-                    <small class="text-muted text-decoration-line-through">
-                        KES 10,500
-                    </small>
-
-                </div>
-
-                <!-- ACTIONS -->
-                <div class="d-flex justify-content-between align-items-center mt-3 gap-2">
-
-                    <a href="#"
-                       class="small fw-semibold text-decoration-none text-nowrap"
-                       style="color: var(--jpos-blue);">
-
-                        View Details
-
-                    </a>
-
-                    <a href="#"
-                    class="btn btn-sm text-white rounded-pill px-3 text-nowrap d-inline-flex align-items-center"
-                    style="background: linear-gradient(135deg, var(--jpos-blue), var(--jpos-green));">
-
-                        <i class="fas fa-shopping-cart me-1"></i>
-                        Add to Cart
-
-                    </a>
-
-                </div>
-
-            </div>
-
-        </div>
-
-        <!-- ================= ITEM ================= -->
-        <div class="wishlist-product bg-white d-flex align-items-start gap-3 p-3 mb-3 rounded-4 border shadow-sm">
-
-            <div class="position-relative">
-
-                <img src="{{ asset('assets/images/poster.png') }}"
-                     class="rounded-3"
-                     style="width:80px;height:80px;object-fit:cover;"
-                     alt="Product">
-
-            </div>
-
-            <div class="flex-grow-1">
-
-                <div class="d-flex justify-content-between align-items-start">
-
-                    <div>
-
-                        <small class="text-success fw-semibold d-block mb-1">
-                            In Stock
-                        </small>
-
-                        <h6 class="mb-1 fw-bold">
-                            Barcode Scanner
-                        </h6>
-
-                        <small class="text-muted">
-                            Honeywell Voyager
-                        </small>
+                        @if(isset($item['old_price']))
+                            <small class="text-muted text-decoration-line-through">
+                                KES {{ number_format($item['old_price']) }}
+                            </small>
+                        @endif
 
                     </div>
 
-                    <button class="btn btn-sm btn-light border rounded-circle flex-shrink-0">
-                        <i class="fas fa-times text-danger small"></i>
-                    </button>
+                    <!-- ACTIONS -->
+                    <div class="d-flex justify-content-between align-items-center mt-3 gap-2">
 
-                </div>
+                        <!-- VIEW -->
+                        <a href="{{ route('product.show', $item['id']) }}"
+                           class="small fw-semibold text-decoration-none text-nowrap"
+                           style="color: var(--jpos-blue);">
 
-                <div class="mt-2 d-flex align-items-center gap-2">
+                            View Details
 
-                    <span class="fw-bold"
-                          style="color: var(--jpos-blue);">
+                        </a>
 
-                        KES 4,500
+                        <!-- MOVE TO CART -->
+                    <form method="POST" action="{{ route('wishlist.move.single', $item['id']) }}" class="m-0">
+                        @csrf
 
-                    </span>
+                        <button class="btn btn-sm text-white rounded-pill px-3 text-nowrap d-inline-flex align-items-center"
+                                style="background: linear-gradient(135deg, var(--jpos-blue), var(--jpos-green));">
 
-                    <small class="text-muted text-decoration-line-through">
-                        KES 5,500
-                    </small>
+                            <i class="fas fa-shopping-cart me-1"></i>
+                            Add to Cart
 
-                </div>
-
-                <div class="d-flex justify-content-between align-items-center mt-3 gap-2">
-
-                    <a href="#"
-                       class="small fw-semibold text-decoration-none text-nowrap"
-                       style="color: var(--jpos-blue);">
-
-                        View Details
-
-                    </a>
-
-                    <a href="#"
-                    class="btn btn-sm text-white rounded-pill px-3 text-nowrap d-inline-flex align-items-center"
-                    style="background: linear-gradient(135deg, var(--jpos-blue), var(--jpos-green));">
-
-                        <i class="fas fa-shopping-cart me-1"></i>
-                        Add to Cart
-
-                    </a>
-
-                </div>
-
-            </div>
-
-        </div>
-
-        <!-- ================= ITEM ================= -->
-        <div class="wishlist-product bg-white d-flex align-items-start gap-3 p-3 mb-4 rounded-4 border shadow-sm">
-
-            <div class="position-relative">
-
-                <img src="{{ asset('assets/images/pos.png') }}"
-                     class="rounded-3"
-                     style="width:80px;height:80px;object-fit:cover;"
-                     alt="Product">
-
-            </div>
-
-            <div class="flex-grow-1">
-
-                <div class="d-flex justify-content-between align-items-start">
-
-                    <div>
-
-                        <small class="text-warning fw-semibold d-block mb-1">
-                            Limited Stock
-                        </small>
-
-                        <h6 class="mb-1 fw-bold">
-                            POS Cash Drawer
-                        </h6>
-
-                        <small class="text-muted">
-                            Heavy Duty Drawer
-                        </small>
+                        </button>
+                    </form>
 
                     </div>
 
-                    <button class="btn btn-sm btn-light border rounded-circle flex-shrink-0">
-                        <i class="fas fa-times text-danger small"></i>
-                    </button>
-
-                </div>
-
-                <div class="mt-2 d-flex align-items-center gap-2">
-
-                    <span class="fw-bold"
-                          style="color: var(--jpos-blue);">
-
-                        KES 12,000
-
-                    </span>
-
-                    <small class="text-muted text-decoration-line-through">
-                        KES 14,000
-                    </small>
-
-                </div>
-
-                <div class="d-flex justify-content-between align-items-center mt-3 gap-2">
-
-                    <a href="#"
-                       class="small fw-semibold text-decoration-none text-nowrap"
-                       style="color: var(--jpos-blue);">
-
-                        View Details
-
-                    </a>
-
-                    <a href="#"
-                    class="btn btn-sm text-white rounded-pill px-3 text-nowrap d-inline-flex align-items-center"
-                    style="background: linear-gradient(135deg, var(--jpos-blue), var(--jpos-green));">
-
-                        <i class="fas fa-shopping-cart me-1"></i>
-                        Add to Cart
-
-                    </a>
-
                 </div>
 
             </div>
 
-        </div>
+        @empty
 
-        <!-- EMPTY STATE -->
-        <!--
-        <div class="text-center py-5">
+            <div class="text-center py-5">
 
-            <div class="mb-3">
-                <i class="fas fa-heart text-muted fs-1"></i>
+                <div class="mb-3">
+                    <i class="fas fa-heart text-muted fs-1"></i>
+                </div>
+
+                <h6 class="fw-bold">
+                    Your wishlist is empty
+                </h6>
+
+                <p class="text-muted small mb-0">
+                    Save products you love for later.
+                </p>
+
             </div>
 
-            <h6 class="fw-bold">
-                Your wishlist is empty
-            </h6>
-
-            <p class="text-muted small mb-0">
-                Save products you love for later.
-            </p>
-
-        </div>
-        -->
+        @endforelse
 
     </div>
 
     <!-- FOOTER -->
     <div class="offcanvas-footer p-3 border-top bg-white">
 
-        <div class="d-grid gap-2">
+        <div class="d-flex gap-2">
 
-            <a href="#"
-            class="btn text-white fw-bold rounded-pill py-3 d-flex justify-content-center align-items-center"
-            style="background: linear-gradient(135deg, var(--jpos-blue), var(--jpos-green));">
+            <!-- MOVE ALL TO CART -->
+            <form method="POST"
+                action="{{ route('wishlist.move.all') }}"
+                class="flex-fill m-0">
 
-                <i class="fas fa-shopping-cart me-2"></i>
-                Move All To Cart
+                @csrf
 
-            </a>
+                <button class="btn btn-sm text-white fw-semibold rounded-pill w-100 d-flex justify-content-center align-items-center py-2"
+                        style="background: linear-gradient(135deg, var(--jpos-blue), var(--jpos-green));">
+
+                    <i class="fas fa-shopping-cart me-1"></i>
+                    Move All To Cart
+
+                </button>
+
+            </form>
 
             <!-- CONTINUE SHOPPING -->
-            <a href="#"
-               class="btn fw-semibold rounded-pill py-2 border"
-               style="border-color: var(--jpos-blue); color: var(--jpos-blue);">
+            <a href="{{ route('shop') }}"
+            class="btn btn-sm fw-semibold rounded-pill flex-fill d-flex justify-content-center align-items-center py-2 border"
+            style="border-color: var(--jpos-blue); color: var(--jpos-blue);">
 
                 Continue Shopping
 
