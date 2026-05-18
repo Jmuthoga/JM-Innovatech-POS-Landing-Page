@@ -22,11 +22,6 @@ return new class extends Migration
             $table->string('town')->nullable();
             $table->string('county')->nullable();
 
-            // Billing
-            $table->text('billing_address')->nullable();
-            $table->string('billing_town')->nullable();
-            $table->string('billing_county')->nullable();
-
             // Shipping
             $table->string('shipping_name')->nullable();
             $table->string('shipping_phone')->nullable();
@@ -48,9 +43,6 @@ return new class extends Migration
                 'address',
                 'town',
                 'county',
-                'billing_address',
-                'billing_town',
-                'billing_county',
                 'shipping_name',
                 'shipping_phone',
                 'shipping_email',

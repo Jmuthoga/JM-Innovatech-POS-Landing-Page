@@ -148,3 +148,47 @@
     .custom-pagination { display: flex; justify-content: center; gap: 5px; margin-top: 40px; flex-wrap: wrap; }
     .custom-pagination a, .custom-pagination span { padding: 8px 14px; border-radius: 8px; border: 1px solid var(--border-color); text-decoration: none; color: var(--brand-navy); background: white; font-weight: 600; font-size: 0.9rem; }
     .custom-pagination .active { background: var(--brand-blue); color: white; }
+
+    /* Slider Play-Then-Slide Choreography Logic */
+    @keyframes cycleSlideOne {
+        0%, 45% { transform: translateX(0%); opacity: 1; }
+        50%, 95% { transform: translateX(-100%); opacity: 0; }
+        100% { transform: translateX(0%); opacity: 1; }
+    }
+
+    @keyframes cycleSlideTwo {
+        0%, 45% { transform: translateX(100%); opacity: 0; }
+        50%, 95% { transform: translateX(0%); opacity: 1; }
+        100% { transform: translateX(100%); opacity: 0; }
+    }
+
+    /* Timeline Progression Overlay Ribbon Indicator */
+    @keyframes sliderProgress {
+        0% { width: 0%; }
+        92% { width: 100%; }
+        100% { width: 100%; }
+    }
+
+    /* Slide 1 - Video Digital Scan Effect */
+    @keyframes videoScanner {
+        0% { top: -100%; }
+        50%, 100% { top: 100%; }
+    }
+
+    /* Slide 2 - Video Atmospheric Aura Wave */
+    @keyframes auraFloat {
+        0% { transform: translate(0, 0) scale(1); }
+        100% { transform: translate(-10%, -10%) scale(1.2); }
+    }
+
+    /* Live Active Target Glow */
+    @keyframes livePulse {
+        0% { opacity: 0.3; transform: scale(0.9); }
+        100% { opacity: 1; transform: scale(1.1); }
+    }
+
+    /* Global Slider Button Micro-interactions */
+    .banner-cta-btn:hover {
+        transform: translateY(-2px);
+        filter: brightness(1.15);
+    }

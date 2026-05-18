@@ -302,7 +302,8 @@
                     <div class="mb-3 p-3 rounded" style="background-color: var(--checkout-bg-light); border: 1px solid var(--checkout-border);">
                         <span class="d-block text-uppercase fw-bold text-muted mb-1" style="font-size: 0.65rem; letter-spacing: 0.5px;">Shipping Destination</span>
                         <div class="fw-bold text-dark mb-1" style="font-size: 0.9rem;">
-                            {{ $orderSummaryData['shipping_information']['shipping_name'] ?? 'Guest Customer' }}
+                            {{ $orderSummaryData['shipping_information']['shipping_name'] ?? 'Guest Customer' }} </br>
+                            {{ $orderSummaryData['shipping_information']['shipping_phone'] ?? '' }}
                         </div>
                         <div class="text-muted small lh-sm" style="font-size: 0.85rem;">
                         {{ $orderSummaryData['shipping_information']['shipping_address'] ?? '' }},

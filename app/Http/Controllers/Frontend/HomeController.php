@@ -29,7 +29,7 @@ class HomeController extends Controller
             'wishlist' => $wishlist,
             'wishlistCount' => count($wishlist),
 
-            'categoriesList' => $categoriesList, // ✅ FIX HERE
+            'categoriesList' => $categoriesList, 
         ]);
     }
 
@@ -92,14 +92,14 @@ class HomeController extends Controller
         }
 
         $allProducts = Product::with(['category', 'brand'])->get()->map(fn($p) => $this->transformProduct($p))->toArray();
-        
+
         $currentGrid = $request->get('grid', 4);
         $perPage = ($currentGrid == 3) ? 21 : 20;
-        
+
         // Native DB Pagination substitution
         $paginator = $query->paginate($perPage)->appends($request->all());
         $products = collect($paginator->items())->map(fn($p) => $this->transformProduct($p))->toArray();
-        
+
         $totalPages = $paginator->lastPage();
         $currentPage = $paginator->currentPage();
 
@@ -117,6 +117,8 @@ class HomeController extends Controller
             'currentGrid'      => $currentGrid,
             'currentPage'      => $currentPage,
             'totalPages'       => $totalPages,
+            'totalProducts'    => $paginator->total(), // Extracted directly from your existing $paginator
+            'perPage'          => $perPage,            // Passed to calculate layout splits dynamically
             'maxPriceFilter'   => $request->get('max_price', 100000),
             'selectedBrands'   => $request->get('brands', []),
             'selectedCategory' => $request->get('category'),
@@ -374,6 +376,8 @@ class HomeController extends Controller
 
     public function applyPromo(Request $request)
     {
+        $user = auth()->user(); // ADD THIS LINE
+
         $totals = $this->calculateCartTotals($request->input('promo_code', ''));
 
         $request->flash();
@@ -440,50 +444,103 @@ class HomeController extends Controller
         ]);
 
         $orderSummaryData = session('pending_order');
-        if (!$orderSummaryData) return redirect()->route('shop')->with('error', 'Your session expired.');
 
-        // Database transactional insertion write logic
-        DB::transaction(function () use ($request, $orderSummaryData) {
-            $shippingInfo = $orderSummaryData['shipping_information'];
+        if (!$orderSummaryData) {
+            return redirect()->route('shop')
+                ->with('error', 'Your session expired.');
+        }
+
+        $user = auth()->user();
+
+        DB::transaction(function () use ($request, $orderSummaryData, $user) {
+
+            $shipping = $orderSummaryData['shipping_information'] ?? [];
             $isCod = $request->payment_method === 'cod';
 
+            /**
+             * =====================================================
+             *  STRONG FALLBACK SYSTEM (NO NULLS ALLOWED)
+             * =====================================================
+             */
+            $firstName = $user->first_name ?? 'Customer';
+            $lastName  = $user->last_name ?? '';
+            $email     = $user->email ?? 'N/A';
+            $phone     = $user->phone ?? 'N/A';
+
+            $address   = $shipping['shipping_address'] ?? $user->shipping_address ?? 'N/A';
+            $county    = $shipping['shipping_county'] ?? $user->shipping_county ?? 'N/A';
+            $town      = $shipping['shipping_town'] ?? $user->shipping_town ?? 'N/A';
+
             $order = Order::create([
-                'user_id' => auth()->id(),
+
+                'user_id' => $user->id,
+
                 'order_number' => 'ORD-' . rand(100000, 999999),
                 'invoice_number' => 'INV-' . rand(10000, 99999),
+
                 'status' => $isCod ? 'Pending Delivery Payment' : 'Paid',
                 'payment_method' => $request->payment_method,
                 'payment_status' => $isCod ? 'pending' : 'paid',
                 'delivery_status' => 'processing',
+
                 'subtotal' => $orderSummaryData['subtotal'],
                 'shipping_fee' => $orderSummaryData['shipping_fee'],
                 'discount_applied' => $orderSummaryData['discount_applied'],
                 'total_order_amount' => $orderSummaryData['net_total'],
-                'shipping_paid' => $isCod ? $orderSummaryData['shipping_fee'] : $orderSummaryData['net_total'],
-                'amount_due_on_delivery' => $isCod ? ($orderSummaryData['net_total'] - $orderSummaryData['shipping_fee']) : 0,
-                'first_name' => $shippingInfo['first_name'] ?? '',
-                'last_name' => $shippingInfo['last_name'] ?? '',
-                'email' => $shippingInfo['email'] ?? '',
-                'phone' => $shippingInfo['phone'] ?? '',
-                'address' => $shippingInfo['address'] ?? '',
-                'county' => $shippingInfo['county'] ?? '',
-                'town' => $shippingInfo['town'] ?? '',
-                'customer_note' => $shippingInfo['notes'] ?? null,
-                'promo_used' => $orderSummaryData['promo_used']
+
+                'shipping_paid' => $isCod
+                    ? $orderSummaryData['shipping_fee']
+                    : $orderSummaryData['net_total'],
+
+                'amount_due_on_delivery' => $isCod
+                    ? ($orderSummaryData['net_total'] - $orderSummaryData['shipping_fee'])
+                    : 0,
+
+                /**
+                 * =====================================================
+                 *  PERSONAL DETAILS (NEVER NULL)
+                 * =====================================================
+                 */
+                'first_name' => $firstName,
+                'last_name'  => $lastName,
+                'email'      => $email,
+                'phone'      => $phone,
+
+                /**
+                 * =====================================================
+                 *  SHIPPING DETAILS (NEVER NULL)
+                 * =====================================================
+                 */
+                'shipping_name' => $shipping['shipping_name'] ?? $firstName . ' ' . $lastName,
+                'shipping_phone' => $shipping['shipping_phone'] ?? $phone,
+                'shipping_email' => $shipping['shipping_email'] ?? $email,
+                'shipping_address' => $address,
+                'shipping_county' => $county,
+                'shipping_town' => $town,
+
+                'promo_used' => $orderSummaryData['promo_used'] ?? null,
             ]);
 
+            /**
+             * =========================
+             * ORDER ITEMS
+             * =========================
+             */
             foreach ($orderSummaryData['cart_items'] as $item) {
                 $order->items()->create([
                     'product_id' => $item['id'],
-                    'name' => $item['name'],
-                    'price' => $item['price'],
-                    'qty' => $item['qty'],
-                    'image' => $item['image']
+                    'name'       => $item['name'],
+                    'price'      => $item['price'],
+                    'qty'        => $item['qty'],
+                    'image'      => $item['image'],
                 ]);
             }
         });
 
         session()->forget(['cart', 'pending_order']);
-        return redirect()->route('customer.account')->with('success', 'Order recorded into database successfully.');
+
+        return redirect()
+            ->route('customer.account')
+            ->with('success', 'Order recorded into database successfully.');
     }
 }

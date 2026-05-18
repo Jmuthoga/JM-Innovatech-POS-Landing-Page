@@ -101,10 +101,6 @@ class CustomerController extends Controller
                 'town'             => 'required|string',
                 'county'           => 'required|string',
 
-                'billing_address'  => 'required|string',
-                'billing_town'     => 'required|string',
-                'billing_county'   => 'required|string',
-
                 'shipping_name'    => 'required|string',
                 'shipping_phone'   => 'required|string',
                 'shipping_email'   => 'required|email',
@@ -184,8 +180,35 @@ class CustomerController extends Controller
      */
     public function account()
     {
-        $customer = Auth::user();
-        $orders = []; // Ready for when you build an orders table/relationship
+        $user = Auth::user();
+
+        // REAL orders from database
+        $orders = $user->orders()->with('items')->latest()->get();
+
+        // Latest order snapshot (for dashboard shipping display)
+        $latestOrder = $user->orders()->latest()->first();
+
+        $customer = [
+            'id' => $user->id,
+            'name' => $user->first_name . ' ' . $user->last_name,
+            'first_name' => $user->first_name,
+            'last_name' => $user->last_name,
+            'email' => $user->email,
+            'phone' => $user->phone,
+
+            // fallback profile info
+            'address' => $user->address,
+            'town' => $user->town,
+            'county' => $user->county,
+
+            // IMPORTANT: shipping comes from latest order (NOT user table)
+            'shipping_name' => $latestOrder->shipping_name ?? null,
+            'shipping_phone' => $latestOrder->shipping_phone ?? null,
+            'shipping_email' => $latestOrder->shipping_email ?? null,
+            'shipping_address' => $latestOrder->shipping_address ?? null,
+            'shipping_town' => $latestOrder->shipping_town ?? null,
+            'shipping_county' => $latestOrder->shipping_county ?? null,
+        ];
 
         return view('frontend.pages.customer', compact('customer', 'orders'));
     }
@@ -195,18 +218,31 @@ class CustomerController extends Controller
      */
     public function updateProfile(Request $request)
     {
-        /** @var \App\Models\User $user */
         $user = Auth::user();
 
         $validated = $request->validate([
-            'name'  => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email,' . $user->id,
-            'phone' => 'required|string',
+            'first_name' => 'required|string|max:255',
+            'last_name'  => 'required|string|max:255',
+            'email'      => 'required|email|unique:users,email,' . $user->id,
+            'phone'      => 'required|string|max:20',
+
+            'shipping_name'    => 'nullable|string|max:255',
+            'shipping_phone'   => 'nullable|string|max:20',
+            'shipping_email'   => 'nullable|email|max:255',
+            'shipping_address' => 'nullable|string|max:255',
+            'shipping_town'    => 'nullable|string|max:255',
+            'shipping_county'  => 'nullable|string|max:255',
         ]);
 
-        $user->update($validated);
+        $user->fill($validated);
+        $user->save();
 
-        return back()->with('success', 'Profile identity info updated successfully.');
+        // force fresh data from DB
+        $user->refresh();
+
+        return back()
+            ->with('success', 'Profile and shipping information updated successfully.')
+            ->with('customer', $user);
     }
 
     /**

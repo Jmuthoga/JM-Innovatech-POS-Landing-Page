@@ -73,7 +73,7 @@
 
                                 @php
                                     $counties = [
-                                        'baringo' => 'Baringo',
+                                        'aringo' => 'Baringo',
                                         'bomet' => 'Bomet',
                                         'bungoma' => 'Bungoma',
                                         'busia' => 'Busia',

@@ -362,7 +362,7 @@
                         @else
                             <div class="account-user-box">
                                 <div class="account-avatar">
-                                    {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
+                                    {{ strtoupper(substr(auth()->user()->first_name, 0, 1) . substr(auth()->user()->last_name, 0, 1)) }}
                                 </div>
                                 <div>
                                     <h6>Hello, {{ auth()->user()->first_name }}</h6>
@@ -378,14 +378,15 @@
                                 <i class="fas fa-shopping-bag"></i> Orders
                             </a>
 
-                            <a href="#" class="account-dropdown-link">
-                                <i class="fas fa-heart"></i> Wishlist
+                            <a href="{{ route('cart.index') }}" class="account-dropdown-link">
+                                <i class="fas fa-check-circle"></i>
+                                Complete Order
                             </a>
 
                             <!-- Authentic Secure Logout Form Submit Wrapper -->
                             <form action="{{ route('logout') }}" method="POST" class="d-inline w-100">
                                 @csrf
-                                <button type="submit" class="account-logout-btn w-100 border-0 bg-transparent text-start text-danger">
+                                <button type="submit" class="account-logout-btn w-100 border-0 bg-transparent text-danger d-flex align-items-center justify-content-center gap-2">
                                     <i class="fas fa-sign-out-alt"></i> Logout
                                 </button>
                             </form>
@@ -1056,30 +1057,30 @@
 
             <div class="mobile-user-box">
 
-                <div class="mobile-user-avatar">
-                    {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
-                </div>
+            <div class="mobile-user-avatar">
+                {{ strtoupper(substr(auth()->user()->first_name, 0, 1) . substr(auth()->user()->last_name, 0, 1)) }}
+            </div>
 
                 <div>
-                    <h6>{{ auth()->user()->name }}</h6>
+                    <h6>Hello, {{ auth()->user()->first_name }}</h6>
                     <p>{{ auth()->user()->email }}</p>
                 </div>
 
             </div>
 
-            <a href="#" class="mobile-account-link">
+            <a href="{{ route('customer.account') }}" class="mobile-account-link">
                 <i class="fas fa-user"></i>
                 My Profile
             </a>
 
-            <a href="#" class="mobile-account-link">
+            <a href="{{ route('customer.account') }}#orders" class="mobile-account-link">
                 <i class="fas fa-shopping-bag"></i>
                 My Orders
             </a>
 
-            <a href="#" class="mobile-account-link">
-                <i class="fas fa-heart"></i>
-                Wishlist
+            <a href="{{ route('cart.index') }}" class="mobile-account-link">
+                <i class="fas fa-check-circle"></i>
+                Complete Order
             </a>
 
             <form method="POST" action="{{ route('logout') }}">

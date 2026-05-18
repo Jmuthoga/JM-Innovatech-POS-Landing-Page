@@ -190,7 +190,7 @@
                 <div class="bg-white border rounded-3 p-3 shadow-sm sticky-sidebar" style="border-color: var(--border-color);">
                     <div class="d-flex align-items-center gap-3 pb-3 mb-3" style="border-bottom: 1px solid var(--border-color);">
                         <div class="flex-shrink-0 d-flex align-items-center justify-content-center bg-brand-blue rounded-2 fw-bold text-white fs-5 shadow-sm" style="width: 44px; height: 44px;">
-                            {{ strtoupper(substr($customer['name'], 0, 2)) }}
+                            {{ strtoupper(substr(auth()->user()->first_name, 0, 1) . substr(auth()->user()->last_name, 0, 1)) }}
                         </div>
                         <div class="overflow-hidden">
                             <h6 class="fw-bold text-dark mb-0 text-truncate" style="font-size: 0.95rem;">{{ $customer['first_name'] }} {{ $customer['last_name'] }}</h6>
@@ -253,7 +253,7 @@
                                         @endforeach
                                     </select>
                                     <button class="btn bg-brand-blue text-white btn-audit-engine px-4 py-2 fw-semibold small d-flex align-items-center gap-2" onclick="processTrackingAudit()" type="button">
-                                        <i class="fa-solid fa-chart-network small opacity-75"></i> Audit Pipeline
+                                        <i class="fa-solid fa-chart-network small opacity-75"></i> Track Order
                                     </button>
                                 </div>
                             </div>
@@ -292,7 +292,7 @@
                         <div class="col-12 col-sm-4">
                             <div class="account-card p-4 d-flex align-items-center justify-content-between h-100">
                                 <div>
-                                    <p class="small fw-bold text-uppercase tracking-wider mb-1" style="color: var(--text-muted); font-size: 0.75rem;">Total Bookings</p>
+                                    <p class="small fw-bold text-uppercase tracking-wider mb-1" style="color: var(--text-muted); font-size: 0.75rem;">Total Orders</p>
                                     <h3 class="fw-bold m-0 text-dark">{{ count($orders) }}</h3>
                                 </div>
                                 <div class="rounded-2 d-flex align-items-center justify-content-center fs-5" style="width: 44px; height: 44px; background-color: rgba(11, 79, 163, 0.05); color: var(--brand-blue);"><i class="fa-solid fa-file-invoice-dollar"></i></div>
@@ -360,7 +360,7 @@
                                     </div>
                                 @else
                                     <div class="d-flex flex-column gap-2.5">
-                                        @foreach(array_slice(array_reverse($orders), 0, 3) as $order)
+                                        @foreach($orders->sortByDesc('created_at')->take(3) as $order)
                                             <div class="d-flex align-items-center justify-content-between small pb-2 border-bottom border-light">
                                                 <div>
                                                     <p class="fw-bold text-dark mb-0">{{ $order['order_number'] }}</p>
@@ -400,7 +400,7 @@
                             </a>
                         </div>
                     @else
-                        @foreach(array_reverse($orders) as $index => $order)
+                        @foreach($orders->sortByDesc('created_at') as $index => $order)
                             <div class="account-card overflow-hidden">
                                 <!-- Box Header Meta Details Container -->
                                 <div class="bg-light border-bottom px-4 py-3 d-flex flex-wrap align-items-center justify-content-between gap-3" style="border-color: var(--border-color);">
@@ -539,12 +539,12 @@
                             <div class="row g-3">
                                 <div class="col-12 col-sm-6">
                                     <label class="d-block small fw-bold text-uppercase tracking-wider mb-1.5 text-muted" style="font-size: 0.75rem;">Customer First Name</label>
-                                    <input type="text" name="name" class="form-control form-control-muted bg-light border rounded-2 small" value="{{ $customer['first_name'] }}" disabled required>
+                                    <input type="text" name="first_name" class="form-control form-control-muted bg-light border rounded-2 small" value="{{ $customer['first_name'] }}" disabled required>
                                 </div>
 
                                 <div class="col-12 col-sm-6">
                                     <label class="d-block small fw-bold text-uppercase tracking-wider mb-1.5 text-muted" style="font-size: 0.75rem;">Customer Last Name</label>
-                                    <input type="text" name="name" class="form-control form-control-muted bg-light border rounded-2 small" value="{{ $customer['last_name'] }}" disabled required>
+                                    <input type="text" name="last_name" class="form-control form-control-muted bg-light border rounded-2 small" value="{{ $customer['last_name'] }}" disabled required>
                                 </div>
 
                                 <div class="col-12 col-sm-6">
@@ -587,7 +587,7 @@
                                                     Shipping Name
                                                 </label>
 
-                                                <input type="text"
+                                                <input type="text" name="shipping_name"
                                                     class="form-control bg-light"
                                                     value="{{ $customer['shipping_name'] }}"
                                                     disabled>
@@ -598,9 +598,20 @@
                                                     Shipping Phone
                                                 </label>
 
-                                                <input type="text"
+                                                <input type="text" name="shipping_phone"
                                                     class="form-control bg-light"
                                                     value="{{ $customer['shipping_phone'] }}"
+                                                    disabled>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <label class="small text-muted fw-bold mb-1">
+                                                    Shipping Email
+                                                </label>
+
+                                                <input type="email" name="shipping_email"
+                                                    class="form-control bg-light"
+                                                    value="{{ $customer['shipping_email'] }}"
                                                     disabled>
                                             </div>
 
@@ -609,7 +620,7 @@
                                                     Shipping Address
                                                 </label>
 
-                                                <input type="text"
+                                                <input type="text" name="shipping_address"
                                                     class="form-control bg-light"
                                                     value="{{ $customer['shipping_address'] }}"
                                                     disabled>
@@ -620,7 +631,7 @@
                                                     Shipping Town
                                                 </label>
 
-                                                <input type="text"
+                                                <input type="text" name="shipping_town"
                                                     class="form-control bg-light"
                                                     value="{{ $customer['shipping_town'] }}"
                                                     disabled>
@@ -631,10 +642,70 @@
                                                     Shipping County
                                                 </label>
 
-                                                <input type="text"
+                                                @php
+                                                    $counties = [
+                                                        'baringo' => 'Baringo',
+                                                        'bomet' => 'Bomet',
+                                                        'bungoma' => 'Bungoma',
+                                                        'busia' => 'Busia',
+                                                        'elgeyo-marakwet' => 'Elgeyo Marakwet',
+                                                        'embu' => 'Embu',
+                                                        'garissa' => 'Garissa',
+                                                        'homa-bay' => 'Homa Bay',
+                                                        'isiolo' => 'Isiolo',
+                                                        'kajiado' => 'Kajiado',
+                                                        'kakamega' => 'Kakamega',
+                                                        'kericho' => 'Kericho',
+                                                        'kiambu' => 'Kiambu',
+                                                        'kilifi' => 'Kilifi',
+                                                        'kirinyaga' => 'Kirinyaga',
+                                                        'kisii' => 'Kisii',
+                                                        'kisumu' => 'Kisumu',
+                                                        'kitui' => 'Kitui',
+                                                        'kwale' => 'Kwale',
+                                                        'laikipia' => 'Laikipia',
+                                                        'lamu' => 'Lamu',
+                                                        'machakos' => 'Machakos',
+                                                        'makueni' => 'Makueni',
+                                                        'mandera' => 'Mandera',
+                                                        'marsabit' => 'Marsabit',
+                                                        'meru' => 'Meru',
+                                                        'migori' => 'Migori',
+                                                        'mombasa' => 'Mombasa',
+                                                        'muranga' => "Murang'a",
+                                                        'nairobi' => 'Nairobi',
+                                                        'nakuru' => 'Nakuru',
+                                                        'nandi' => 'Nandi',
+                                                        'narok' => 'Narok',
+                                                        'nyamira' => 'Nyamira',
+                                                        'nyandarua' => 'Nyandarua',
+                                                        'nyeri' => 'Nyeri',
+                                                        'samburu' => 'Samburu',
+                                                        'siaya' => 'Siaya',
+                                                        'taita-taveta' => 'Taita Taveta',
+                                                        'tana-river' => 'Tana River',
+                                                        'tharaka-nithi' => 'Tharaka-Nithi',
+                                                        'trans-nzoia' => 'Trans Nzoia',
+                                                        'turkana' => 'Turkana',
+                                                        'uasin-gishu' => 'Uasin Gishu',
+                                                        'vihiga' => 'Vihiga',
+                                                        'wajir' => 'Wajir',
+                                                        'west-pokot' => 'West Pokot',
+                                                    ];
+                                                @endphp
+
+                                                <select name="shipping_county"
                                                     class="form-control bg-light"
-                                                    value="{{ $customer['shipping_county'] }}"
                                                     disabled>
+
+                                                    @foreach($counties as $value => $label)
+                                                        <option value="{{ $value }}"
+                                                            {{ $customer['shipping_county'] == $value ? 'selected' : '' }}>
+                                                            {{ $label }}
+                                                        </option>
+                                                    @endforeach
+
+                                                </select>
                                             </div>
 
                                         </div>
@@ -645,7 +716,7 @@
                             <!-- Dynamic Submit Row -->
                             <div class="col-12 d-none mt-4 pt-3 text-end" id="formActionsRow" style="border-top: 1px dashed var(--border-color)">
                                 <button type="button" onclick="cancelProfileEditing()" class="btn btn-light border btn-sm px-3 rounded-2 me-2 small text-dark">Cancel</button>
-                                <button type="submit" class="btn bg-brand-blue text-white btn-sm px-4 rounded-2 small shadow-sm">Save Changes</button>
+                                <button type="submit" class="btn bg-brand-green text-black btn-sm px-4 rounded-2 small shadow-sm">Save Changes</button>
                             </div>
                         </form>
                     </div>
@@ -799,16 +870,18 @@
      */
     function enableProfileEditing() {
         const form = document.getElementById('profileUpdateForm');
-        const inputs = form.querySelectorAll('input');
-        
-        inputs.forEach(input => {
-            input.removeAttribute('disabled');
-            input.classList.remove('bg-light');
-            input.style.backgroundColor = '#ffffff';
+
+        // include select + textarea too
+        const fields = form.querySelectorAll('input, select, textarea');
+
+        fields.forEach(field => {
+            field.removeAttribute('disabled');
+            field.classList.remove('bg-light');
+            field.style.backgroundColor = '#ffffff';
         });
 
         document.getElementById('formActionsRow').classList.remove('d-none');
-        
+
         const toggleBtn = document.getElementById('toggleEditBtn');
         toggleBtn.classList.add('d-none');
     }
@@ -818,15 +891,16 @@
      */
     function cancelProfileEditing() {
         const form = document.getElementById('profileUpdateForm');
-        const inputs = form.querySelectorAll('input');
-        
-        inputs.forEach(input => {
-            input.setAttribute('disabled', 'disabled');
-            input.classList.add('bg-light');
+
+        const fields = form.querySelectorAll('input, select, textarea');
+
+        fields.forEach(field => {
+            field.setAttribute('disabled', 'disabled');
+            field.classList.add('bg-light');
         });
 
         document.getElementById('formActionsRow').classList.add('d-none');
-        
+
         const toggleBtn = document.getElementById('toggleEditBtn');
         toggleBtn.classList.remove('d-none');
     }

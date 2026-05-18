@@ -27,18 +27,13 @@ class CustomerSeeder extends Seeder
                 'town'       => 'Nyeri Town',
                 'county'     => 'Nyeri',
 
-                // Billing Address Fields
-                'billing_address' => 'Garden Estate Apartment B12',
-                'billing_town'    => 'Nyeri Town',
-                'billing_county'  => 'Nyeri',
-
                 // Shipping Fields
                 'shipping_name'    => 'John Muthoga',
                 'shipping_phone'   => '0791446968',
                 'shipping_email'   => 'customer@gmail.com',
                 'shipping_address' => 'Kimathi Estate House 24',
                 'shipping_town'    => 'Nyeri Town',
-                'shipping_county'  => 'Nyeri',
+                'shipping_county'  => 'nyeri',
 
                 'email_verified_at' => now(),
             ]
@@ -56,12 +51,7 @@ class CustomerSeeder extends Seeder
                 // Base Address
                 'address' => 'Kilimani Heights Apt 4C',
                 'town'    => 'Nairobi Central',
-                'county'  => 'Nairobi',
-
-                // Billing Address
-                'billing_address' => 'Kilimani Heights Apt 4C',
-                'billing_town'    => 'Nairobi Central',
-                'billing_county'  => 'Nairobi',
+                'county'  => 'nairobi',
 
                 // Shipping
                 'shipping_name'    => 'Jane Mwangi',
@@ -69,7 +59,7 @@ class CustomerSeeder extends Seeder
                 'shipping_email'   => 'jane.doe@example.com',
                 'shipping_address' => 'Kilimani Heights Apt 4C',
                 'shipping_town'    => 'Nairobi Central',
-                'shipping_county'  => 'Nairobi',
+                'shipping_county'  => 'nairobi',
 
                 'email_verified_at' => now(),
             ]

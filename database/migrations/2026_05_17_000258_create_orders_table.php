@@ -34,10 +34,6 @@ return new class extends Migration
             $table->string('last_name');
             $table->string('email');
             $table->string('phone');
-            $table->text('address');
-            $table->string('county');
-            $table->string('town');
-            $table->text('customer_note')->nullable();
 
             $table->string('promo_used')->nullable();
             $table->timestamps();

@@ -238,7 +238,16 @@
         transform: translateY(-1px);
     }
 
-    /* Retail Interactive E-commerce Verification Display */
+    /* =========================
+    PROFESSIONAL OTP SECTION
+    ========================= */
+
+    .otp-wrapper {
+        width: 100%;
+        max-width: 420px;
+        margin: 0 auto;
+    }
+
     .otp-display-icon {
         width: 72px;
         height: 72px;
@@ -254,30 +263,101 @@
 
     .otp-grid {
         display: flex;
+        align-items: center;
         justify-content: center;
-        gap: 14px;
-        margin: 2.5rem 0;
+        gap: 12px;
+        width: 100%;
+        margin: 2rem auto;
     }
 
     .otp-box {
-        width: 54px;
-        height: 60px;
-        font-size: 1.75rem !important;
+        width: 56px;
+        height: 62px;
+        border-radius: 14px !important;
+        border: 1px solid var(--border-subtle) !important;
+        background: var(--input-neutral) !important;
+
+        font-size: 1.6rem !important;
         font-weight: 700 !important;
         text-align: center;
-        border: 1px solid var(--border-subtle) !important;
-        background-color: var(--input-neutral) !important;
-        border-radius: 10px !important;
-        transition: var(--transition);
+
+        transition: all 0.2s ease;
     }
 
     .otp-box:focus {
         background-color: #ffffff !important;
         border-color: var(--brand-accent) !important;
-        box-shadow: 0 0 0 4px rgba(11, 79, 163, 0.1) !important;
+        box-shadow: 0 0 0 4px rgba(11, 79, 163, 0.12) !important;
+        transform: translateY(-2px);
         outline: none;
     }
 
+    /* =========================
+    TABLET RESPONSIVE
+    ========================= */
+
+    @media (max-width: 768px) {
+
+        .auth-main-body {
+            padding: 2.5rem 1.5rem !important;
+        }
+
+        .otp-grid {
+            gap: 10px;
+        }
+
+        .otp-box {
+            width: 50px;
+            height: 56px;
+            font-size: 1.45rem !important;
+        }
+    }
+
+    /* =========================
+    MOBILE RESPONSIVE
+    ========================= */
+
+    @media (max-width: 576px) {
+
+        .otp-wrapper {
+            max-width: 100%;
+        }
+
+        .otp-grid {
+            gap: 8px;
+            justify-content: center;
+        }
+
+        .otp-box {
+            width: 44px;
+            height: 50px;
+            font-size: 1.2rem !important;
+            border-radius: 12px !important;
+        }
+
+        .otp-display-icon {
+            width: 60px;
+            height: 60px;
+            font-size: 1.6rem;
+        }
+    }
+
+    /* =========================
+    VERY SMALL DEVICES
+    ========================= */
+
+    @media (max-width: 380px) {
+
+        .otp-grid {
+            gap: 6px;
+        }
+
+        .otp-box {
+            width: 40px;
+            height: 46px;
+            font-size: 1rem !important;
+        }
+    }
     @media (max-width: 991.98px) {
         .auth-wrapper { margin: 2rem auto; }
         .auth-main-body { padding: 3rem 2rem !important; }
@@ -346,13 +426,18 @@
                         <input type="hidden" name="stage" value="1">
 
                         <div class="custom-input-group">
-                            <label for="name">Full Name</label>
-                            <input type="text" id="name" name="name" class="form-control" value="{{ old('name', $signupData['name'] ?? '') }}" placeholder="e.g. John Muthoga" required autocomplete="name">
+                            <label for="name">First Name</label>
+                            <input type="text" id="first_name" name="first_name" class="form-control" value="{{ old('first_name', $signupData['first_name'] ?? '') }}" placeholder="e.g. John" required autocomplete="name">
+                        </div>
+
+                        <div class="custom-input-group">
+                            <label for="name">Last Name</label>
+                            <input type="text" id="last_name" name="last_name" class="form-control" value="{{ old('last_name', $signupData['last_name'] ?? '') }}" placeholder="e.g. Doe" required autocomplete="name">
                         </div>
                         
                         <div class="custom-input-group">
                             <label for="email">Email Address</label>
-                            <input type="email" id="email" name="email" class="form-control" value="{{ old('email', $signupData['email'] ?? '') }}" placeholder="example@domain.com" required autocomplete="email">
+                            <input type="email" id="email" name="email" class="form-control" value="{{ old('email', $signupData['email'] ?? '') }}" placeholder="example@gmail.com" required autocomplete="email">
                         </div>
                         
                         <div class="custom-input-group">
@@ -363,11 +448,11 @@
                         <div class="row">
                             <div class="col-sm-6 custom-input-group">
                                 <label for="password">Password</label>
-                                <input type="password" id="password" name="password" class="form-control" placeholder="••••••••" required autocomplete="new-password">
+                                <input type="password" id="password" name="password" class="form-control"  required autocomplete="new-password">
                             </div>
                             <div class="col-sm-6 custom-input-group">
                                 <label for="password_confirmation">Confirm Password</label>
-                                <input type="password" id="password_confirmation" name="password_confirmation" class="form-control" placeholder="••••••••" required autocomplete="new-password">
+                                <input type="password" id="password_confirmation" name="password_confirmation" class="form-control"  required autocomplete="new-password">
                             </div>
                         </div>
 
@@ -382,7 +467,10 @@
                         @csrf
                         <input type="hidden" name="stage" value="2">
 
-                        <h5 class="form-segment-header">Where should we deliver your orders?</h5>
+                        <h5 class="form-segment-header">Your Details</h5>
+                        <p class="text-muted small mb-3">
+                            This is your primary address and contact information.
+                        </p>
                         <div class="custom-input-group">
                             <label for="address">Street / Apartment / House No.</label>
                             <input type="text" id="address" name="address" class="form-control" placeholder="Garden Estate, Apartment B12" value="{{ old('address', $signupData['address'] ?? '') }}" required>
@@ -398,36 +486,17 @@
                             </div>
                         </div>
 
-                        <!-- UX Enhancement: Billing Sync Switch to mitigate manual checkout overhead -->
-                        <div class="form-check address-checkbox-card d-flex align-items-center gap-2 ms-0">
-                            <input class="form-check-input ms-0" type="checkbox" id="syncAddresses" checked style="cursor: pointer;">
-                            <label class="form-check-label small fw-semibold text-muted mb-0" for="syncAddresses" style="cursor: pointer; user-select: none;">
-                                My Billing and Shipping information matches this address
-                            </label>
-                        </div>
-
                         <!-- Dynamic Target Wrappers for advanced configurations -->
-                        <div id="billingShippingSections" style="display: none;">
-                            <h5 class="form-segment-header">Billing Details</h5>
-                            <div class="custom-input-group">
-                                <label for="billing_address">Billing Street Address</label>
-                                <input type="text" id="billing_address" name="billing_address" class="form-control" placeholder="Garden Estate, Apartment B12" value="{{ old('billing_address', $signupData['billing_address'] ?? '') }}">
-                            </div>
-                            <div class="row">
-                                <div class="col-6 custom-input-group">
-                                    <label for="billing_town">Billing Town</label>
-                                    <input type="text" id="billing_town" name="billing_town" class="form-control" placeholder="Nyeri Town" value="{{ old('billing_town', $signupData['billing_town'] ?? '') }}">
-                                </div>
-                                <div class="col-6 custom-input-group">
-                                    <label for="billing_county">Billing County</label>
-                                    <input type="text" id="billing_county" name="billing_county" class="form-control" placeholder="Nyeri" value="{{ old('billing_county', $signupData['billing_county'] ?? '') }}">
-                                </div>
-                            </div>
+                        <div id="billingShippingSections" style="display: block;">
 
-                            <h5 class="form-segment-header">Shipping Destination Recipient</h5>
+                            <h5 class="form-segment-header">Where should we deliver your order?</h5>
+
+                            <p class="text-muted small mb-3">
+                                Please provide a location where you can easily receive your order.
+                            </p>
                             <div class="custom-input-group">
-                                <label for="shipping_name">Recipient Name</label>
-                                <input type="text" id="shipping_name" name="shipping_name" class="form-control" placeholder="John Muthoga" value="{{ old('shipping_name', $signupData['shipping_name'] ?? '') }}">
+                                <label for="shipping_name">Recipient Full Name</label>
+                                <input type="text" id="shipping_name" name="shipping_name" class="form-control" placeholder="John Doe" value="{{ old('shipping_name', $signupData['shipping_name'] ?? '') }}">
                             </div>
                             <div class="row">
                                 <div class="col-6 custom-input-group">
@@ -450,7 +519,66 @@
                                 </div>
                                 <div class="col-6 custom-input-group">
                                     <label for="shipping_county">Shipping County</label>
-                                    <input type="text" id="shipping_county" name="shipping_county" class="form-control" placeholder="Nyeri" value="{{ old('shipping_county', $signupData['shipping_county'] ?? '') }}">
+
+                                    <select id="shipping_county" name="shipping_county" class="form-control" required>
+                                        <option value="">Select County</option>
+
+                                        @foreach([
+                                            'baringo' => 'Baringo',
+                                            'bomet' => 'Bomet',
+                                            'bungoma' => 'Bungoma',
+                                            'busia' => 'Busia',
+                                            'elgeyo-marakwet' => 'Elgeyo Marakwet',
+                                            'embu' => 'Embu',
+                                            'garissa' => 'Garissa',
+                                            'homa-bay' => 'Homa Bay',
+                                            'isiolo' => 'Isiolo',
+                                            'kajiado' => 'Kajiado',
+                                            'kakamega' => 'Kakamega',
+                                            'kericho' => 'Kericho',
+                                            'kiambu' => 'Kiambu',
+                                            'kilifi' => 'Kilifi',
+                                            'kirinyaga' => 'Kirinyaga',
+                                            'kisii' => 'Kisii',
+                                            'kisumu' => 'Kisumu',
+                                            'kitui' => 'Kitui',
+                                            'kwale' => 'Kwale',
+                                            'laikipia' => 'Laikipia',
+                                            'lamu' => 'Lamu',
+                                            'machakos' => 'Machakos',
+                                            'makueni' => 'Makueni',
+                                            'mandera' => 'Mandera',
+                                            'marsabit' => 'Marsabit',
+                                            'meru' => 'Meru',
+                                            'migori' => 'Migori',
+                                            'mombasa' => 'Mombasa',
+                                            'muranga' => "Murang'a",
+                                            'nairobi' => 'Nairobi',
+                                            'nakuru' => 'Nakuru',
+                                            'nandi' => 'Nandi',
+                                            'narok' => 'Narok',
+                                            'nyamira' => 'Nyamira',
+                                            'nyandarua' => 'Nyandarua',
+                                            'nyeri' => 'Nyeri',
+                                            'samburu' => 'Samburu',
+                                            'siaya' => 'Siaya',
+                                            'taita-taveta' => 'Taita Taveta',
+                                            'tana-river' => 'Tana River',
+                                            'tharaka-nithi' => 'Tharaka-Nithi',
+                                            'trans-nzoia' => 'Trans Nzoia',
+                                            'turkana' => 'Turkana',
+                                            'uasin-gishu' => 'Uasin Gishu',
+                                            'vihiga' => 'Vihiga',
+                                            'wajir' => 'Wajir',
+                                            'west-pokot' => 'West Pokot',
+                                        ] as $key => $value)
+                                            <option value="{{ $key }}"
+                                                {{ old('shipping_county', $signupData['shipping_county'] ?? '') == $key ? 'selected' : '' }}>
+                                                {{ $value }}
+                                            </option>
+                                        @endforeach
+
+                                    </select>
                                 </div>
                             </div>
                         </div>
@@ -460,62 +588,47 @@
                         </button>
                     </form>
 
-                    <script>
-                        document.addEventListener("DOMContentLoaded", function () {
-                            const syncCheck = document.getElementById("syncAddresses");
-                            const structuralWrapper = document.getElementById("billingShippingSections");
-                            
-                            function balanceFormStates() {
-                                if(syncCheck.checked) {
-                                    structuralWrapper.style.display = "none";
-                                    // Cascade input parameters from Primary to shadow components safely
-                                    document.getElementById("billing_address").value = document.getElementById("address").value;
-                                    document.getElementById("billing_town").value = document.getElementById("town").value;
-                                    document.getElementById("billing_county").value = document.getElementById("county").value;
-                                    
-                                    document.getElementById("shipping_name").value = document.getElementById("name") ? document.getElementById("name").value : "Customer";
-                                    document.getElementById("shipping_phone").value = document.getElementById("phone") ? document.getElementById("phone").value : "";
-                                    document.getElementById("shipping_email").value = document.getElementById("email") ? document.getElementById("email").value : "";
-                                    document.getElementById("shipping_address").value = document.getElementById("address").value;
-                                    document.getElementById("shipping_town").value = document.getElementById("town").value;
-                                    document.getElementById("shipping_county").value = document.getElementById("county").value;
-                                } else {
-                                    structuralWrapper.style.display = "block";
-                                }
-                            }
 
-                            syncCheck.addEventListener("change", balanceFormStates);
-                            document.getElementById("addressForm").addEventListener("submit", balanceFormStates);
-                        });
-                    </script>
-
-                <!-- STAGE 3: SECURITY AUTHENTICATION -->
-                @elseif($currentStage === 3)
+                
+                    <!-- STAGE 3: SECURITY AUTHENTICATION -->
+                
+                    @elseif($currentStage === 3)
                     <form action="{{ route('signup.verify_otp') }}" method="POST" id="otpForm" class="text-center py-2">
                         @csrf
                         
-                        <div class="otp-display-icon">
-                            <i class="fas fa-envelope-open-text"></i>
-                        </div>
-                        
-                        <h4 style="color: var(--text-main); font-weight: 700; margin-bottom: 0.5rem; letter-spacing: -0.02em;">Verify Your Email</h4>
-                        <p class="text-muted small mx-auto mb-4" style="max-width: 420px; line-height: 1.6;">
-                            We've sent a 6-digit verification code to your email inbox. Please enter the code below to complete your registration.
-                        </p>
-                        
-                        <!-- OTP Node Interfaces -->
-                        <div class="otp-grid">
-                            <input type="text" class="otp-box" maxlength="1" pattern="\d*" required autocomplete="off" autofocus>
-                            <input type="text" class="otp-box" maxlength="1" pattern="\d*" required autocomplete="off">
-                            <input type="text" class="otp-box" maxlength="1" pattern="\d*" required autocomplete="off">
-                            <input type="text" class="otp-box" maxlength="1" pattern="\d*" required autocomplete="off">
-                            <input type="text" class="otp-box" maxlength="1" pattern="\d*" required autocomplete="off">
-                            <input type="text" class="otp-box" maxlength="1" pattern="\d*" required autocomplete="off">
+                        <div class="otp-wrapper">
+
+                            <div class="otp-display-icon">
+                                <i class="fas fa-envelope-open-text"></i>
+                            </div>
+
+                            <h4 style="color: var(--text-main); font-weight: 700; margin-bottom: 0.5rem; letter-spacing: -0.02em;">
+                                Verify Your Email
+                            </h4>
+
+                            <p class="text-muted small mx-auto mb-4" style="max-width: 420px; line-height: 1.6;">
+                                We've sent a 6-digit verification code to your email inbox.
+                                Please enter the code below to complete your registration.
+                            </p>
+
+                            <div class="otp-grid">
+                                <input type="text" class="otp-box" maxlength="1" pattern="\d*" required autocomplete="off" autofocus>
+                                <input type="text" class="otp-box" maxlength="1" pattern="\d*" required autocomplete="off">
+                                <input type="text" class="otp-box" maxlength="1" pattern="\d*" required autocomplete="off">
+                                <input type="text" class="otp-box" maxlength="1" pattern="\d*" required autocomplete="off">
+                                <input type="text" class="otp-box" maxlength="1" pattern="\d*" required autocomplete="off">
+                                <input type="text" class="otp-box" maxlength="1" pattern="\d*" required autocomplete="off">
+                            </div>
+
                         </div>
 
                         <input type="hidden" name="otp" id="hidden_otp_input">
 
-                        <button type="submit" class="btn btn-action btn-flat-success w-100 mt-2 d-flex align-items-center justify-content-center gap-2">
+                        <button 
+                            type="submit" 
+                            class="btn btn-action btn-flat-success w-100 mt-2 d-flex align-items-center justify-content-center gap-2"
+                            style="white-space: nowrap;"
+                        >
                             Complete Setup & Shop <i class="fas fa-shopping-bag"></i>
                         </button>
                     </form>

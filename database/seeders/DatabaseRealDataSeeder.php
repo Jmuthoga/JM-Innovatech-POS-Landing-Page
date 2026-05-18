@@ -36,8 +36,12 @@ class DatabaseRealDataSeeder extends Seeder
         }
 
         // 4. Seed Promo Codes
-        PromoCode::create(['code' => 'JMTECH10', 'type' => 'percentage', 'discount' => 10]);
-        PromoCode::create(['code' => 'FREE500', 'type' => 'fixed', 'discount' => 500]);
+        PromoCode::create(['code' => 'WELCOME5', 'type' => 'percentage', 'discount' => 5]);
+        PromoCode::create(['code' => 'SAVE100', 'type' => 'fixed', 'discount' => 100]);
+        PromoCode::create(['code' => 'FREESHIP', 'type' => 'fixed', 'discount' => 0]);
+        PromoCode::create(['code' => 'JMDEALS15', 'type' => 'percentage', 'discount' => 15]);
+        PromoCode::create(['code' => 'MEGA200', 'type' => 'fixed', 'discount' => 200]);
+        PromoCode::create(['code' => 'NEWUSER20', 'type' => 'percentage', 'discount' => 20]);
 
         // 5. Seed Products (ALL HOMEPAGE SECTIONS)
 

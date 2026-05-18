@@ -14,20 +14,28 @@ class Order extends Model
         'payment_method',
         'payment_status',
         'delivery_status',
+
         'subtotal',
         'shipping_fee',
         'discount_applied',
         'total_order_amount',
         'shipping_paid',
         'amount_due_on_delivery',
+
+        //  PERSONAL DETAILS (user snapshot)
         'first_name',
         'last_name',
         'email',
         'phone',
-        'address',
-        'county',
-        'town',
-        'customer_note',
+
+        //  SHIPPING DETAILS (NEW)
+        'shipping_name',
+        'shipping_phone',
+        'shipping_email',
+        'shipping_address',
+        'shipping_county',
+        'shipping_town',
+
         'promo_used'
     ];
 
@@ -35,6 +43,7 @@ class Order extends Model
     {
         return $this->hasMany(OrderItem::class);
     }
+
     public function user()
     {
         return $this->belongsTo(User::class);
