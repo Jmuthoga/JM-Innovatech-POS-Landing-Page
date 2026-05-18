@@ -22,6 +22,8 @@
     <link rel="stylesheet" href="{{ asset('assets/css/shop.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/product.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/cart.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/customer.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/authentication.css') }}">
 
     <style>
         body {

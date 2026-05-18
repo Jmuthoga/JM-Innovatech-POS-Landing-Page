@@ -1,0 +1,941 @@
+    /* =========================
+              SIGN UP
+    ========================= */
+
+    :root {
+        /* User-Defined Brand Color Token Definitions */
+        --brand-blue: #0B4FA3;
+        --brand-navy: #011226;
+        --brand-green: #25D366;
+        --text-dark: #1e293b;
+        --text-muted: #64748b;
+        --border-color: #e2e8f0;
+        --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+        --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+        --transition: all 0.2s ease-in-out;
+        
+        --surface-bg: #ffffff;
+        --input-neutral: #f8fafc;
+
+        /* Perfect Mapping to Core Presentation Structural Architecture */
+        --text-main: var(--text-dark);
+        --border-subtle: var(--border-color);
+        --brand-primary: var(--brand-blue);
+        --brand-accent: var(--brand-blue);
+        --brand-success: var(--brand-green);
+    }
+
+    .auth-wrapper {
+        max-width: 1100px;
+        margin: 4rem auto;
+        padding: 0 1.5rem;
+    }
+
+    .auth-card {
+        background: var(--surface-bg);
+        border: 1px solid var(--border-subtle);
+        border-radius: 20px;
+        box-shadow: var(--shadow-md);
+        overflow: hidden;
+    }
+
+    /* Left Sidebar: Retail Focused Brand Experience */
+    .auth-sidebar {
+        background: linear-gradient(135deg, var(--brand-navy) 0%, #000710 100%);
+        padding: 4rem 2.5rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        position: relative;
+    }
+
+    /* Soft modern background texture */
+    .auth-sidebar::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        opacity: 0.05;
+        background-image: radial-gradient(#ffffff 2px, transparent 2px);
+        background-size: 24px 24px;
+    }
+
+    .sidebar-content {
+        position: relative;
+        z-index: 2;
+    }
+
+    .auth-title {
+        color: #ffffff;
+        font-weight: 800;
+        font-size: 2rem;
+        letter-spacing: -0.03em;
+        margin-bottom: 1rem;
+    }
+
+    .auth-subtitle {
+        color: #cbd5e1;
+        font-size: 1rem;
+        line-height: 1.6;
+    }
+
+    /* Elegant Step Indicator */
+    .step-timeline {
+        display: flex;
+        flex-direction: column;
+        gap: 1.75rem;
+        margin-top: 5rem;
+        position: relative;
+        z-index: 2;
+    }
+
+    .timeline-item {
+        display: flex;
+        align-items: center;
+        gap: 1.25rem;
+        opacity: 0.35;
+        transition: var(--transition);
+    }
+
+    .timeline-item.active { opacity: 1; }
+    .timeline-item.completed { opacity: 0.9; }
+
+    .timeline-marker {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        border: 2px solid #475569;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.85rem;
+        font-weight: 700;
+        color: #cbd5e1;
+        background: var(--brand-navy);
+        transition: var(--transition);
+    }
+
+    .timeline-item.active .timeline-marker {
+        border-color: #ffffff;
+        color: var(--brand-blue);
+        background: #ffffff;
+        box-shadow: 0 0 15px rgba(255,255,255,0.2);
+    }
+
+    .timeline-item.completed .timeline-marker {
+        border-color: var(--brand-success);
+        color: #ffffff;
+        background: var(--brand-success);
+    }
+
+    .timeline-label {
+        font-size: 0.9rem;
+        font-weight: 600;
+        letter-spacing: 0.03em;
+        color: #94a3b8;
+    }
+
+    .timeline-item.active .timeline-label { color: #ffffff; }
+    .timeline-item.completed .timeline-label { color: #cbd5e1; text-decoration: line-through; opacity: 0.7; }
+
+    /* Right Main Content Layer */
+    .auth-main-body {
+        padding: 4.5rem 4rem !important;
+    }
+
+    /* Clean, Modern Form Layouts */
+    .form-segment-header {
+        color: var(--text-main);
+        font-weight: 700;
+        font-size: 1.1rem;
+        letter-spacing: -0.01em;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin: 2.5rem 0 1.5rem 0;
+    }
+
+    .form-segment-header::after {
+        content: '';
+        flex: 1;
+        height: 1px;
+        background: var(--border-subtle);
+    }
+
+    .form-segment-header:first-of-type {
+        margin-top: 0;
+    }
+
+    .custom-input-group {
+        margin-bottom: 1.5rem;
+    }
+
+    .custom-input-group label {
+        font-weight: 600;
+        color: var(--text-main);
+        font-size: 0.85rem;
+        margin-bottom: 0.5rem;
+        display: block;
+    }
+
+    .custom-input-group .form-control, 
+    .custom-input-group .form-select {
+        border: 1px solid var(--border-subtle);
+        background-color: var(--input-neutral);
+        border-radius: 10px;
+        padding: 0.85rem 1.1rem;
+        color: var(--text-main);
+        font-size: 0.95rem;
+        transition: var(--transition);
+    }
+
+    .custom-input-group .form-control:focus,
+    .custom-input-group .form-select:focus {
+        background-color: #ffffff;
+        border-color: var(--brand-accent);
+        box-shadow: 0 0 0 4px rgba(11, 79, 163, 0.1);
+        outline: none;
+    }
+
+    /* Toggle UI Switch Component */
+    .address-checkbox-card {
+        background: var(--input-neutral);
+        border: 1px solid var(--border-subtle);
+        border-radius: 10px;
+        padding: 1rem 1.25rem;
+        margin-bottom: 1.5rem;
+    }
+
+    /* High-Conversion CTA Design */
+    .btn-action {
+        font-weight: 600;
+        font-size: 1rem;
+        padding: 0.95rem 2rem;
+        border-radius: 10px;
+        transition: var(--transition);
+        border: none;
+    }
+
+    .btn-flat-primary {
+        background-color: var(--brand-accent);
+        color: #ffffff;
+    }
+
+    .btn-flat-primary:hover {
+        background-color: #093f82;
+        box-shadow: 0 8px 20px rgba(11, 79, 163, 0.25);
+        transform: translateY(-1px);
+    }
+
+    .btn-flat-success {
+        background-color: var(--brand-success);
+        color: #ffffff;
+    }
+
+    .btn-flat-success:hover {
+        background-color: #1ebd54;
+        box-shadow: 0 8px 20px rgba(37, 211, 102, 0.25);
+        transform: translateY(-1px);
+    }
+
+    /* =========================
+    PROFESSIONAL OTP SECTION
+    ========================= */
+
+    .otp-wrapper {
+        width: 100%;
+        max-width: 420px;
+        margin: 0 auto;
+    }
+
+    .otp-display-icon {
+        width: 72px;
+        height: 72px;
+        background: rgba(11, 79, 163, 0.08);
+        color: var(--brand-accent);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2rem;
+        margin: 0 auto 1.5rem auto;
+    }
+
+    .otp-grid {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+        width: 100%;
+        margin: 2rem auto;
+    }
+
+    .otp-box {
+        width: 56px;
+        height: 62px;
+        border-radius: 14px !important;
+        border: 1px solid var(--border-subtle) !important;
+        background: var(--input-neutral) !important;
+
+        font-size: 1.6rem !important;
+        font-weight: 700 !important;
+        text-align: center;
+
+        transition: all 0.2s ease;
+    }
+
+    .otp-box:focus {
+        background-color: #ffffff !important;
+        border-color: var(--brand-accent) !important;
+        box-shadow: 0 0 0 4px rgba(11, 79, 163, 0.12) !important;
+        transform: translateY(-2px);
+        outline: none;
+    }
+
+    /* =========================
+    TABLET RESPONSIVE
+    ========================= */
+
+    @media (max-width: 768px) {
+
+        .auth-main-body {
+            padding: 2.5rem 1.5rem !important;
+        }
+
+        .otp-grid {
+            gap: 10px;
+        }
+
+        .otp-box {
+            width: 50px;
+            height: 56px;
+            font-size: 1.45rem !important;
+        }
+    }
+
+    /* =========================
+    MOBILE RESPONSIVE
+    ========================= */
+
+    @media (max-width: 576px) {
+
+        .otp-wrapper {
+            max-width: 100%;
+        }
+
+        .otp-grid {
+            gap: 8px;
+            justify-content: center;
+        }
+
+        .otp-box {
+            width: 44px;
+            height: 50px;
+            font-size: 1.2rem !important;
+            border-radius: 12px !important;
+        }
+
+        .otp-display-icon {
+            width: 60px;
+            height: 60px;
+            font-size: 1.6rem;
+        }
+    }
+
+    /* =========================
+    VERY SMALL DEVICES
+    ========================= */
+
+    @media (max-width: 380px) {
+
+        .otp-grid {
+            gap: 6px;
+        }
+
+        .otp-box {
+            width: 40px;
+            height: 46px;
+            font-size: 1rem !important;
+        }
+    }
+    @media (max-width: 991.98px) {
+        .auth-wrapper { margin: 2rem auto; }
+        .auth-main-body { padding: 3rem 2rem !important; }
+        .auth-sidebar { padding: 3rem 2rem; gap: 3rem; }
+        .step-timeline { display: flex; flex-direction: row; justify-content: space-between; gap: 0.5rem; margin-top: 2rem; }
+        .timeline-label { display: none; }
+    }
+
+    /* =========================
+              LOGIN
+    ========================= */
+
+    .auth-wrapper {
+        max-width: 1100px;
+        margin: 4rem auto;
+        padding: 0 1.5rem;
+    }
+
+    .auth-card {
+        background: var(--surface-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 20px;
+        box-shadow: var(--shadow-md), 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+        overflow: hidden;
+    }
+
+    /* Left Sidebar: Brand Palette Experience */
+    .auth-sidebar {
+        background: linear-gradient(135deg, var(--brand-navy) 0%, #000814 100%);
+        padding: 4rem 2.5rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        position: relative;
+    }
+
+    /* Soft modern background texture */
+    .auth-sidebar::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        opacity: 0.05;
+        background-image: radial-gradient(#ffffff 2px, transparent 2px);
+        background-size: 24px 24px;
+    }
+
+    .sidebar-content {
+        position: relative;
+        z-index: 2;
+    }
+
+    .auth-title {
+        color: #ffffff;
+        font-weight: 800;
+        font-size: 2rem;
+        letter-spacing: -0.03em;
+        margin-bottom: 1rem;
+    }
+
+    .auth-subtitle {
+        color: #cbd5e1;
+        font-size: 1rem;
+        line-height: 1.6;
+    }
+
+    /* Quick Value Proposition List */
+    .sidebar-benefits {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+        margin-top: 5rem;
+        position: relative;
+        z-index: 2;
+    }
+
+    .benefit-item {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .benefit-icon {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.1);
+        color: var(--brand-green);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.85rem;
+    }
+
+    .benefit-text {
+        font-size: 0.9rem;
+        font-weight: 500;
+        color: #cbd5e1;
+    }
+
+    /* Right Main Content Layer */
+    .auth-main-body {
+        padding: 4.5rem 4rem !important;
+    }
+
+    .custom-input-group {
+        margin-bottom: 1.5rem;
+    }
+
+    .custom-input-group label {
+        font-weight: 600;
+        color: var(--text-dark);
+        font-size: 0.85rem;
+        margin-bottom: 0.5rem;
+        display: block;
+    }
+
+    .custom-input-group .form-control {
+        border: 1px solid var(--border-color);
+        background-color: var(--input-neutral);
+        border-radius: 10px;
+        padding: 0.85rem 1.1rem;
+        color: var(--text-dark);
+        font-size: 0.95rem;
+        transition: var(--transition);
+        box-shadow: var(--shadow-sm);
+    }
+
+    .custom-input-group .form-control:focus {
+        background-color: #ffffff;
+        border-color: var(--brand-blue);
+        box-shadow: 0 0 0 4px rgba(11, 79, 163, 0.15);
+        outline: none;
+    }
+
+    .password-container {
+        position: relative;
+    }
+
+    .password-visibility-trigger {
+        position: absolute;
+        right: 1.1rem;
+        top: 50%;
+        transform: translateY(-50%);
+        color: var(--text-muted);
+        cursor: pointer;
+        background: none;
+        border: none;
+        padding: 0;
+        font-size: 0.95rem;
+    }
+
+    .password-visibility-trigger:hover {
+        color: var(--text-dark);
+    }
+
+    .form-utilities {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 2rem;
+    }
+
+    .remember-me-checkbox {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .remember-me-checkbox input {
+        cursor: pointer;
+        border: 1px solid var(--border-color);
+        border-radius: 4px;
+    }
+
+    .remember-me-checkbox input:checked {
+        background-color: var(--brand-blue);
+        border-color: var(--brand-blue);
+    }
+
+    .remember-me-checkbox label {
+        cursor: pointer;
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: var(--text-muted);
+        margin: 0;
+        user-select: none;
+    }
+
+    /* High-Conversion CTA Design */
+    .btn-action {
+        font-weight: 600;
+        font-size: 1rem;
+        padding: 0.95rem 2rem;
+        border-radius: 10px;
+        transition: var(--transition);
+        border: none;
+    }
+
+    .btn-flat-primary {
+        background-color: var(--brand-blue);
+        color: #ffffff;
+    }
+
+    .btn-flat-primary:hover {
+        background-color: #093f82;
+        box-shadow: 0 8px 20px rgba(11, 79, 163, 0.25);
+        transform: translateY(-1px);
+        color: #ffffff;
+    }
+
+    .brand-link {
+        color: var(--brand-blue);
+        transition: var(--transition);
+    }
+
+    .brand-link:hover {
+        color: var(--brand-navy);
+    }
+
+    @media (max-width: 991.98px) {
+        .auth-wrapper { margin: 2rem auto; }
+        .auth-main-body { padding: 3rem 2rem !important; }
+        .auth-sidebar { padding: 3rem 2rem; gap: 3rem; }
+        .sidebar-benefits { display: none; }
+    }
+
+    /* =========================
+              FORGOT PASSWORD
+    ========================= */
+    .auth-wrapper {
+        max-width: 1100px;
+        margin: 4rem auto;
+        padding: 0 1.5rem;
+    }
+
+    .auth-card {
+        background: var(--surface-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 20px;
+        box-shadow: var(--shadow-md), 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+        overflow: hidden;
+    }
+
+    /* Left Sidebar: Brand Palette Experience */
+    .auth-sidebar {
+        background: linear-gradient(135deg, var(--brand-navy) 0%, #000814 100%);
+        padding: 4rem 2.5rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        position: relative;
+    }
+
+    /* Soft modern background texture */
+    .auth-sidebar::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        opacity: 0.05;
+        background-image: radial-gradient(#ffffff 2px, transparent 2px);
+        background-size: 24px 24px;
+    }
+
+    .sidebar-content {
+        position: relative;
+        z-index: 2;
+    }
+
+    .auth-title {
+        color: #ffffff;
+        font-weight: 800;
+        font-size: 2rem;
+        letter-spacing: -0.03em;
+        margin-bottom: 1rem;
+    }
+
+    .auth-subtitle {
+        color: #cbd5e1;
+        font-size: 1rem;
+        line-height: 1.6;
+    }
+
+    /* Quick Value Proposition List (Tailored for Security/Recovery) */
+    .sidebar-benefits {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+        margin-top: 5rem;
+        position: relative;
+        z-index: 2;
+    }
+
+    .benefit-item {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .benefit-icon {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.1);
+        color: var(--brand-green);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.85rem;
+    }
+
+    .benefit-text {
+        font-size: 0.9rem;
+        font-weight: 500;
+        color: #cbd5e1;
+    }
+
+    /* Right Main Content Layer */
+    .auth-main-body {
+        padding: 4.5rem 4rem !important;
+    }
+
+    .custom-input-group {
+        margin-bottom: 1.5rem;
+    }
+
+    .custom-input-group label {
+        font-weight: 600;
+        color: var(--text-dark);
+        font-size: 0.85rem;
+        margin-bottom: 0.5rem;
+        display: block;
+    }
+
+    .custom-input-group .form-control {
+        border: 1px solid var(--border-color);
+        background-color: var(--input-neutral);
+        border-radius: 10px;
+        padding: 0.85rem 1.1rem;
+        color: var(--text-dark);
+        font-size: 0.95rem;
+        transition: var(--transition);
+        box-shadow: var(--shadow-sm);
+    }
+
+    .custom-input-group .form-control:focus {
+        background-color: #ffffff;
+        border-color: var(--brand-blue);
+        box-shadow: 0 0 0 4px rgba(11, 79, 163, 0.15);
+        outline: none;
+    }
+
+    /* High-Conversion CTA Design */
+    .btn-action {
+        font-weight: 600;
+        font-size: 1rem;
+        padding: 0.95rem 2rem;
+        border-radius: 10px;
+        transition: var(--transition);
+        border: none;
+    }
+
+    .btn-flat-primary {
+        background-color: var(--brand-blue);
+        color: #ffffff;
+    }
+
+    .btn-flat-primary:hover {
+        background-color: #093f82;
+        box-shadow: 0 8px 20px rgba(11, 79, 163, 0.25);
+        transform: translateY(-1px);
+        color: #ffffff;
+    }
+
+    .brand-link {
+        color: var(--brand-blue);
+        transition: var(--transition);
+    }
+
+    .brand-link:hover {
+        color: var(--brand-navy);
+    }
+
+    .simulation-alert {
+        background-color: #f0fdf4;
+        border: 1px dashed #22c55e;
+        color: #166534;
+        border-radius: 12px;
+        padding: 1.25rem;
+        font-size: 0.9rem;
+    }
+
+    @media (max-width: 991.98px) {
+        .auth-wrapper { margin: 2rem auto; }
+        .auth-main-body { padding: 3rem 2rem !important; }
+        .auth-sidebar { padding: 3rem 2rem; gap: 3rem; }
+        .sidebar-benefits { display: none; }
+    }
+
+    /* =========================
+        RESET PASSWORD
+    ========================= */
+    .auth-wrapper {
+        max-width: 1100px;
+        margin: 4rem auto;
+        padding: 0 1.5rem;
+    }
+
+    .auth-card {
+        background: var(--surface-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 20px;
+        box-shadow: var(--shadow-md), 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+        overflow: hidden;
+    }
+
+    /* Left Sidebar: Brand Palette Experience */
+    .auth-sidebar {
+        background: linear-gradient(135deg, var(--brand-navy) 0%, #000814 100%);
+        padding: 4rem 2.5rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        position: relative;
+    }
+
+    /* Soft modern background texture */
+    .auth-sidebar::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        opacity: 0.05;
+        background-image: radial-gradient(#ffffff 2px, transparent 2px);
+        background-size: 24px 24px;
+    }
+
+    .sidebar-content {
+        position: relative;
+        z-index: 2;
+    }
+
+    .auth-title {
+        color: #ffffff;
+        font-weight: 800;
+        font-size: 2rem;
+        letter-spacing: -0.03em;
+        margin-bottom: 1rem;
+    }
+
+    .auth-subtitle {
+        color: #cbd5e1;
+        font-size: 1rem;
+        line-height: 1.6;
+    }
+
+    /* Quick Value Proposition List (Tailored for Reset flow) */
+    .sidebar-benefits {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+        margin-top: 5rem;
+        position: relative;
+        z-index: 2;
+    }
+
+    .benefit-item {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .benefit-icon {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.1);
+        color: var(--brand-green);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.85rem;
+    }
+
+    .benefit-text {
+        font-size: 0.9rem;
+        font-weight: 500;
+        color: #cbd5e1;
+    }
+
+    /* Right Main Content Layer */
+    .auth-main-body {
+        padding: 4.5rem 4rem !important;
+    }
+
+    .custom-input-group {
+        margin-bottom: 1.5rem;
+    }
+
+    .custom-input-group label {
+        font-weight: 600;
+        color: var(--text-dark);
+        font-size: 0.85rem;
+        margin-bottom: 0.5rem;
+        display: block;
+    }
+
+    .custom-input-group .form-control {
+        border: 1px solid var(--border-color);
+        background-color: var(--input-neutral);
+        border-radius: 10px;
+        padding: 0.85rem 1.1rem;
+        color: var(--text-dark);
+        font-size: 0.95rem;
+        transition: var(--transition);
+        box-shadow: var(--shadow-sm);
+    }
+
+    .custom-input-group .form-control:focus {
+        background-color: #ffffff;
+        border-color: var(--brand-blue);
+        box-shadow: 0 0 0 4px rgba(11, 79, 163, 0.15);
+        outline: none;
+    }
+
+    .password-container {
+        position: relative;
+    }
+
+    .password-visibility-trigger {
+        position: absolute;
+        right: 1.1rem;
+        top: 50%;
+        transform: translateY(-50%);
+        color: var(--text-muted);
+        cursor: pointer;
+        background: none;
+        border: none;
+        padding: 0;
+        font-size: 0.95rem;
+    }
+
+    .password-visibility-trigger:hover {
+        color: var(--text-dark);
+    }
+
+    /* High-Conversion CTA Design */
+    .btn-action {
+        font-weight: 600;
+        font-size: 1rem;
+        padding: 0.95rem 2rem;
+        border-radius: 10px;
+        transition: var(--transition);
+        border: none;
+    }
+
+    .btn-flat-primary {
+        background-color: var(--brand-blue);
+        color: #ffffff;
+    }
+
+    .btn-flat-primary:hover {
+        background-color: #093f82;
+        box-shadow: 0 8px 20px rgba(11, 79, 163, 0.25);
+        transform: translateY(-1px);
+        color: #ffffff;
+    }
+
+    .brand-link {
+        color: var(--brand-blue);
+        transition: var(--transition);
+    }
+
+    .brand-link:hover {
+        color: var(--brand-navy);
+    }
+
+    @media (max-width: 991.98px) {
+        .auth-wrapper { margin: 2rem auto; }
+        .auth-main-body { padding: 3rem 2rem !important; }
+        .auth-sidebar { padding: 3rem 2rem; gap: 3rem; }
+        .sidebar-benefits { display: none; }
+    }
+
