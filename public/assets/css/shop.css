@@ -11,6 +11,15 @@
         --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
+    .filter-group div::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    .filter-group div::-webkit-scrollbar-thumb {
+        background: #ccc;
+        border-radius: 10px;
+    }
+
     .shop-page { background-color: var(--bg-body); padding: 40px 0 80px; font-family: 'Inter', sans-serif; }
 
     /* --- SIDEBAR --- */

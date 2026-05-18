@@ -63,7 +63,7 @@
                     <div style="margin-bottom: 24px;">
                         <label style="font-weight: 700; font-size: 0.85rem; display: block; margin-bottom: 10px;">Select Variant:</label>
                         <div style="display: flex; gap: 12px;">
-                            @foreach($product['variants'] as $index => $variant)
+                            @foreach(($product['variants'] ?? []) as $index => $variant)
                                 <div
                                     title="{{ $variant['name'] }}"
                                     style="
@@ -146,11 +146,22 @@
                         </a>
 
                         <!-- WISHLIST (UNCHANGED FUNCTIONALITY PLACEHOLDER) -->
-                        <a href="#"
-                        class="btn-action btn-outline me-2"
-                        title="Add to Wishlist">
-                            <i class="far fa-heart"></i>
-                        </a>
+                        <form action="{{ route('wishlist.add') }}" method="POST" style="display:inline;">
+                            @csrf
+
+                            <input type="hidden" name="id" value="{{ $product['id'] }}">
+                            <input type="hidden" name="name" value="{{ $product['name'] }}">
+                            <input type="hidden" name="price" value="{{ $product['new_price'] }}">
+                            <input type="hidden" name="old_price" value="{{ $product['old_price'] }}">
+                            <input type="hidden" name="image" value="{{ $product['image'] }}">
+
+                            <button type="submit"
+                                class="btn-action btn-outline me-2"
+                                title="Add to Wishlist"
+                                style="border: none; background: transparent;">
+                                <i class="far fa-heart"></i>
+                            </button>
+                        </form>
 
                         <!-- SHARE PRODUCT -->
                         <a href="#"
@@ -173,7 +184,7 @@
                     
                     <div class="thumb-grid">
 
-                        @foreach($product['thumbnails'] as $index => $thumb)
+                        @foreach(($product['thumbnails'] ?? []) as $index => $thumb)
 
                         <div class="thumb-item {{ $index == 0 ? 'active' : '' }}"
                             onclick="changeImg(this, '{{ $thumb }}')">

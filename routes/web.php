@@ -21,6 +21,26 @@ Route::delete('/wishlist/{id}', [HomeController::class, 'removeFromWishlist'])->
 Route::post('/wishlist/move/{id}', [HomeController::class, 'moveWishlistToCart'])->name('wishlist.move.single');
 Route::post('/wishlist/move-all', [HomeController::class, 'moveAllWishlistToCart'])->name('wishlist.move.all');
 
+    //LOGIN REDIRECT HELPERS
+// CART
+Route::get('/cart-login-redirect', function () {
+    session(['url.intended' => route('cart.index')]);
+    return redirect()->route('login');
+})->name('cart.login.redirect');
+
+// CHECKOUT
+Route::get('/checkout-login-redirect', function () {
+    session(['url.intended' => route('checkout')]);
+    return redirect()->route('login');
+})->name('checkout.login.redirect');
+
+
+// CUSTOMER ACCOUNT
+Route::get('/account-login-redirect', function () {
+    session(['url.intended' => route('customer.account')]);
+    return redirect()->route('login');
+})->name('account.login.redirect');
+
 //CUSTOMER AUTHENTICATION (GUEST ONLY)
 Route::middleware(['guest'])->group(function () {
     //LOGIN
@@ -46,7 +66,7 @@ Route::middleware(['auth'])->group(function () {
 
     //CHECKOUT (LOGIN REQUIRED)
     Route::get('/checkout', [HomeController::class, 'checkout'])->name('checkout');
-    Route::post('/checkout/apply-promo', [HomeController::class, 'applyPromo'])->name('checkout.apply_promo');
+    Route::match(['get', 'post'], '/checkout/apply-promo', [HomeController::class, 'applyPromo'])->name('checkout.apply_promo');
     Route::post('/checkout/process', [HomeController::class, 'checkoutProcess'])->name('checkout.process');
 
     //PAYMENT (LOGIN REQUIRED)

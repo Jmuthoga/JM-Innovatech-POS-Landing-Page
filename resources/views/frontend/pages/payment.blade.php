@@ -164,7 +164,7 @@
                                     <span class="input-group-text bg-white border-end-0 text-muted fw-semibold" style="border-color: #cbd5e1;">+254</span>
                                     <input type="tel" name="mpesa_phone" class="form-control form-control-sm shadow-none ps-2 fw-semibold" 
                                            style="border-color: #cbd5e1;" placeholder="712345678" autocomplete="tel" required
-                                           value="{{ $orderSummaryData['shipping_information']['phone'] ?? '' }}">
+                                           value="{{ $orderSummaryData['shipping_information']['shipping_phone'] ?? '' }}">
                                 </div>
                                 <div class="form-text text-muted small mt-2 d-flex gap-2 align-items-start" style="font-size: 0.8rem;">
                                     <i class="fas fa-info-circle mt-0.5"></i> 
@@ -302,10 +302,12 @@
                     <div class="mb-3 p-3 rounded" style="background-color: var(--checkout-bg-light); border: 1px solid var(--checkout-border);">
                         <span class="d-block text-uppercase fw-bold text-muted mb-1" style="font-size: 0.65rem; letter-spacing: 0.5px;">Shipping Destination</span>
                         <div class="fw-bold text-dark mb-1" style="font-size: 0.9rem;">
-                            {{ $orderSummaryData['shipping_information']['first_name'] }} {{ $orderSummaryData['shipping_information']['last_name'] }}
+                            {{ $orderSummaryData['shipping_information']['shipping_name'] ?? 'Guest Customer' }}
                         </div>
                         <div class="text-muted small lh-sm" style="font-size: 0.85rem;">
-                            {{ $orderSummaryData['shipping_information']['address'] }}, {{ ucfirst($orderSummaryData['shipping_information']['town']) }}, {{ ucfirst($orderSummaryData['shipping_information']['county']) }}
+                        {{ $orderSummaryData['shipping_information']['shipping_address'] ?? '' }},
+                        {{ ucfirst($orderSummaryData['shipping_information']['shipping_town'] ?? '') }},
+                        {{ ucfirst($orderSummaryData['shipping_information']['shipping_county'] ?? '') }}
                         </div>
                     </div>
 

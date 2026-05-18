@@ -13,35 +13,63 @@
                 <!-- 1. Expanded Shipping Information -->
                 <div class="cart-card mb-3">
                     <div class="p-3 border-bottom">
-                        <h2 class="section-title mb-0" style="font-size: 1.1rem;"><i class="fas fa-truck me-2"></i> 1. Shipping Details</h2>
+                        <h2 class="section-title mb-0" style="font-size: 1.1rem;">
+                            <i class="fas fa-truck me-2"></i> 1. Shipping Details
+                        </h2>
                     </div>
+
                     <div class="p-3">
                         <div class="row g-3">
+
+                            {{-- SHIPPING NAME --}}
                             <div class="col-md-6">
-                                <label class="form-label">First Name</label>
-                                <input type="text" name="first_name" value="{{ old('first_name', $user['first_name']) }}" class="form-control form-control-sm shadow-none" required>
+                                <label class="form-label">Shipping Name</label>
+                                <input type="text"
+                                    name="shipping_name"
+                                    value="{{ old('shipping_name', $user->shipping_name ?? '') }}"
+                                    class="form-control form-control-sm shadow-none"
+                                    required>
                             </div>
+
+                            {{-- SHIPPING PHONE --}}
                             <div class="col-md-6">
-                                <label class="form-label">Last Name</label>
-                                <input type="text" name="last_name" value="{{ old('last_name', $user['last_name']) }}" class="form-control form-control-sm shadow-none" placeholder="Doe" required>
-                            </div>
-                            <div class="col-md-6">
-                                <label class="form-label">Email Address</label>
-                                <input type="email" name="email" value="{{ old('email', $user['email']) }}" class="form-control form-control-sm shadow-none" placeholder="john@gmail.com" required>
-                            </div>
-                            <div class="col-md-6">
-                                <label class="form-label">Phone Number</label>
+                                <label class="form-label">Shipping Phone</label>
                                 <div class="input-group input-group-sm">
                                     <span class="input-group-text bg-light text-muted">+254</span>
-                                    <input type="tel" name="phone" value="{{ old('phone', $user['phone']) }}" class="form-control shadow-none" placeholder="712345678" required>
+                                    <input type="tel"
+                                        name="shipping_phone"
+                                        value="{{ old('shipping_phone', $user->shipping_phone ?? '') }}"
+                                        class="form-control shadow-none"
+                                        placeholder="712345678"
+                                        required>
                                 </div>
                             </div>
-                            <div class="col-md-12">
-                                <label class="form-label">Street Address / Apartment / Estate</label>
-                                <input type="text" name="address" value="{{ old('address', $user['address']) }}" class="form-control form-control-sm shadow-none" placeholder="e.g. Garden City, Apt 4B" required>
-                            </div>
+
+                            {{-- SHIPPING EMAIL --}}
                             <div class="col-md-6">
-                                <label class="form-label">County</label>
+                                <label class="form-label">Shipping Email</label>
+                                <input type="email"
+                                    name="shipping_email"
+                                    value="{{ old('shipping_email', $user->shipping_email ?? '') }}"
+                                    class="form-control form-control-sm shadow-none"
+                                    placeholder="john@gmail.com"
+                                    required>
+                            </div>
+
+                            {{-- SHIPPING ADDRESS --}}
+                            <div class="col-md-6">
+                                <label class="form-label">Shipping Address</label>
+                                <input type="text"
+                                    name="shipping_address"
+                                    value="{{ old('shipping_address', $user->shipping_address ?? '') }}"
+                                    class="form-control form-control-sm shadow-none"
+                                    placeholder="e.g. Garden City, Apt 4B"
+                                    required>
+                            </div>
+
+                            {{-- COUNTY --}}
+                            <div class="col-md-6">
+                                <label class="form-label">Shipping County</label>
 
                                 @php
                                     $counties = [
@@ -92,41 +120,36 @@
                                         'vihiga' => 'Vihiga',
                                         'wajir' => 'Wajir',
                                         'west-pokot' => 'West Pokot',
-                                        'others' => 'Other',
                                     ];
                                 @endphp
 
                                 <select class="form-select form-select-sm shadow-none"
-                                        name="county"
+                                        name="shipping_county"
                                         required>
 
                                     <option value="">Select County</option>
 
                                     @foreach($counties as $value => $label)
-
                                         <option value="{{ $value }}"
-                                            {{ old('county', $user['county']) == $value ? 'selected' : '' }}>
-
+                                            {{ old('shipping_county', $user->shipping_county ?? '') == $value ? 'selected' : '' }}>
                                             {{ $label }}
-
                                         </option>
-
                                     @endforeach
 
                                 </select>
                             </div>
-                            <div class="col-md-6">
-                                <label class="form-label">Town / Area</label>
-                                <input type="text" name="town" value="{{ old('town', $user['town']) }}" class="form-control form-control-sm shadow-none" placeholder="e.g. Westlands" required>
-                            </div>
-                            <div class="col-md-12">
-                                <label class="form-label">Order Notes (Optional)</label>
-                                <textarea name="notes"
-                                        class="form-control form-control-sm shadow-none"
-                                        rows="2"
-                                        placeholder="Instructions for delivery...">{{ old('notes', $user['notes']) }}</textarea>
 
+                            {{-- TOWN --}}
+                            <div class="col-md-6">
+                                <label class="form-label">Shipping Town / Area</label>
+                                <input type="text"
+                                    name="shipping_town"
+                                    value="{{ old('shipping_town', $user->shipping_town ?? '') }}"
+                                    class="form-control form-control-sm shadow-none"
+                                    placeholder="e.g. Westlands"
+                                    required>
                             </div>
+
                         </div>
                     </div>
                 </div>
@@ -134,88 +157,110 @@
                 <!-- 2. Cart Items -->
                 <div class="cart-card">
                     <div class="p-3 border-bottom">
-                        <h1 class="section-title mb-0" style="font-size: 1.1rem;"><i class="fas fa-shopping-cart me-2"></i> 2. Order Review ({{ count($cartItems) }})</h1>
+                        <h1 class="section-title mb-0" style="font-size: 1.1rem;">
+                            <i class="fas fa-shopping-cart me-2"></i>
+                            2. Order Review ({{ count($cartItems) }})
+                        </h1>
                     </div>
 
-                    @foreach($cartItems as $item)
-                        @php
-                            $discount = round((($item['old_price'] - $item['price']) / $item['old_price']) * 100);
-                            $lineTotal = $item['price'] * $item['qty'];
-                        @endphp
-                        <div class="cart-item">
-                            <div class="row align-items-center g-3">
+                    @if(count($cartItems) > 0)
 
-                                <!-- IMAGE -->
-                                <div class="col-auto">
-                                    <img src="{{ $item['image'] }}"
-                                        class="item-img border"
-                                        alt="product">
-                                </div>
+                        @foreach($cartItems as $item)
+                            @php
+                                $discount = round((($item['old_price'] - $item['price']) / $item['old_price']) * 100);
+                                $lineTotal = $item['price'] * $item['qty'];
+                            @endphp
 
-                                <!-- PRODUCT -->
-                                <div class="col">
-                                    <span class="brand-tag">
-                                        {{ $item['brand'] ?? 'Premium Product' }}
-                                    </span>
-                                    <a href="{{ route('product.show', $item['id']) }}"
+                            <div class="cart-item">
+                                <div class="row align-items-center g-3">
+
+                                    <!-- IMAGE -->
+                                    <div class="col-auto">
+                                        <img src="{{ $item['image'] }}"
+                                            class="item-img border"
+                                            alt="product">
+                                    </div>
+
+                                    <!-- PRODUCT -->
+                                    <div class="col">
+                                        <span class="brand-tag">
+                                            {{ $item['brand'] ?? 'Premium Product' }}
+                                        </span>
+
+                                        <a href="{{ route('product.show', $item['id']) }}"
                                         class="item-name mb-1 text-truncate"
                                         style="max-width: 250px;">
                                             {{ $item['name'] }}
-                                    </a>
-                                </div>
-
-                                <!-- QUANTITY -->
-                                <div class="col-auto">
-                                    <div class="qty-box">
-
-                                        <!-- DECREASE -->
-                                        <form method="POST"
-                                            action="{{ route('cart.decrease', $item['id']) }}"
-                                            class="d-inline">
-                                            @csrf
-                                            <button type="submit"
-                                                    class="qty-btn">
-                                                -
-                                            </button>
-                                        </form>
-
-                                        <!-- QTY -->
-                                        <input type="text"
-                                            class="qty-input"
-                                            value="{{ $item['qty'] }}"
-                                            readonly>
-
-                                        <!-- INCREASE -->
-                                        <form method="POST"
-                                            action="{{ route('cart.increase', $item['id']) }}"
-                                            class="d-inline">
-                                            @csrf
-                                            <button type="submit"
-                                                    class="qty-btn">
-                                                +
-                                            </button>
-                                        </form>
+                                        </a>
                                     </div>
-                                </div>
 
-                                <!-- PRICE -->
-                                <div class="col-auto text-end"
-                                    style="min-width: 120px;">
-                                    <span class="current-price">
-                                        KES {{ number_format($lineTotal) }}
-                                    </span>
-                                    <div class="d-flex justify-content-end align-items-center gap-2">
-                                        <span class="old-price">
-                                            KES {{ number_format($item['old_price']) }}
-                                        </span>
-                                        <span class="discount-pill">
-                                            -{{ $discount }}%
-                                        </span>
+                                    <!-- QUANTITY -->
+                                    <div class="col-auto">
+                                        <div class="qty-box">
+
+                                            <form method="POST"
+                                                action="{{ route('cart.decrease', $item['id']) }}"
+                                                class="d-inline">
+                                                @csrf
+                                                <button type="submit" class="qty-btn">-</button>
+                                            </form>
+
+                                            <input type="text"
+                                                class="qty-input"
+                                                value="{{ $item['qty'] }}"
+                                                readonly>
+
+                                            <form method="POST"
+                                                action="{{ route('cart.increase', $item['id']) }}"
+                                                class="d-inline">
+                                                @csrf
+                                                <button type="submit" class="qty-btn">+</button>
+                                            </form>
+
+                                        </div>
                                     </div>
+
+                                    <!-- PRICE -->
+                                    <div class="col-auto text-end" style="min-width: 120px;">
+                                        <span class="current-price">
+                                            KES {{ number_format($lineTotal) }}
+                                        </span>
+                                        <div class="d-flex justify-content-end align-items-center gap-2">
+                                            <span class="old-price">
+                                                KES {{ number_format($item['old_price']) }}
+                                            </span>
+                                            <span class="discount-pill">
+                                                -{{ $discount }}%
+                                            </span>
+                                        </div>
+                                    </div>
+
                                 </div>
                             </div>
+                        @endforeach
+
+                    @else
+
+                        <!-- EMPTY CART STATE -->
+                        <div class="p-5 text-center">
+                            <div class="mb-3">
+                                <i class="fas fa-shopping-cart" style="font-size: 3rem; color: #ccc;"></i>
+                            </div>
+
+                            <h5 class="mb-2">Your cart is currently empty</h5>
+
+                            <p class="text-muted mb-3">
+                                Looks like you haven’t added any products yet.
+                                Start shopping to see items here.
+                            </p>
+
+                            <a href="{{ route('home') }}" class="btn btn-sm"
+                            style="background-color: #0b4fa3; border-color: #0b4fa3; color: #fff;">
+                                Continue Shopping
+                            </a>
                         </div>
-                    @endforeach
+
+                    @endif
                 </div>
             </div>
 
@@ -223,37 +268,46 @@
             <div class="col-lg-4">
                 <div class="summary-sidebar">
                     
-                    <!-- Promo Code Section (Form tags removed) -->
+                    <!-- Promo Code Section -->
                     <div class="cart-card p-3 mb-3">
-                        <h2 class="section-title mb-3" style="font-size: 1rem;">Vouchers & Promos</h2>
 
-                        <div class="input-group">
-                            <input type="text"
-                                name="promo_code"
-                                value="{{ old('promo_code', $appliedPromo['code'] ?? request('promo_code')) }}"
-                                class="form-control promo-input shadow-none"
-                                placeholder="Enter Promo Code">
+                        <h2 class="section-title mb-3" style="font-size: 1rem;">
+                            Vouchers & Promos
+                        </h2>
 
-                            <!-- This button triggers a Javascript switch or alternative route submission -->
-                            <button type="submit" 
-                                    formaction="{{ route('checkout.apply_promo') }}" 
-                                    formmethod="POST" 
-                                    class="btn promo-btn shadow-none">
-                                APPLY
-                            </button>
-                        </div>
+                        <form action="{{ route('checkout.apply_promo') }}" method="POST">
+                            @csrf
+
+                            <div class="input-group">
+
+                                <input type="text"
+                                    name="promo_code"
+                                    value="{{ old('promo_code', $appliedPromo['code'] ?? request('promo_code')) }}"
+                                    class="form-control promo-input shadow-none"
+                                    placeholder="Enter Promo Code">
+
+                                <button type="submit"
+                                        class="btn promo-btn shadow-none">
+                                    APPLY
+                                </button>
+
+                            </div>
+                        </form>
 
                         @if(isset($appliedPromo) && $appliedPromo)
                             <div class="alert alert-success mt-3 mb-0 py-2 small">
-                                Congratulations! Promo Applied: <strong>{{ $appliedPromo['code'] }}</strong>. Your special discount has been deducted from your order summary total.
+                                Congratulations! Promo Applied:
+                                <strong>{{ $appliedPromo['code'] }}</strong>.
+                                Discount applied successfully.
                             </div>
                         @endif
-                        
+
                         @if(isset($promoError) && $promoError)
                             <div class="alert alert-danger mt-3 mb-0 py-2 small">
                                 {{ $promoError }}
                             </div>
                         @endif
+
                     </div>
 
                     <!-- Summary Details -->

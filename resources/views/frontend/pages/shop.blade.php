@@ -16,17 +16,21 @@
                             <a href="{{ request()->url() }}" style="font-size:0.7rem; color:red; text-decoration:none;">Clear All</a>
                         @endif
                     </div>
-                    <ul class="filter-list">
-                        @foreach($categoriesList as $cat)
-                        <li>
-                            <a href="{{ request()->fullUrlWithQuery(['category' => $cat, 'page' => 1]) }}" 
-                               class="{{ $selectedCategory == $cat ? 'active' : '' }}">
-                                {{ $cat }} 
-                                <span class="count">{{ $categoryCounts[$cat] ?? 0 }}</span>
-                            </a>
-                        </li>
-                        @endforeach
-                    </ul>
+
+                    <!-- EXACT 7 ITEMS -->
+                    <div style="max-height: calc(7 * 52px); overflow-y: auto; padding-right: 5px;">
+                        <ul class="filter-list">
+                            @foreach($categoriesList as $cat)
+                                <li>
+                                    <a href="{{ request()->fullUrlWithQuery(['category' => $cat, 'page' => 1]) }}" 
+                                    class="{{ $selectedCategory == $cat ? 'active' : '' }}">
+                                        {{ $cat }} 
+                                        <span class="count">{{ $categoryCounts[$cat] ?? 0 }}</span>
+                                    </a>
+                                </li>
+                            @endforeach
+                        </ul>
+                    </div>
                 </div>
 
                 <!-- Price Filter -->
@@ -42,31 +46,53 @@
                 <!-- Brands -->
                 <div class="filter-group">
                     <h4>Top Brands</h4>
-                    <div style="display:flex; flex-direction:column; gap:10px;">
-                        @foreach($brandsList as $brandName)
-                        <label style="font-size:0.9rem; cursor:pointer; display:flex; align-items:center; justify-content: space-between;">
-                            <div style="display:flex; align-items:center; gap:8px;">
-                                <input type="checkbox" class="brand-filter" value="{{ $brandName }}" {{ in_array($brandName, $selectedBrands) ? 'checked' : '' }}> 
-                                {{ $brandName }}
-                            </div>
-                            <span class="count">{{ $brandCounts[$brandName] ?? 0 }}</span>
-                        </label>
-                        @endforeach
+
+                    <!-- Scrollable container -->
+                    <div style="max-height: 260px; overflow-y: auto; padding-right: 5px;">
+                        <div style="display:flex; flex-direction:column; gap:10px;">
+                            @foreach($brandsList as $brandName)
+                                <label style="font-size:0.9rem; cursor:pointer; display:flex; align-items:center; justify-content: space-between;">
+                                    
+                                    <div style="display:flex; align-items:center; gap:8px;">
+                                        <input type="checkbox"
+                                            class="brand-filter"
+                                            value="{{ $brandName }}"
+                                            {{ in_array($brandName, $selectedBrands) ? 'checked' : '' }}>
+                                        {{ $brandName }}
+                                    </div>
+
+                                    <span class="count">{{ $brandCounts[$brandName] ?? 0 }}</span>
+                                </label>
+                            @endforeach
+                        </div>
                     </div>
                 </div>
 
-                <!-- NEW: Popular Products -->
+                <!-- Latest Products -->
                 <div class="filter-group">
-                    <h4>Popular Items</h4>
-                    @foreach($popularProducts as $popular)
-                    <a href="#" class="sidebar-product">
-                        <img src="{{ $popular['image'] }}" alt="Hardware">
-                        <div class="sidebar-product-info">
-                            <span class="sidebar-product-name">{{ $popular['name'] }}</span>
-                            <span class="sidebar-product-price">KSh {{ number_format($popular['new_price']) }}</span>
-                        </div>
-                    </a>
-                    @endforeach
+                    <h4>Latest Products</h4>
+
+                    <!-- Scrollable container -->
+                    <div style="max-height: 240px; overflow-y: auto; padding-right: 5px;">
+
+                        @foreach($latestProducts as $latest)
+                        <a href="{{ route('product.show', $latest['id']) }}" class="sidebar-product">
+                            
+                            <img src="{{ $latest['image'] }}" alt="{{ $latest['name'] }}">
+
+                            <div class="sidebar-product-info">
+                                <span class="sidebar-product-name">
+                                    {{ $latest['name'] }}
+                                </span>
+
+                                <span class="sidebar-product-price">
+                                    KSh {{ number_format($latest['new_price']) }}
+                                </span>
+                            </div>
+                        </a>
+                        @endforeach
+
+                    </div>
                 </div>
             </aside>
 

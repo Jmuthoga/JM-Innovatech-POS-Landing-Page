@@ -15,11 +15,16 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
+        // We comment out or remove the default generic factory creation 
+        // because it doesn't contain your mandatory multi-stage custom attributes.
+        // User::factory()->create([
+        //     'name' => 'Test User',
+        //     'email' => 'test@example.com',
+        // ]);
 
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
+        // This triggers your dedicated customer records sequentially
+        $this->call([
+            CustomerSeeder::class,
         ]);
     }
 }

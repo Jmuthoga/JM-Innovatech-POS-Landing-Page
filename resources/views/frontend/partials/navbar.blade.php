@@ -1,23 +1,4 @@
 @php
-
-    // Later, you will fetch these from your Database in your Controller:
-    // $categories = Category::where('active', true)->get();
-
-    $categories = [
-        'POS Systems',
-        'POS Accessories',
-        'Barcode Scanners',
-        'Receipt Printers',
-        'Cash Drawers',
-        'ETIMS Devices',
-        'Starlink Setup',
-        'Networking Equipment',
-        'Software Licenses'
-    ];
-
-@endphp
-
-@php
     $miniCart = session()->get('cart', []);
     $miniCartCount = collect($miniCart)->sum('qty');
     $miniSubtotal = collect($miniCart)->sum(fn($i) => $i['price'] * $i['qty']);
@@ -384,7 +365,7 @@
                                     {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
                                 </div>
                                 <div>
-                                    <h6>{{ auth()->user()->name }}</h6>
+                                    <h6>Hello, {{ auth()->user()->first_name }}</h6>
                                     <small>{{ auth()->user()->email }}</small>
                                 </div>
                             </div>
@@ -415,9 +396,14 @@
 
                 <!-- MOBILE ACCOUNT -->
                 <div class="action-item d-lg-none">
-                    <a href="{{ auth()->check() ? route('customer.account') : route('login') }}" class="action-link">
+                    <a href="javascript:void(0)"
+                    class="action-link"
+                    data-bs-toggle="offcanvas"
+                    data-bs-target="#offcanvasAccount">
+
                         <i class="fas fa-user-circle"></i>
                         <span>Account</span>
+
                     </a>
                 </div>
 
@@ -627,7 +613,9 @@
         <div class="d-grid gap-2">
 
         <!-- VIEW FULL CART -->
-        <a href="{{ auth()->check() ? route('cart.index') : route('login') }}"
+        <a href="{{ auth()->check() || session('mock_logged_in')
+            ? route('cart.index')
+            : route('cart.login.redirect') }}"
             class="btn text-white fw-bold rounded-pill py-3"
             style="background: linear-gradient(135deg, var(--jpos-blue), var(--jpos-green));">
 
@@ -866,17 +854,18 @@
 
         <div class="category-grid">
 
-            @foreach($categories as $category)
+            @foreach($categoriesList as $cat)
 
-                <a href="{{ route('shop', ['category' => is_array($category) ? $category['name'] : $category]) }}"
-                   class="category-card">
+                @php
+                    $categoryName = strtolower($cat);
+                @endphp
 
-                    @php
-                        $categoryName = strtolower(is_array($category) ? $category['name'] : $category);
-                    @endphp
+                <a href="{{ route('shop', ['category' => $cat]) }}"
+                class="category-card">
 
                     @switch($categoryName)
 
+                        {{-- POS SYSTEMS --}}
                         @case('pos systems')
                             <i class="fas fa-cash-register"></i>
                             @break
@@ -885,6 +874,7 @@
                             <i class="fas fa-plug"></i>
                             @break
 
+                        {{-- BARCODE / PRINTING --}}
                         @case('barcode scanners')
                             <i class="fas fa-barcode"></i>
                             @break
@@ -893,14 +883,21 @@
                             <i class="fas fa-print"></i>
                             @break
 
+                        @case('printers')
+                            <i class="fas fa-print"></i>
+                            @break
+
+                        {{-- CASH --}}
                         @case('cash drawers')
                             <i class="fas fa-box-open"></i>
                             @break
 
+                        {{-- ETIMS --}}
                         @case('etims devices')
                             <i class="fas fa-receipt"></i>
                             @break
 
+                        {{-- NETWORKING --}}
                         @case('starlink setup')
                             <i class="fas fa-satellite-dish"></i>
                             @break
@@ -909,18 +906,90 @@
                             <i class="fas fa-network-wired"></i>
                             @break
 
+                        @case('networking')
+                            <i class="fas fa-network-wired"></i>
+                            @break
+
+                        {{-- SOFTWARE --}}
                         @case('software licenses')
                             <i class="fas fa-laptop-code"></i>
                             @break
 
+                        @case('software')
+                            <i class="fas fa-laptop-code"></i>
+                            @break
+
+                        {{-- COMPUTERS --}}
+                        @case('computers')
+                            <i class="fas fa-desktop"></i>
+                            @break
+
+                        @case('desktop computers')
+                            <i class="fas fa-desktop"></i>
+                            @break
+
+                        @case('laptops')
+                            <i class="fas fa-laptop"></i>
+                            @break
+
+                        @case('computer accessories')
+                            <i class="fas fa-keyboard"></i>
+                            @break
+
+                        {{-- ELECTRONICS --}}
+                        @case('electronics')
+                            <i class="fas fa-microchip"></i>
+                            @break
+
+                        {{-- TV --}}
+                        @case('tv')
+                        @case('tvs')
+                        @case('televisions')
+                        @case('smart tvs')
+                            <i class="fas fa-tv"></i>
+                            @break
+
+                        {{-- PHONES --}}
+                        @case('phones')
+                        @case('smartphones')
+                        @case('mobile phones')
+                            <i class="fas fa-mobile-alt"></i>
+                            @break
+
+                        {{-- CAMERAS --}}
+                        @case('cameras')
+                            <i class="fas fa-camera"></i>
+                            @break
+
+                        {{-- GAMING --}}
+                        @case('gaming')
+                            <i class="fas fa-gamepad"></i>
+                            @break
+
+                        {{-- ACCESSORIES --}}
+                        @case('accessories')
+                            <i class="fas fa-headphones"></i>
+                            @break
+
+                        {{-- SECURITY --}}
+                        @case('cctv')
+                        @case('cctv cameras')
+                        @case('security cameras')
+                        @case('surveillance')
+                            <i class="fas fa-video"></i>
+                            @break
+
+                        @case('security systems')
+                            <i class="fas fa-shield-alt"></i>
+                            @break
+
+                        {{-- DEFAULT --}}
                         @default
                             <i class="fas fa-layer-group"></i>
 
                     @endswitch
 
-                    <span>
-                        {{ is_array($category) ? $category['name'] : $category }}
-                    </span>
+                    <span>{{ $cat }}</span>
 
                 </a>
 
@@ -967,7 +1036,7 @@
 
             </div>
 
-            <a href=""
+            <a href="{{ route('login') }}"
                class="mobile-account-link">
 
                 <i class="fas fa-sign-in-alt"></i>
@@ -975,7 +1044,7 @@
 
             </a>
 
-            <a href=""
+            <a href="{{ route('signup') }}"
                class="mobile-account-link">
 
                 <i class="fas fa-user-plus"></i>
@@ -1013,7 +1082,7 @@
                 Wishlist
             </a>
 
-            <form method="POST" action="">
+            <form method="POST" action="{{ route('logout') }}">
                 @csrf
 
                 <button type="submit" class="mobile-logout-btn">

@@ -4,522 +4,287 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Category;
+use App\Models\Brand;
+use App\Models\Slider;
+use App\Models\Product;
+use App\Models\PromoCode;
+use App\Models\Order;
+use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
+    public function __construct()
+    {
+        $cart = session()->get('cart', []);
+        $wishlist = session()->get('wishlist', []);
+
+        $categoriesList = Category::orderBy('name')->pluck('name')->all();
+
+        view()->share([
+            'miniCart' => $cart,
+            'miniCartCount' => collect($cart)->sum('qty'),
+            'miniSubtotal' => collect($cart)->sum(fn($i) => $i['price'] * $i['qty']),
+
+            'wishlist' => $wishlist,
+            'wishlistCount' => count($wishlist),
+
+            'categoriesList' => $categoriesList, // ✅ FIX HERE
+        ]);
+    }
+
     public function index()
     {
-        // ================= CATEGORIES =================
-        $categories = [
-            'POS Systems',
-            'POS Accessories',
-            'Barcode Scanners',
-            'Receipt Printers',
-            'Cash Drawers',
-            'ETIMS Devices',
-            'Starlink Setup',
-            'Networking Equipment',
-            'Software Licenses'
-        ];
-
-        // ================= SLIDERS =================
-        $sliders = [
-            [
-                'title' => 'Order POS Hardware Now',
-                'desc' => 'Get high-quality POS machines, printers, and accessories delivered fast across Kenya.',
-                'btn_text' => 'Shop Now',
-                'btn_link' => route('shop'),
-                'image' => asset('assets/images/poster.png')
-            ],
-            [
-                'title' => 'Get Starlink Internet',
-                'desc' => 'Fast, reliable satellite internet for your business anywhere in Kenya.',
-                'btn_text' => 'Get Starlink Now',
-                'btn_link' => '#',
-                'image' => asset('assets/images/starlink.webp')
-            ],
-            [
-                'title' => 'ETIMS Devices Ready',
-                'desc' => 'Compliant eTIMS solutions for seamless tax integration and reporting.',
-                'btn_text' => 'Order Now',
-                'btn_link' => '#',
-                'image' => asset('assets/images/etims.jpg')
-            ]
-        ];
-
-        // ================= IMAGE POOL (FROM SLIDERS ONLY) =================
-        $sliderImages = collect($sliders)
-            ->pluck('image')
-            ->values()
-            ->all();
-
-        $image = function ($i, $offset = 0) use ($sliderImages) {
-            return $sliderImages[($i + $offset) % count($sliderImages)];
-        };
-
-        // ================= HOT DEALS =================
-        $hotNames = [
-            'MacBook Pro Retina',
-            'HP EliteBook 840',
-            'Dell Latitude 7490',
-            'Lenovo ThinkPad X1',
-            'MacBook Air M1',
-            'iPad Pro 11',
-            'Surface Laptop 3',
-            'Asus Zenbook 14'
-        ];
-
-        $hotDeals = [];
-        for ($i = 0; $i < 8; $i++) {
-            $hotDeals[] = [
-                'name' => $hotNames[$i],
-                'category' => 'Refurbished Tech',
-                'new_price' => rand(28000, 90000),
-                'old_price' => rand(95000, 120000),
-                'image' => $image($i, 0),
+        $categories = Category::pluck('name')->all();
+        $sliders = Slider::all()->map(function($slider) {
+            return [
+                'title' => $slider->title,
+                'desc' => $slider->desc,
+                'btn_text' => $slider->btn_text,
+                'btn_link' => $slider->btn_link === 'route(shop)' ? route('shop') : $slider->btn_link,
+                'image' => asset($slider->image)
             ];
-        }
+        })->toArray();
 
-        // ================= POS EQUIPMENT =================
-        $posEquipment = [];
-        for ($i = 0; $i < 12; $i++) {
-            $posEquipment[] = [
-                'name' => 'POS Equipment ' . ($i + 1),
-                'new_price' => rand(5000, 50000),
-                'old_price' => rand(60000, 70000),
-                'image' => $image($i, 1),
-            ];
-        }
+        // Query segments structured via Database flags
+        $hotDeals = Product::where('is_hot_deal', true)->take(8)->get()->map(fn($p) => $this->transformProduct($p));
+        $posEquipment = Product::where('is_pos_equipment', true)->take(12)->get()->map(fn($p) => $this->transformProduct($p));
+        $printers = Product::whereHas('category', fn($q) => $q->where('name', 'Printers'))->take(8)->get()->map(fn($p) => $this->transformProduct($p));
+        $supplies = Product::where('is_supply_item', true)->take(12)->get()->map(fn($p) => $this->transformProduct($p));
+        $toners = Product::where('is_toner', true)->take(8)->get()->map(fn($p) => $this->transformProduct($p));
 
-        // ================= PRINTERS =================
-        $printers = [];
-        for ($i = 0; $i < 8; $i++) {
-            $printers[] = [
-                'name' => 'Printer Model ' . ($i + 1),
-                'category' => 'Printers',
-                'features' => 'PRINT • COPY • SCAN',
-                'new_price' => rand(8000, 50000),
-                'old_price' => rand(60000, 70000),
-                'image' => $image($i, 2),
-            ];
-        }
-
-        // ================= SUPPLIES =================
-        $supplies = [];
-        for ($i = 0; $i < 12; $i++) {
-            $supplies[] = [
-                'name' => 'Supply Item ' . ($i + 1),
-                'features' => 'HIGH QUALITY • DURABLE',
-                'new_price' => rand(100, 3000),
-                'old_price' => rand(4000, 5000),
-                'image' => $image($i, 3),
-            ];
-        }
-
-        // ================= TONERS =================
-        $toners = [];
-        for ($i = 0; $i < 8; $i++) {
-            $toners[] = [
-                'name' => 'Toner Model ' . ($i + 1),
-                'brand' => 'HP / Canon / Epson',
-                'features' => 'HIGH YIELD • SHARP PRINT',
-                'new_price' => rand(2000, 8000),
-                'old_price' => rand(9000, 12000),
-                'image' => $image($i, 4),
-            ];
-        }
-
-        return view('frontend.home', compact(
-            'categories',
-            'sliders',
-            'hotDeals',
-            'posEquipment',
-            'printers',
-            'supplies',
-            'toners'
-        ));
+        return view('frontend.home', compact('categories', 'sliders', 'hotDeals', 'posEquipment', 'printers', 'supplies', 'toners'));
     }
+
     public function shop(Request $request)
     {
-        $brandsList = ['HP', 'Epson', 'Zebra', 'Honeywell'];
-        $categoriesList = ['POS Systems', 'Thermal Printers', 'Barcode Scanners', 'Cash Drawers'];
+        $brandsList = Brand::pluck('name')->all();
+        $categoriesList = Category::orderBy('name')->pluck('name')->all();
+        $latestProducts = Category::with(['products' => function ($query) {
+            $query->latest()->limit(1);
+        }])
+            ->orderBy('name')
+            ->get()
+            ->map(function ($category) {
+                $product = $category->products->first();
 
-        $allProducts = [];
+                return $product ? $this->transformProduct($product) : null;
+            })
+            ->filter()
+            ->values()
+            ->toArray();
 
-        for ($i = 1; $i <= 60; $i++) {
-            $allProducts[] = [
-                'id' => $i,
-                'name' => 'POS Terminal Pro Gen ' . $i,
-                'new_price' => rand(15000, 45000),
-                'old_price' => rand(46000, 55000),
-                'category' => $categoriesList[array_rand($categoriesList)],
-                'brand' => $brandsList[array_rand($brandsList)],
-                'image' => asset('assets/images/pos.png'),
-            ];
+
+        $query = Product::with(['category', 'brand']);
+
+        // Database-driven Filter Mechanics
+        if ($request->filled('max_price')) {
+            $query->where('new_price', '<=', $request->max_price);
+        }
+        if ($request->filled('brands')) {
+            $query->whereHas('brand', fn($q) => $q->whereIn('name', $request->brands));
+        }
+        if ($request->filled('category')) {
+            $query->whereHas('category', fn($q) => $q->where('name', $request->category));
+        }
+        if ($request->filled('search')) {
+            $query->where('name', 'LIKE', '%' . $request->search . '%');
         }
 
-        // Filters
-        $maxPriceFilter = $request->get('max_price', 100000);
-        $selectedBrands = $request->get('brands', []);
-        $selectedCategory = $request->get('category');
-        $searchTerm = $request->get('search');
-
-        $filteredProducts = array_filter($allProducts, function ($product) use (
-            $maxPriceFilter,
-            $selectedBrands,
-            $selectedCategory,
-            $searchTerm
-        ) {
-            $priceMatch = $product['new_price'] <= $maxPriceFilter;
-            $brandMatch = empty($selectedBrands) || in_array($product['brand'], $selectedBrands);
-            $catMatch = empty($selectedCategory) || $product['category'] === $selectedCategory;
-
-            $searchMatch = true;
-            if (!empty($searchTerm)) {
-                $searchMatch = stripos($product['name'], $searchTerm) !== false;
-            }
-
-            return $priceMatch && $brandMatch && $catMatch && $searchMatch;
-        });
-
+        $allProducts = Product::with(['category', 'brand'])->get()->map(fn($p) => $this->transformProduct($p))->toArray();
+        
         $currentGrid = $request->get('grid', 4);
-        $currentPage = $request->get('page', 1);
         $perPage = ($currentGrid == 3) ? 21 : 20;
-
-        $offset = ($currentPage - 1) * $perPage;
-        $products = array_slice($filteredProducts, $offset, $perPage);
-
-        $totalPages = ceil(count($filteredProducts) / $perPage);
-
-        $popularProducts = array_slice($allProducts, 0, 3);
+        
+        // Native DB Pagination substitution
+        $paginator = $query->paginate($perPage)->appends($request->all());
+        $products = collect($paginator->items())->map(fn($p) => $this->transformProduct($p))->toArray();
+        
+        $totalPages = $paginator->lastPage();
+        $currentPage = $paginator->currentPage();
 
         $categoryCounts = array_count_values(array_column($allProducts, 'category'));
         $brandCounts = array_count_values(array_column($allProducts, 'brand'));
 
-        return view('frontend.pages.shop', compact(
-            'products',
-            'allProducts',
-            'popularProducts',
-            'brandsList',
-            'categoriesList',
-            'categoryCounts',
-            'brandCounts',
-            'currentGrid',
-            'currentPage',
-            'totalPages',
-            'maxPriceFilter',
-            'selectedBrands',
-            'selectedCategory'
-        ));
+        // Fixed compact syntax crash by passing explicit array maps to view layers
+        return view('frontend.pages.shop', [
+            'products'         => $products,
+            'allProducts'      => $allProducts,
+            'brandsList'       => $brandsList,
+            'categoriesList'   => $categoriesList,
+            'categoryCounts'   => $categoryCounts,
+            'brandCounts'      => $brandCounts,
+            'currentGrid'      => $currentGrid,
+            'currentPage'      => $currentPage,
+            'totalPages'       => $totalPages,
+            'maxPriceFilter'   => $request->get('max_price', 100000),
+            'selectedBrands'   => $request->get('brands', []),
+            'selectedCategory' => $request->get('category'),
+            'latestProducts'   => $latestProducts,
+        ]);
     }
 
     public function product($id)
     {
-        $brandsList = ['HP', 'Epson', 'Zebra', 'Honeywell'];
+        $productModel = Product::with(['category', 'brand'])->findOrFail($id);
 
-        $categoriesList = [
-            'POS Systems',
-            'Thermal Printers',
-            'Barcode Scanners',
-            'Cash Drawers'
+        $product = $this->transformProduct($productModel);
+
+        $product['description'] = $productModel->description;
+        $product['stock'] = $productModel->stock;
+
+        $product['flash_sale_ends'] = $productModel->flash_sale_ends
+            ? $productModel->flash_sale_ends->timestamp
+            : null;
+
+        $product['thumbnails'] = !empty($productModel->thumbnails)
+            ? array_map(fn($t) => asset($t), $productModel->thumbnails)
+            : [asset($productModel->image)];
+
+        $product['variants'] = $productModel->variants ?? [
+            [
+                'name' => 'Default Black',
+                'color' => '#000000'
+            ]
         ];
 
-        $variants = [
-            [
-                'name' => 'Midnight Black',
-                'color' => '#1e293b'
-            ],
-            [
-                'name' => 'Silver Mist',
-                'color' => '#e2e8f0'
-            ],
-            [
-                'name' => 'Ocean Blue',
-                'color' => '#0B4FA3'
-            ],
-        ];
-
-        $products = [];
-
-        for ($i = 1; $i <= 60; $i++) {
-
-            $newPrice = rand(15000, 45000);
-            $oldPrice = rand($newPrice + 2000, $newPrice + 12000);
-
-            $products[] = [
-                'id' => $i,
-
-                'name' => 'POS Terminal Pro Gen ' . $i,
-
-                'new_price' => $newPrice,
-
-                'old_price' => $oldPrice,
-
-                'category' => $categoriesList[array_rand($categoriesList)],
-
-                'brand' => $brandsList[array_rand($brandsList)],
-
-                'description' => 'High quality POS system suitable for retail environments.',
-
-                'stock' => rand(3, 40),
-
-                'flash_sale_ends' => now()->addHours(rand(3, 24))->timestamp,
-
-                'image' => asset('assets/images/pos.png'),
-
-                'thumbnails' => [
-                    asset('assets/images/poster.png'),
-                    asset('assets/images/pos.png'),
-                    asset('assets/images/poster.png'),
-                    asset('assets/images/pos.png'),
-                ],
-
-                'variants' => $variants,
-            ];
-        }
-
-        $product = collect($products)->firstWhere('id', (int) $id);
-
-        abort_if(!$product, 404);
-
-        /**
-         * AUTO DISCOUNT
-         */
-        $oldPrice = $product['old_price'] ?? 0;
-        $newPrice = $product['new_price'] ?? 0;
-
-        $discount = ($oldPrice > 0)
-            ? round((($oldPrice - $newPrice) / $oldPrice) * 100)
+        $discount = ($productModel->old_price > 0)
+            ? round((($productModel->old_price - $productModel->new_price) / $productModel->old_price) * 100)
             : 0;
 
-        /**
-         * RELATED PRODUCTS
-         */
-        $related_products = [];
+        $related_products = Product::where('id', '!=', $id)
+            ->where('category_id', $productModel->category_id)
+            ->take(16)
+            ->get()
+            ->map(fn($p) => [
+                'name' => $p->name,
+                'image' => asset($p->image),
+                'new_price' => $p->new_price,
+                'url' => route('product.show', $p->id)
+            ])->toArray();
 
-        foreach ($products as $related) {
-
-            if ($related['id'] != $product['id']) {
-
-                $related_products[] = [
-                    'name' => $related['name'],
-                    'image' => $related['image'],
-                    'new_price' => $related['new_price'],
-                    'url' => route('product.show', $related['id']),
-                ];
-            }
-        }
-
-        $related_products = array_slice($related_products, 0, 16);
-
-        return view('frontend.pages.product', compact(
-            'product',
-            'discount',
-            'related_products'
-        ));
+        return view('frontend.pages.product', compact('product', 'discount', 'related_products'));
     }
 
-    // Add this helper logic inside your HomeController class
+    private function transformProduct($p) {
+        return [
+            'id' => $p->id,
+            'name' => $p->name,
+            'category' => $p->category->name ?? 'Uncategorized',
+            'brand' => $p->brand->name ?? 'Generic',
+            'new_price' => $p->new_price,
+            'old_price' => $p->old_price,
+            'features' => $p->features,
+            'image' => asset($p->image),
+        ];
+    }
+
     private function calculateCartTotals($promoCode = '')
     {
-        $shipping = [
-            'standard_fee' => 250,
-            'express_fee'  => 600,
-            'free_shipping_minimum' => 50000,
-        ];
-
-        $promoCodes = [
-            ['code' => 'JMTECH10', 'type' => 'percentage', 'discount' => 10],
-            ['code' => 'FREE500', 'type' => 'fixed', 'discount' => 500],
-        ];
-
-        // 🔥 GET REAL CART FROM SESSION
+        $shipping = ['standard_fee' => 250, 'free_shipping_minimum' => 50000];
         $cartItems = session()->get('cart', []);
-
         $subtotal = collect($cartItems)->sum(fn($i) => $i['price'] * $i['qty']);
-
-        $shippingFee = ($subtotal >= $shipping['free_shipping_minimum'])
-            ? 0
-            : $shipping['standard_fee'];
+        $shippingFee = ($subtotal >= $shipping['free_shipping_minimum']) ? 0 : $shipping['standard_fee'];
 
         $discountAmount = 0;
         $appliedPromo = null;
         $promoError = null;
-
         $promoCode = trim($promoCode);
 
         if ($promoCode !== '') {
-
             if (strlen($promoCode) > 12) {
                 $promoError = "Promo code is too long.";
             } else {
-
-                $matched = collect($promoCodes)->first(function ($promo) use ($promoCode) {
-                    return strtoupper($promo['code']) === strtoupper($promoCode);
-                });
-
+                $matched = PromoCode::where('code', $promoCode)->first();
                 if ($matched) {
-                    $appliedPromo = $matched;
-
-                    $discountAmount = $matched['type'] === 'percentage'
-                        ? ($subtotal * $matched['discount']) / 100
-                        : $matched['discount'];
+                    $appliedPromo = $matched->toArray();
+                    $discountAmount = $matched->type === 'percentage' 
+                        ? ($subtotal * $matched->discount) / 100 
+                        : $matched->discount;
                 } else {
                     $promoError = "Invalid promo code.";
                 }
             }
         }
 
-        $total = max(($subtotal + $shippingFee) - $discountAmount, 0);
-
         return [
-            'cartItems' => $cartItems,
-            'shippingFee' => $shippingFee,
-            'subtotal' => $subtotal,
-            'discountAmount' => $discountAmount,
-            'total' => $total,
-            'appliedPromo' => $appliedPromo,
-            'promoError' => $promoError
+            'cartItems' => $cartItems, 'shippingFee' => $shippingFee, 'subtotal' => $subtotal,
+            'discountAmount' => $discountAmount, 'total' => max(($subtotal + $shippingFee) - $discountAmount, 0),
+            'appliedPromo' => $appliedPromo, 'promoError' => $promoError
         ];
     }
-
 
     public function cart(Request $request)
     {
-        $user = [
-            'first_name' => 'John',
-            'last_name'  => 'Muthoga',
-            'email'      => 'john@gmail.com',
-            'phone'      => '712345678',
-            'address'    => 'Garden Estate Apartment B12',
-            'county'     => 'nyeri',
-            'town'       => 'Nyeri Town',
-            'notes'      => 'Call before delivery',
-        ];
+        if (!auth()->check()) {
+            return redirect()->route('login')->with('error', 'Please login first');
+        }
 
-        $promoCode = $request->input('promo_code', '');
-        $totals = $this->calculateCartTotals($promoCode);
+        $user = auth()->user();
 
-        return view('frontend.pages.cart', array_merge(['user' => $user], $totals));
-    }
-
-    // ================= CART CORE =================
-
-    private function getCart()
-    {
-        return session()->get('cart', []);
-    }
-
-    private function saveCart($cart)
-    {
-        session()->put('cart', $cart);
-    }
-
-    private function cartCount($cart)
-    {
-        return collect($cart)->sum('qty');
-    }
-
-    private function cartTotal($cart)
-    {
-        return collect($cart)->sum(fn($i) => $i['price'] * $i['qty']);
+        return view('frontend.pages.cart', array_merge(
+            ['user' => $user],
+            $this->calculateCartTotals($request->input('promo_code', ''))
+        ));
     }
 
     public function addToCart(Request $request)
     {
-        $cart = $this->getCart();
-
-        $id = $request->id;
+        $request->validate(['id' => 'required|exists:products,id']);
+        
+        // Secured pricing against client manipulation by looking up DB definitions directly
+        $product = Product::findOrFail($request->id);
+        $cart = session()->get('cart', []);
+        $id = $product->id;
 
         if (isset($cart[$id])) {
-
             $cart[$id]['qty'] += 1;
         } else {
-
             $cart[$id] = [
-                'id' => $id,
-                'name' => $request->name,
-                'price' => $request->price,
-                'old_price' => $request->old_price,
-                'image' => $request->image,
+                'id' => $id, 
+                'name' => $product->name, 
+                'price' => $product->new_price, 
+                'old_price' => $product->old_price, 
+                'image' => asset($product->image), 
                 'qty' => 1
             ];
         }
-
-        $this->saveCart($cart);
-
-        return redirect()->back()
-            ->with('success', 'Product added to cart successfully.');
+        session()->put('cart', $cart);
+        return redirect()->back()->with('success', 'Product added to cart successfully.');
     }
 
-    public function increaseCart($id)
-    {
+    public function increaseCart($id) {
         $cart = session()->get('cart', []);
-
-        if (isset($cart[$id])) {
-            $cart[$id]['qty']++;
-        }
-
+        if (isset($cart[$id])) $cart[$id]['qty']++;
         session()->put('cart', $cart);
-
         return back();
     }
 
-    public function decreaseCart($id)
-    {
+    public function decreaseCart($id) {
         $cart = session()->get('cart', []);
-
         if (isset($cart[$id])) {
             $cart[$id]['qty']--;
-
-            if ($cart[$id]['qty'] <= 0) {
-                unset($cart[$id]);
-            }
+            if ($cart[$id]['qty'] <= 0) unset($cart[$id]);
         }
-
         session()->put('cart', $cart);
-
         return back();
     }
 
-    public function removeFromCart($id)
-    {
+    public function removeFromCart($id) {
         $cart = session()->get('cart', []);
-
-        if (isset($cart[$id])) {
-            unset($cart[$id]);
-            session()->put('cart', $cart);
-        }
-
+        if (isset($cart[$id])) { unset($cart[$id]); session()->put('cart', $cart); }
         return back();
     }
 
-    // ================= WISHLIST CORE =================
-
-    private function getWishlist()
-    {
-        return session()->get('wishlist', []);
-    }
-
-    private function saveWishlist($wishlist)
-    {
-        session()->put('wishlist', $wishlist);
-    }
-
-    private function wishlistCount($wishlist)
-    {
-        return collect($wishlist)->count();
-    }
-
-    public function __construct()
-    {
-        view()->share('wishlist', session()->get('wishlist', []));
-        view()->share('wishlistCount', collect(session()->get('wishlist', []))->count());
-    }
-
+    // ================= WISHLIST =================
     public function addToWishlist(Request $request)
     {
-        $wishlist = $this->getWishlist();
+        $request->validate([
+            'id' => 'required'
+        ]);
+
+        $wishlist = session()->get('wishlist', []);
+
         $id = $request->id;
 
         if (!isset($wishlist[$id])) {
@@ -532,39 +297,37 @@ class HomeController extends Controller
             ];
         }
 
-        $this->saveWishlist($wishlist);
+        session()->put('wishlist', $wishlist);
 
         return back()->with('success', 'Added to wishlist');
     }
 
     public function removeFromWishlist($id)
     {
-        $wishlist = $this->getWishlist();
+        $wishlist = session()->get('wishlist', []);
 
         if (isset($wishlist[$id])) {
             unset($wishlist[$id]);
+            session()->put('wishlist', $wishlist);
         }
 
-        $this->saveWishlist($wishlist);
-
-        return back();
+        return back()->with('success', 'Removed from wishlist');
     }
 
     public function moveWishlistToCart($id)
     {
-        $wishlist = $this->getWishlist();
-        $cart = $this->getCart();
+        $wishlist = session()->get('wishlist', []);
+        $cart = session()->get('cart', []);
 
         if (isset($wishlist[$id])) {
-
             $item = $wishlist[$id];
 
-            // add to cart (same logic as addToCart)
+            // Add to cart or increase qty
             if (isset($cart[$id])) {
                 $cart[$id]['qty'] += 1;
             } else {
                 $cart[$id] = [
-                    'id' => $item['id'],
+                    'id' => $id,
                     'name' => $item['name'],
                     'price' => $item['price'],
                     'old_price' => $item['old_price'],
@@ -576,16 +339,16 @@ class HomeController extends Controller
             unset($wishlist[$id]);
         }
 
-        $this->saveCart($cart);
-        $this->saveWishlist($wishlist);
+        session()->put('wishlist', $wishlist);
+        session()->put('cart', $cart);
 
-        return back()->with('success', 'Moved to cart');
+        return back()->with('success', 'Item moved to cart');
     }
 
     public function moveAllWishlistToCart()
     {
-        $wishlist = $this->getWishlist();
-        $cart = $this->getCart();
+        $wishlist = session()->get('wishlist', []);
+        $cart = session()->get('cart', []);
 
         foreach ($wishlist as $id => $item) {
 
@@ -593,7 +356,7 @@ class HomeController extends Controller
                 $cart[$id]['qty'] += 1;
             } else {
                 $cart[$id] = [
-                    'id' => $item['id'],
+                    'id' => $id,
                     'name' => $item['name'],
                     'price' => $item['price'],
                     'old_price' => $item['old_price'],
@@ -603,180 +366,124 @@ class HomeController extends Controller
             }
         }
 
-        // empty wishlist
+        session()->put('cart', $cart);
         session()->forget('wishlist');
 
-        $this->saveCart($cart);
-
-        return back()->with('success', 'All wishlist items moved to cart');
+        return back()->with('success', 'Wishlist moved to cart');
     }
 
     public function applyPromo(Request $request)
     {
-        // Rebuild user array using old submitted form input data
-        $user = [
-            'first_name' => $request->input('first_name'),
-            'last_name'  => $request->input('last_name'),
-            'email'      => $request->input('email'),
-            'phone'      => $request->input('phone'),
-            'address'    => $request->input('address'),
-            'county'     => $request->input('county'),
-            'town'       => $request->input('town'),
-            'notes'      => $request->input('notes'),
-        ];
+        $totals = $this->calculateCartTotals($request->input('promo_code', ''));
 
-        $promoCode = $request->input('promo_code', '');
-        $totals = $this->calculateCartTotals($promoCode);
-
-        // Flash data to input state so old() helper preserves inputs on return
         $request->flash();
 
-        return view('frontend.pages.cart', array_merge(['user' => $user], $totals));
+        return view('frontend.pages.cart', array_merge([
+            'user' => $user
+        ], $totals));
     }
-
-    // Update your checkout tracking process
 
     public function checkoutProcess(Request $request)
     {
-        $promoCode = $request->input('promo_code', '');
-        $totals = $this->calculateCartTotals($promoCode);
+        $totals = $this->calculateCartTotals($request->input('promo_code', ''));
 
-        // Compile everything into a unified array
-        $orderSummaryData = [
-            'shipping_information' => $request->only(['first_name', 'last_name', 'email', 'phone', 'address', 'county', 'town', 'notes']),
-            'cart_items'           => $totals['cartItems'],
-            'subtotal'             => $totals['subtotal'],
-            'shipping_fee'         => $totals['shippingFee'],
-            'discount_applied'     => $totals['discountAmount'],
-            'net_total'            => $totals['net_total'] ?? $totals['total'], // Fallback if keys mismatch
-            'promo_used'           => $totals['appliedPromo'] ? $totals['appliedPromo']['code'] : null,
-        ];
+        $user = auth()->user();
 
-        // Put the data into the session safely
-        session(['pending_order' => $orderSummaryData]);
+        session(['pending_order' => [
+            'shipping_information' => [
+                'shipping_name'    => $user->shipping_name,
+                'shipping_email'   => $user->shipping_email,
+                'shipping_phone'   => $user->shipping_phone,
+                'shipping_address' => $user->shipping_address,
+                'shipping_county'  => $user->shipping_county,
+                'shipping_town'    => $user->shipping_town,
+            ],
 
-        // REDIRECT to the secure GET payment view route
+            'cart_items' => $totals['cartItems'],
+            'subtotal' => $totals['subtotal'],
+            'shipping_fee' => $totals['shippingFee'],
+            'discount_applied' => $totals['discountAmount'],
+            'net_total' => $totals['total'],
+            'promo_used' => $totals['appliedPromo']['code'] ?? null,
+        ]]);
+
         return redirect()->route('checkout.payment');
     }
 
-    // 2. Safely render the payment page (Refreshable via GET)
     public function paymentPage()
     {
-        // Pull data from session
-        $orderSummaryData = session('pending_order');
-
-        // If the user directly types the URL or session expires, send them back to shop/cart safely
-        if (!$orderSummaryData) {
-            return redirect()->route('shop')->with('error', 'Your checkout session has expired. Please try again.');
-        }
-
-        // Return your isolated layout file
-        return view('frontend.pages.payment', compact('orderSummaryData'));
-    }
-
-    // Add this new method to handle the final chosen payment submission
-    public function paymentSubmit(Request $request)
-    {
-        $request->validate([
-            'payment_method' => 'required|in:mpesa,card,airtel,cod',
-            'mpesa_phone'    => 'required_if:payment_method,mpesa',
-        ]);
-
         $orderSummaryData = session('pending_order');
 
         if (!$orderSummaryData) {
             return redirect()->route('shop')
-                ->with('error', 'Your session expired. Please try again.');
+                ->with('error', 'Your checkout session has expired.');
         }
 
-        $paymentMethod = $request->payment_method;
+        // Normalize shipping data safely (prevents undefined indexes)
+        $orderSummaryData['shipping_information'] = array_merge([
+            'shipping_name'    => '',
+            'shipping_email'   => '',
+            'shipping_phone'   => '',
+            'shipping_address' => '',
+            'shipping_county'  => '',
+            'shipping_town'    => '',
+        ], $orderSummaryData['shipping_information'] ?? []);
 
-        /*
-    |--------------------------------------------------------------------------
-    | PAY ON DELIVERY
-    |--------------------------------------------------------------------------
-    */
-
-        if ($paymentMethod === 'cod') {
-
-            // ONLY SHIPPING FEE IS PAID NOW
-            $shippingFee = $orderSummaryData['shipping_fee'];
-
-            // MOCK ORDER STORAGE
-            $orders = session()->get('customer_orders', []);
-
-            $orders[] = [
-                'order_number' => 'ORD-' . rand(100000, 999999),
-                'status' => 'Pending Delivery Payment',
-                'payment_method' => 'Pay on Delivery',
-
-                'payment_status' => 'pending',
-                'delivery_status' => 'processing',
-                'invoice_number' => 'INV-' . rand(10000, 99999),
-
-                'shipping_paid' => $shippingFee,
-                'amount_due_on_delivery' => $orderSummaryData['net_total'] - $shippingFee,
-                'total_order_amount' => $orderSummaryData['net_total'],
-                'created_at' => now()->format('d M Y H:i'),
-                'items' => $orderSummaryData['cart_items'],
-
-                'customer_note' => $orderSummaryData['shipping_information']['notes'] ?? null,
-            ];
-
-            session()->put('customer_orders', $orders);
-
-            // CLEAR CART
-            session()->forget('cart');
-            session()->forget('pending_order');
-
-            return redirect()->route('customer.account')
-                ->with('success', 'Order placed successfully. Pay remaining balance after delivery.');
-        }
-
-        /*
-    |--------------------------------------------------------------------------
-    | MPESA
-    |--------------------------------------------------------------------------
-    */
-
-        if ($paymentMethod === 'mpesa') {
-
-            $phone = $request->mpesa_phone;
-
-            // STK PUSH WILL COME HERE
-        }
-
-        /*
-    |--------------------------------------------------------------------------
-    | CARD / AIRTEL MOCK
-    |--------------------------------------------------------------------------
-    */
-
-        $orders = session()->get('customer_orders', []);
-
-        $orders[] = [
-            'order_number' => 'ORD-' . rand(100000, 999999),
-            'status' => 'Paid',
-            'payment_method' => strtoupper($paymentMethod),
-
-            'payment_status' => 'paid',
-            'delivery_status' => 'processing',
-            'invoice_number' => 'INV-' . rand(10000, 99999),
-
-            'total_order_amount' => $orderSummaryData['net_total'],
-            'created_at' => now()->format('d M Y H:i'),
-            'items' => $orderSummaryData['cart_items'],
-            'shipping_information' => $orderSummaryData['shipping_information'],
-            'customer_note' => $orderSummaryData['shipping_information']['notes'] ?? null,
-        ];
-
-        session()->put('customer_orders', $orders);
-
-        session()->forget('cart');
-        session()->forget('pending_order');
-
-        return redirect()->route('customer.account')
-            ->with('success', 'Payment completed successfully.');
+        return view('frontend.pages.payment', compact('orderSummaryData'));
     }
 
+    public function paymentSubmit(Request $request)
+    {
+        $request->validate([
+            'payment_method' => 'required|in:mpesa,card,airtel,cod',
+            'mpesa_phone' => 'required_if:payment_method,mpesa',
+        ]);
+
+        $orderSummaryData = session('pending_order');
+        if (!$orderSummaryData) return redirect()->route('shop')->with('error', 'Your session expired.');
+
+        // Database transactional insertion write logic
+        DB::transaction(function () use ($request, $orderSummaryData) {
+            $shippingInfo = $orderSummaryData['shipping_information'];
+            $isCod = $request->payment_method === 'cod';
+
+            $order = Order::create([
+                'user_id' => auth()->id(),
+                'order_number' => 'ORD-' . rand(100000, 999999),
+                'invoice_number' => 'INV-' . rand(10000, 99999),
+                'status' => $isCod ? 'Pending Delivery Payment' : 'Paid',
+                'payment_method' => $request->payment_method,
+                'payment_status' => $isCod ? 'pending' : 'paid',
+                'delivery_status' => 'processing',
+                'subtotal' => $orderSummaryData['subtotal'],
+                'shipping_fee' => $orderSummaryData['shipping_fee'],
+                'discount_applied' => $orderSummaryData['discount_applied'],
+                'total_order_amount' => $orderSummaryData['net_total'],
+                'shipping_paid' => $isCod ? $orderSummaryData['shipping_fee'] : $orderSummaryData['net_total'],
+                'amount_due_on_delivery' => $isCod ? ($orderSummaryData['net_total'] - $orderSummaryData['shipping_fee']) : 0,
+                'first_name' => $shippingInfo['first_name'] ?? '',
+                'last_name' => $shippingInfo['last_name'] ?? '',
+                'email' => $shippingInfo['email'] ?? '',
+                'phone' => $shippingInfo['phone'] ?? '',
+                'address' => $shippingInfo['address'] ?? '',
+                'county' => $shippingInfo['county'] ?? '',
+                'town' => $shippingInfo['town'] ?? '',
+                'customer_note' => $shippingInfo['notes'] ?? null,
+                'promo_used' => $orderSummaryData['promo_used']
+            ]);
+
+            foreach ($orderSummaryData['cart_items'] as $item) {
+                $order->items()->create([
+                    'product_id' => $item['id'],
+                    'name' => $item['name'],
+                    'price' => $item['price'],
+                    'qty' => $item['qty'],
+                    'image' => $item['image']
+                ]);
+            }
+        });
+
+        session()->forget(['cart', 'pending_order']);
+        return redirect()->route('customer.account')->with('success', 'Order recorded into database successfully.');
+    }
 }

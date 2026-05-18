@@ -166,7 +166,7 @@
                         </span>
                         <span class="text-white-50 small">&bull; ID: #{{ str_pad($customer['id'] ?? '1', 6, '0', STR_PAD_LEFT) }}</span>
                     </div>
-                    <h1 class="h3 fw-bold tracking-tight text-white mb-1">Welcome Back, {{ $customer['name'] }}</h1>
+                    <h1 class="h3 fw-bold tracking-tight text-white mb-1">Welcome Back, {{ $customer['first_name'] }} {{ $customer['last_name'] }}</h1>
                     <p class="text-white-50 small mb-0 opacity-85">Manage your active procurement contracts, update dispatch locations, and request immediate parcel status audits.</p>
                 </div>
                 <div class="col-12 col-md-5 text-md-end">
@@ -193,7 +193,7 @@
                             {{ strtoupper(substr($customer['name'], 0, 2)) }}
                         </div>
                         <div class="overflow-hidden">
-                            <h6 class="fw-bold text-dark mb-0 text-truncate" style="font-size: 0.95rem;">{{ $customer['name'] }}</h6>
+                            <h6 class="fw-bold text-dark mb-0 text-truncate" style="font-size: 0.95rem;">{{ $customer['first_name'] }} {{ $customer['last_name'] }}</h6>
                             <p class="small text-muted text-truncate mb-0" style="font-size: 0.8rem;">{{ $customer['email'] }}</p>
                         </div>
                     </div>
@@ -524,7 +524,7 @@
                 <!-- ================= PANEL 3: SHIPPING COORDINATES (EDITABLE) ================= -->
                 <div id="tab-panel-profile" class="tab-panel d-flex flex-column gap-4 d-none">
                     <div class="account-card p-4">
-                        <form action="#" method="POST" id="profileUpdateForm">
+                        <form action="{{ route('customer.profile.update') }}" method="POST" id="profileUpdateForm">
                             @csrf
                             <div class="d-flex align-items-center justify-content-between pb-3 mb-4" style="border-bottom: 1px solid var(--border-color);">
                                 <div>
@@ -538,33 +538,38 @@
 
                             <div class="row g-3">
                                 <div class="col-12 col-sm-6">
-                                    <label class="d-block small fw-bold text-uppercase tracking-wider mb-1.5 text-muted" style="font-size: 0.75rem;">Customer Name</label>
-                                    <input type="text" name="name" class="form-control form-control-muted bg-light border rounded-2 small" value="{{ $customer['shipping_name'] }}" disabled required>
+                                    <label class="d-block small fw-bold text-uppercase tracking-wider mb-1.5 text-muted" style="font-size: 0.75rem;">Customer First Name</label>
+                                    <input type="text" name="name" class="form-control form-control-muted bg-light border rounded-2 small" value="{{ $customer['first_name'] }}" disabled required>
                                 </div>
 
                                 <div class="col-12 col-sm-6">
-                                    <label class="d-block small fw-bold text-uppercase tracking-wider mb-1.5 text-muted" style="font-size: 0.75rem;">Email Identity</label>
-                                    <input type="email" name="email" class="form-control form-control-muted bg-light border rounded-2 small" value="{{ $customer['shipping_email'] }}" disabled required>
+                                    <label class="d-block small fw-bold text-uppercase tracking-wider mb-1.5 text-muted" style="font-size: 0.75rem;">Customer Last Name</label>
+                                    <input type="text" name="name" class="form-control form-control-muted bg-light border rounded-2 small" value="{{ $customer['last_name'] }}" disabled required>
                                 </div>
 
                                 <div class="col-12 col-sm-6">
-                                    <label class="d-block small fw-bold text-uppercase tracking-wider mb-1.5 text-muted" style="font-size: 0.75rem;">Phone Line Contact</label>
-                                    <input type="text" name="phone" class="form-control form-control-muted bg-light border rounded-2 small" value="{{ $customer['shipping_phone'] }}" disabled required>
+                                    <label class="d-block small fw-bold text-uppercase tracking-wider mb-1.5 text-muted" style="font-size: 0.75rem;">Customer Email</label>
+                                    <input type="email" name="email" class="form-control form-control-muted bg-light border rounded-2 small" value="{{ $customer['email'] }}" disabled required>
                                 </div>
 
                                 <div class="col-12 col-sm-6">
-                                    <label class="d-block small fw-bold text-uppercase tracking-wider mb-1.5 text-muted" style="font-size: 0.75rem;">Fulfillment Street / Building Address</label>
-                                    <input type="text" name="address" class="form-control form-control-muted bg-light border rounded-2 small" value="{{ $customer['shipping_address'] }}" disabled required>
+                                    <label class="d-block small fw-bold text-uppercase tracking-wider mb-1.5 text-muted" style="font-size: 0.75rem;">Phone Contact</label>
+                                    <input type="text" name="phone" class="form-control form-control-muted bg-light border rounded-2 small" value="{{ $customer['phone'] }}" disabled required>
                                 </div>
 
                                 <div class="col-12 col-sm-6">
-                                    <label class="d-block small fw-bold text-uppercase tracking-wider mb-1.5 text-muted" style="font-size: 0.75rem;">Town Dispatch Node</label>
-                                    <input type="text" name="town" class="form-control form-control-muted bg-light border rounded-2 small" value="{{ $customer['shipping_town'] }}" disabled required>
+                                    <label class="d-block small fw-bold text-uppercase tracking-wider mb-1.5 text-muted" style="font-size: 0.75rem;">Street / Building Address</label>
+                                    <input type="text" name="address" class="form-control form-control-muted bg-light border rounded-2 small" value="{{ $customer['address'] }}" disabled required>
+                                </div>
+
+                                <div class="col-12 col-sm-6">
+                                    <label class="d-block small fw-bold text-uppercase tracking-wider mb-1.5 text-muted" style="font-size: 0.75rem;">Town</label>
+                                    <input type="text" name="town" class="form-control form-control-muted bg-light border rounded-2 small" value="{{ $customer['town'] }}" disabled required>
                                 </div>
 
                                 <div class="col-12 col-sm-6">
                                     <label class="d-block small fw-bold text-uppercase tracking-wider mb-1.5 text-muted" style="font-size: 0.75rem;">County Region</label>
-                                    <input type="text" name="county" class="form-control form-control-muted bg-light border rounded-2 small" value="{{ $customer['shipping_county'] }}" disabled required>
+                                    <input type="text" name="county" class="form-control form-control-muted bg-light border rounded-2 small" value="{{ $customer['county'] }}" disabled required>
                                 </div>
 
                                 <!-- Billing Information -->
@@ -572,41 +577,63 @@
                                     <div class="bg-light rounded-3 p-3 border">
                                         <h6 class="fw-bold small text-dark mb-3">
                                             <i class="fa-solid fa-file-invoice me-1 text-brand-blue"></i>
-                                            Billing Information
+                                            Shipping Information
                                         </h6>
 
                                         <div class="row g-3">
 
                                             <div class="col-md-6">
                                                 <label class="small text-muted fw-bold mb-1">
-                                                    Billing Address
+                                                    Shipping Name
                                                 </label>
 
                                                 <input type="text"
                                                     class="form-control bg-light"
-                                                    value="{{ $customer['billing_address'] }}"
+                                                    value="{{ $customer['shipping_name'] }}"
+                                                    disabled>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <label class="small text-muted fw-bold mb-1">
+                                                    Shipping Phone
+                                                </label>
+
+                                                <input type="text"
+                                                    class="form-control bg-light"
+                                                    value="{{ $customer['shipping_phone'] }}"
+                                                    disabled>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <label class="small text-muted fw-bold mb-1">
+                                                    Shipping Address
+                                                </label>
+
+                                                <input type="text"
+                                                    class="form-control bg-light"
+                                                    value="{{ $customer['shipping_address'] }}"
                                                     disabled>
                                             </div>
 
                                             <div class="col-md-3">
                                                 <label class="small text-muted fw-bold mb-1">
-                                                    Billing Town
+                                                    Shipping Town
                                                 </label>
 
                                                 <input type="text"
                                                     class="form-control bg-light"
-                                                    value="{{ $customer['billing_town'] }}"
+                                                    value="{{ $customer['shipping_town'] }}"
                                                     disabled>
                                             </div>
 
                                             <div class="col-md-3">
                                                 <label class="small text-muted fw-bold mb-1">
-                                                    Billing County
+                                                    Shipping County
                                                 </label>
 
                                                 <input type="text"
                                                     class="form-control bg-light"
-                                                    value="{{ $customer['billing_county'] }}"
+                                                    value="{{ $customer['shipping_county'] }}"
                                                     disabled>
                                             </div>
 

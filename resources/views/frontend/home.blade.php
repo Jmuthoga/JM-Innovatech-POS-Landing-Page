@@ -88,7 +88,7 @@
                     </button>
                 </form>
 
-                <a href="{{ route('product.show', $loop->iteration) }}" class="deal-image">
+                <a href="{{ route('product.show', $deal['id']) }}" class="deal-image">
                     <img src="{{ $deal['image'] }}" alt="">
                 </a>
 
@@ -110,7 +110,7 @@
                             class="flex-fill m-0 p-0">
                             @csrf
 
-                            <input type="hidden" name="id" value="{{ $loop->iteration }}">
+                            <input type="hidden" name="id" value="{{ $deal['id'] }}"> 
                             <input type="hidden" name="name" value="{{ $deal['name'] }}">
                             <input type="hidden" name="price" value="{{ $deal['new_price'] }}">
                             <input type="hidden" name="old_price" value="{{ $deal['old_price'] }}">
@@ -230,7 +230,7 @@
                 <form action="{{ route('wishlist.add') }}" method="POST" class="wishlist-btn m-0">
                     @csrf
 
-                    <input type="hidden" name="id" value="pos-{{ $loop->iteration }}">
+                    <input type="hidden" name="id" value="{{ $item['id'] }}"> 
                     <input type="hidden" name="name" value="{{ $item['name'] }}">
                     <input type="hidden" name="price" value="{{ $item['new_price'] }}">
                     <input type="hidden" name="old_price" value="{{ $item['old_price'] }}">
@@ -241,9 +241,8 @@
                     </button>
                 </form>
 
-                <a href="{{ route('product.show', $loop->iteration) }}" class="deal-image">
-                    <img src="{{ file_exists(public_path('assets/images/' . $item['image'])) ? asset('assets/images/' . $item['image']) : 'https://via.placeholder.com/500x350' }}" 
-                        alt="">
+                <a href="{{ route('product.show', $item['id']) }}" class="deal-image">
+                    <img src="{{ $item['image'] }}" alt="{{ $item['name'] }}">
                 </a>
 
                 <div class="deal-content">
@@ -290,7 +289,7 @@
                 <form action="{{ route('wishlist.add') }}" method="POST" class="wishlist-btn m-0">
                     @csrf
 
-                    <input type="hidden" name="id" value="printer-{{ $loop->iteration }}">
+                    <input type="hidden" name="id" value="{{ $printer['id'] }}">
                     <input type="hidden" name="name" value="{{ $printer['name'] }}">
                     <input type="hidden" name="price" value="{{ $printer['new_price'] }}">
                     <input type="hidden" name="old_price" value="{{ $printer['old_price'] }}">
@@ -301,9 +300,8 @@
                     </button>
                 </form>
 
-                <a href="{{ route('product.show', $loop->iteration) }}" class="deal-image">
-                    <img src="{{ file_exists(public_path('assets/images/' . $printer['image'])) ? asset('assets/images/' . $printer['image']) : 'https://via.placeholder.com/500x350' }}" 
-                         alt="">
+                <a href="{{ route('product.show', $printer['id']) }}" class="deal-image">
+                    <img src="{{ $printer['image'] }}" alt="{{ $printer['name'] }}">
                 </a>
 
                 <div class="deal-content">
@@ -432,7 +430,7 @@
                 <form action="{{ route('wishlist.add') }}" method="POST" class="wishlist-btn m-0">
                     @csrf
 
-                    <input type="hidden" name="id" value="supply-{{ $loop->iteration }}">
+                    <input type="hidden" name="id" value="{{ $item['id'] }}">
                     <input type="hidden" name="name" value="{{ $item['name'] }}">
                     <input type="hidden" name="price" value="{{ $item['new_price'] }}">
                     <input type="hidden" name="old_price" value="{{ $item['old_price'] }}">
@@ -443,9 +441,8 @@
                     </button>
                 </form>
 
-                <a href="{{ route('product.show', $loop->iteration) }}" class="deal-image">
-                    <img src="{{ file_exists(public_path('assets/images/' . $item['image'])) ? asset('assets/images/' . $item['image']) : 'https://via.placeholder.com/500x350' }}" 
-                         alt="">
+                <a href="{{ route('product.show', $item['id']) }}" class="deal-image">
+                    <img src="{{ $item['image'] }}" alt="{{ $item['name'] }}">
                 </a>
 
                 <div class="deal-content">
@@ -497,7 +494,7 @@
                 <form action="{{ route('wishlist.add') }}" method="POST" class="wishlist-btn m-0">
                     @csrf
 
-                    <input type="hidden" name="id" value="toner-{{ $loop->iteration }}">
+                    <input type="hidden" name="id" value="{{ $toner['id'] }}">
                     <input type="hidden" name="name" value="{{ $toner['name'] }}">
                     <input type="hidden" name="price" value="{{ $toner['new_price'] }}">
                     <input type="hidden" name="old_price" value="{{ $toner['old_price'] }}">
@@ -508,9 +505,8 @@
                     </button>
                 </form>
 
-                <a href="{{ route('product.show', $loop->iteration) }}" class="deal-image">
-                    <img src="{{ file_exists(public_path('assets/images/' . $toner['image'])) ? asset('assets/images/' . $toner['image']) : 'https://via.placeholder.com/500x350?text=Toner' }}" 
-                         alt="">
+                <a href="{{ route('product.show', $toner['id']) }}" class="deal-image">
+                    <img src="{{ $toner['image'] }}" alt="{{ $toner['name'] }}">
                 </a>
 
                 <div class="deal-content">
