@@ -1,4 +1,4 @@
-name: Deploy Laravel to cPanel
+name: Deploy Laravel to cPanel (Dev → Main → Deploy)
 
 on:
   push:
@@ -12,7 +12,25 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
+      # 1. Merge dev → main safely
+      - name: Merge dev into main and push
+        run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "actions@github.com"
+
+          git fetch origin
+
+          git checkout -B main origin/main
+          git merge origin/dev --no-edit
+
+          git push origin main
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      # 2. Deploy to cPanel dev folder (from main)
       - name: Deploy via SSH
         uses: appleboy/ssh-action@v1.0.3
         with:
@@ -22,10 +40,11 @@ jobs:
           port: ${{ secrets.SSH_PORT }}
           script: |
             cd /home3/pvxkzubm/public_html/dev
-            git pull origin dev
+            git pull origin main
 
             /opt/cpanel/ea-php83/root/usr/bin/php /usr/local/bin/composer install --no-dev --optimize-autoloader
 
+            php artisan optimize:clear
             php artisan config:cache
             php artisan route:cache
             php artisan view:cache
