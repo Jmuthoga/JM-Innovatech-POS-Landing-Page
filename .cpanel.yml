@@ -1,0 +1,10 @@
+---
+deployment:
+  tasks:
+    - export DEPLOYPATH=/home3/pvxkzubm/public_html/dev
+    - /bin/rsync -av --delete ./ $DEPLOYPATH
+    - cd $DEPLOYPATH
+    - /usr/local/bin/composer install --no-dev --optimize-autoloader
+    - /usr/local/bin/php artisan config:cache
+    - /usr/local/bin/php artisan route:cache
+    - /usr/local/bin/php artisan view:cache
