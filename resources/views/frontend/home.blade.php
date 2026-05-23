@@ -53,7 +53,7 @@
     <div class="container">
         <div class="section-top d-flex justify-content-between align-items-center flex-wrap gap-2 mb-4">
             <div class="section-title">
-                <h2 class="h4 mb-1" style="color: var(--brand-navy); font-weight: 700;">Hot Deals For You</h2>
+                <h2 class="h4 mb-1" style="color: var(--brand-navy); font-weight: 700;">Browse Hot Deals For You</h2>
                 <p class="small mb-0" style="color: var(--text-muted);">High-performance refurbished laptops</p>
             </div>
             <a href="{{ route('shop') }}" class="view-all-link">
