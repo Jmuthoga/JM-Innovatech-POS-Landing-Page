@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\CustomerController;
+use App\Http\Controllers\Frontend\PosSystemController;
 
 // FRONTEND HOME ROUTES
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -40,6 +41,24 @@ Route::get('/account-login-redirect', function () {
     session(['url.intended' => route('customer.account')]);
     return redirect()->route('login');
 })->name('account.login.redirect');
+
+// POS SYSTEM INFORMATION PAGES
+Route::prefix('pos')->group(function () {
+    Route::get('/features', [PosSystemController::class, 'features'])->name('pos.features');
+    Route::post('/contact', [PosSystemController::class, 'storeContact'])->name('pos.contact');
+    Route::get('/pricing', [PosSystemController::class, 'pricing'])->name('pos.pricing');
+    Route::get('/customers', [PosSystemController::class, 'customers'])->name('pos.customers');
+    Route::get('/about', [PosSystemController::class, 'about'])->name('pos.about');
+    Route::get('/support', [PosSystemController::class, 'support'])->name('pos.support');
+    Route::get('/retail-pos', [PosSystemController::class, 'retailPos'])->name('pos.retail');
+    Route::get('/inventory-management', [PosSystemController::class, 'inventoryManagement'])->name('pos.inventory');
+    Route::get('/multi-branch', [PosSystemController::class, 'multiBranch'])->name('pos.multi_branch');
+    Route::get('/mpesa-integration', [PosSystemController::class, 'mpesaIntegration'])->name('pos.mpesa');
+    Route::get('/ecommerce-integration', [PosSystemController::class, 'ecommerceIntegration'])->name('pos.ecommerce');
+    Route::get('/barcode-support', [PosSystemController::class, 'barcodeSupport'])->name('pos.barcode');
+    Route::get('/receipt-printing', [PosSystemController::class, 'receiptPrinting'])->name('pos.receipt');
+    Route::get('/loyalty-system', [PosSystemController::class, 'loyaltySystem'])->name('pos.loyalty');
+});
 
 //CUSTOMER AUTHENTICATION (GUEST ONLY)
 Route::middleware(['guest'])->group(function () {

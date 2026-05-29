@@ -25,6 +25,7 @@ class DatabaseSeeder extends Seeder
         // This triggers your dedicated customer records sequentially
         $this->call([
             CustomerSeeder::class,
+            BusinessSeeder::class,
         ]);
     }
 }

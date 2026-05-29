@@ -4,7 +4,7 @@
     $miniSubtotal = collect($miniCart)->sum(fn($i) => $i['price'] * $i['qty']);
 @endphp
 
-<!-- FIRST NAVBAR -->
+<!-- ================= FIRST NAVBAR ================= -->
 <nav class="navbar navbar-expand-lg fixed-top py-3">
     <div class="container">
         <!-- LOGO -->
@@ -54,7 +54,7 @@
                                     Smart retail tools built for modern businesses
                                 </h3>
 
-                                <a href="#" class="mega-item">
+                                <a href="{{ route('shop') }}" class="mega-item">
                                     <div class="mega-icon">
                                         <i class="fas fa-barcode"></i>
                                     </div>
@@ -69,7 +69,7 @@
                                     </div>
                                 </a>
 
-                                <a href="#" class="mega-item">
+                                <a href="{{ route('pos.retail') }}" class="mega-item">
                                     <div class="mega-icon">
                                         <i class="fas fa-cash-register"></i>
                                     </div>
@@ -84,7 +84,7 @@
                                     </div>
                                 </a>
 
-                                <a href="#" class="mega-item">
+                                <a href="{{ route('pos.inventory') }}" class="mega-item">
                                     <div class="mega-icon">
                                         <i class="fas fa-boxes"></i>
                                     </div>
@@ -99,7 +99,7 @@
                                     </div>
                                 </a>
 
-                                <a href="#" class="mega-item">
+                                <a href="{{ route('pos.multi_branch') }}" class="mega-item">
                                     <div class="mega-icon">
                                         <i class="fas fa-store"></i>
                                     </div>
@@ -123,27 +123,27 @@
                                     Integrations & Tools
                                 </div>
 
-                                <a href="#" class="side-link">
+                                <a href="{{ route('pos.mpesa') }}" class="side-link">
                                     MPESA Integration
                                     <i class="fas fa-arrow-right"></i>
                                 </a>
 
-                                <a href="#" class="side-link">
+                                <a href="{{ route('pos.ecommerce') }}" class="side-link">
                                     E-commerce Integration
                                     <i class="fas fa-arrow-right"></i>
                                 </a>
 
-                                <a href="#" class="side-link">
+                                <a href="{{ route('pos.barcode') }}" class="side-link">
                                     Barcode & Scanner Support
                                     <i class="fas fa-arrow-right"></i>
                                 </a>
 
-                                <a href="#" class="side-link">
+                                <a href="{{ route('pos.receipt') }}" class="side-link">
                                     Receipt Printing
                                     <i class="fas fa-arrow-right"></i>
                                 </a>
 
-                                <a href="#" class="side-link">
+                                <a href="{{ route('pos.loyalty') }}" class="side-link">
                                     Customer Loyalty System
                                     <i class="fas fa-arrow-right"></i>
                                 </a>
@@ -182,31 +182,31 @@
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="#features">
+                    <a class="nav-link" href="{{ route('pos.features') }}">
                         Features
                     </a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="#pricing">
+                    <a class="nav-link" href="{{ route('pos.pricing') }}">
                         Pricing
                     </a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="#customers">
+                    <a class="nav-link" href="{{ route('pos.customers') }}">
                         Customers
                     </a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="#about">
+                    <a class="nav-link" href="{{ route('pos.about') }}">
                         About Us
                     </a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="#support">
+                    <a class="nav-link" href="{{ route('pos.support') }}">
                         Support
                     </a>
                 </li>
@@ -233,7 +233,7 @@
     </div>
 </nav>
 
-<!-- SECOND NAVBAR -->
+<!-- ================= SECOND NAVBAR ================= -->
 <div class="secondary-navbar py-3">
 
     <div class="container">
@@ -416,9 +416,9 @@
 
 </div>
 
-<!-- =========================
-    OFFCANVAS COMPONENTS
-========================= -->
+            <!-- =========================
+                OFFCANVAS COMPONENTS
+            ========================= -->
 
 <!-- ================= MINI CART OFFCANVAS ================= -->
 <div class="offcanvas offcanvas-end"
@@ -836,7 +836,7 @@
 
 </div>
 
-<!-- Categories Offcanvas -->
+<!-- ================= Categories Offcanvas ================= -->
 <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasCategories">
 
     <div class="offcanvas-header border-bottom">
@@ -1002,7 +1002,7 @@
 
 </div>
 
-<!-- ACCOUNT OFFCANVAS -->
+<!-- ================= ACCOUNT OFFCANVAS ================= -->
 <div class="offcanvas offcanvas-end"
      tabindex="-1"
      id="offcanvasAccount">
