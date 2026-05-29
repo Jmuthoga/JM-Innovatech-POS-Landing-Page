@@ -1,0 +1,258 @@
+    :root {
+        --jmi-sys-blue: #0B4FA3;
+        --jmi-sys-navy: #011226;
+        --jmi-sys-green: #25D366;
+        --jmi-sys-light: #f8fafc;
+        --jmi-sys-dark: #0f172a;
+        --jmi-sys-muted: #475569;
+        --jmi-sys-border: #e2e8f0;
+    }
+
+    /* Isolated Hero Branding Blocks */
+    .jmi-posmodule-hero-block {
+        background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+        padding: 3rem 0;
+    }
+
+    .jmi-posmodule-main-title {
+        font-size: 2rem;
+        font-weight: 800;
+        color: var(--jmi-sys-navy);
+        line-height: 1.2;
+    }
+
+    /* Professional Button Interface Design */
+    .jmi-posmodule-btn-primary {
+        background-color: var(--jmi-sys-blue);
+        color: #ffffff;
+        font-weight: 600;
+        padding: 0.75rem 1.5rem;
+        border-radius: 0.5rem;
+        border: 1px solid var(--jmi-sys-blue);
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s ease-in-out;
+        width: 100%;
+    }
+
+    .jmi-posmodule-btn-primary:hover {
+        background-color: var(--jmi-sys-navy);
+        border-color: var(--jmi-sys-navy);
+        color: #ffffff;
+    }
+
+    .jmi-posmodule-btn-sandbox {
+        background-color: #ffffff;
+        color: var(--jmi-sys-blue);
+        font-weight: 600;
+        padding: 0.75rem 1.5rem;
+        border-radius: 0.5rem;
+        border: 2px solid var(--jmi-sys-blue);
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s ease-in-out;
+        width: 100%;
+    }
+
+    .jmi-posmodule-btn-sandbox:hover {
+        background-color: var(--jmi-sys-blue);
+        color: #ffffff;
+    }
+
+    /* Flex Row Grid Overrides for exactly 5 columns wrap on XL viewports */
+    @media (min-width: 1200px) {
+        .row-cols-xl-5 > * {
+            flex: 0 0 20%;
+            max-width: 20%;
+        }
+    }
+
+    /* Business Module Card Standardisation */
+    .jmi-business-card {
+        background: #ffffff;
+        border: 1px solid var(--jmi-sys-border);
+        border-radius: 0.75rem;
+        transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+    }
+
+    .jmi-business-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 12px 20px -5px rgba(0, 0, 0, 0.08);
+        border-color: var(--jmi-sys-blue);
+    }
+
+    .jmi-card-img-wrapper {
+        position: relative;
+        width: 100%;
+        padding-top: 56.25%; /* Fixed 16:9 Aspect Ratio */
+        background-color: #e2e8f0;
+    }
+
+    .jmi-card-img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .jmi-card-body {
+        padding: 1.25rem;
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
+    }
+
+    .jmi-card-title {
+        font-weight: 700;
+        color: var(--jmi-sys-navy);
+        font-size: 1rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .jmi-feature-row {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        margin-bottom: 0.35rem;
+        font-size: 0.8rem;
+        color: var(--jmi-sys-muted);
+    }
+
+    .jmi-card-action-link {
+        font-weight: 700;
+        font-size: 0.85rem;
+        color: var(--jmi-sys-blue);
+        text-decoration: none;
+        margin-top: auto;
+        padding-top: 1rem;
+        display: inline-flex;
+        align-items: center;
+    }
+    
+
+    /* Professional Pagination Layout Styling Rules */
+    .jmi-pagination-container {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border-top: 1px solid var(--jmi-sys-border);
+        background-color: #ffffff;
+        padding: 1rem 1.25rem;
+        border-radius: 0.5rem;
+    }
+
+    /* Normalizing Laravel structural wrappers for pagination renders */
+    .jmi-pagination-wrapper nav {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .pagination {
+        display: flex;
+        padding-left: 0;
+        list-style: none;
+        gap: 6px;
+        margin-bottom: 0;
+    }
+
+    .pagination .page-item .page-link {
+        border-radius: 8px !important;
+        border: 1px solid #e2e8f0;
+        color: #0f172a;
+        font-weight: 600;
+        padding: 8px 14px;
+        text-decoration: none;
+        transition: 0.2s;
+    }
+
+    .pagination .page-item .page-link:hover {
+        background: #0B4FA3;
+        color: white;
+        border-color: #0B4FA3;
+    }
+
+    .pagination .page-item.active .page-link {
+        background: #0B4FA3;
+        border-color: #0B4FA3;
+        color: white;
+        z-index: 3;
+    }
+
+    .pagination .page-item.disabled .page-link {
+        background: #f1f5f9;
+        color: #94a3b8;
+        border-color: #e2e8f0;
+        cursor: not-allowed;
+    }
+
+    /* ========================================================================== */
+    /* STRIP OUT DUPLICATE TEXT BLOCKS INSIDE LARAVEL BOOTSTRAP PAGINATION        */
+    /* ========================================================================== */
+    
+    /* 1. Hide the standalone paragraph element Laravel renders for mobile viewports */
+    .jmi-pagination-wrapper nav p.text-muted {
+        display: none !important;
+    }
+
+    /* 2. Hide the left flex container block that Laravel renders on desktop viewports */
+    .jmi-pagination-wrapper nav > div.flex-sm-fill.d-sm-flex.align-items-sm-center.justify-content-sm-between > div:first-child {
+        display: none !important;
+    }
+
+    /* 3. Force the underlying container to align pagination button blocks natively */
+    .jmi-pagination-wrapper nav > div.flex-sm-fill.d-sm-flex.align-items-sm-center.justify-content-sm-between {
+        justify-content: flex-end !important;
+        width: 100%;
+    }
+
+    /* 4. Ensure structural components expand cleanly on desktop environments */
+    @media (min-width: 768px) {
+        .jmi-pagination-wrapper nav {
+            justify-content: flex-end !important;
+            width: 100%;
+        }
+        .jmi-pagination-wrapper nav > div:last-child {
+            margin-left: auto;
+        }
+    }
+
+    /* Matrix Evaluation Grid Elements */
+    .jmi-posmodule-matrix-th {
+        background-color: var(--jmi-sys-navy);
+        color: #ffffff;
+        padding: 0.75rem;
+        font-weight: 600;
+        font-size: 0.85rem;
+        white-space: nowrap;
+    }
+
+    .jmi-posmodule-matrix-td {
+        padding: 0.75rem;
+        border-bottom: 1px solid #e2e8f0;
+        vertical-align: middle;
+        font-size: 0.85rem;
+    }
+
+    /* Breakpoint Adaptations */
+    @media (min-width: 576px) {
+        .jmi-posmodule-btn-primary, .jmi-posmodule-btn-sandbox { width: auto; }
+    }
+    @media (min-width: 768px) {
+        .jmi-posmodule-hero-block { padding: 4.5rem 0; }
+        .jmi-posmodule-main-title { font-size: 2.5rem; }
+    }
+    @media (min-width: 992px) {
+        .jmi-posmodule-hero-block { padding: 6rem 0; }
+        .jmi-posmodule-main-title { font-size: 3rem; }
+    }
