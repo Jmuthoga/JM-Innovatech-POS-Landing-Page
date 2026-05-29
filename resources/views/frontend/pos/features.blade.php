@@ -303,9 +303,11 @@
                 </div>
             </div>
             
-            <div class="col-12 col-lg-5 d-none d-lg-block">
-                <div class="p-2 bg-white rounded-4 shadow-md border">
-                    <img src="{{ asset('assets/images/retailpos.jpg') }}" alt="POS System Terminal Layout View" class="img-fluid rounded-3 w-100">
+            <div class="col-12 col-lg-5 d-flex justify-content-center justify-content-lg-end">
+                <div class="p-2 bg-white rounded-4 shadow-md border w-100">
+                    <img src="{{ asset('assets/images/retailpos.jpg') }}" 
+                        alt="POS System Terminal Layout View" 
+                        class="img-fluid rounded-3 w-100">
                 </div>
             </div>
         </div>
