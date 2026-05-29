@@ -320,7 +320,7 @@
                                 </form>
 
                                 <!-- WHATSAPP ORDER -->
-                                <a href="https://wa.me/254700000000?text={{ urlencode(
+                                <a href="https://wa.me/254791446968?text={{ urlencode(
                                     "Hello JM Innovatech 👋 I want to order:\n\n" .
                                     "Product: " . $product['name'] . "\n" .
                                     "Price: KES " . number_format($product['new_price']) . "\n" .
