@@ -25,6 +25,7 @@
     <link rel="stylesheet" href="{{ asset('assets/css/customer.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/authentication.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/features.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/possystem.css') }}">
 
     <style>
         body {
