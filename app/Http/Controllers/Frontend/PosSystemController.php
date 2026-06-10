@@ -54,7 +54,10 @@ class PosSystemController extends Controller
     // PRICING PAGE
     public function pricing()
     {
-        return view('frontend.pos.pricing');
+        // Fetch sectors just like you did in the features method
+        $allSectors = Business::orderBy('name', 'asc')->get(['name']);
+
+        return view('frontend.pos.pricing', compact('allSectors'));
     }
 
     // CUSTOMERS PAGE

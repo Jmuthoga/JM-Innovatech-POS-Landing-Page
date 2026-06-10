@@ -211,7 +211,7 @@
                     <h5 class="fw-bold text-white mb-2"><i class="fas fa-laptop me-2 text-success"></i> Instant Demonstration Link</h5>
                     <p class="small text-light opacity-75 mb-3">All login credentials are pre-filled on the terminal testing page screen.</p>
                     <a href="https://pos.jminnovatechsolution.co.ke" target="_blank" rel="noopener" class="jmi-posmodule-btn-primary border-0 w-100">
-                        Launch Live Sandbox <i class="fas fa-external-link-alt ms-2 small"></i>
+                        Launch Demo System <i class="fas fa-external-link-alt ms-2 small"></i>
                     </a>
                 </div>
             </div>

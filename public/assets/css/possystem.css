@@ -1,0 +1,233 @@
+    :root {
+        --brand-blue: #0B4FA3;
+        --brand-navy: #011226;
+        --brand-green: #25D366;
+        --text-dark: #1e293b;
+        --text-muted: #64748b;
+        --border-color: #e2e8f0;
+        --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+        --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+        --transition: all 0.2s ease-in-out;
+        --canvas-gray: #f8fafc;
+        --glow-premium: 0 10px 30px -5px rgba(11, 79, 163, 0.15);
+    }
+
+    .retail-pricing-universe {
+        font-family: system-ui, -apple-system, sans-serif;
+        color: var(--text-dark);
+        background-color: var(--canvas-gray);
+        overflow-x: hidden;
+    }
+
+    .pricing-toggle-hub {
+        display: inline-flex;
+        background: #e2e8f0;
+        padding: 0.3rem;
+        border-radius: 99px;
+        border: 1px solid var(--border-color);
+    }
+
+    .pricing-toggle-hub .switch-node {
+        border: none;
+        background: transparent;
+        padding: 0.45rem 1.5rem;
+        font-size: 0.85rem;
+        font-weight: 700;
+        border-radius: 99px;
+        color: var(--text-muted);
+        transition: var(--transition);
+        cursor: pointer;
+    }
+
+    .pricing-toggle-hub .switch-node.active-state {
+        background: #ffffff;
+        color: var(--brand-navy);
+        box-shadow: var(--shadow-sm);
+    }
+
+    .package-deck-card {
+        background: #ffffff;
+        border: 1px solid var(--border-color);
+        border-radius: 1.25rem;
+        padding: 2.25rem 1.5rem;
+        transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        display: flex;
+        flex-direction: column;
+        position: relative;
+    }
+
+    .package-deck-card:hover {
+        transform: translateY(-4px);
+        box-shadow: var(--shadow-md);
+    }
+
+    .package-deck-card.pro-tier-accent {
+        border: 2px solid var(--brand-blue);
+        box-shadow: var(--glow-premium);
+    }
+
+    .pro-tier-badge {
+        position: absolute;
+        top: 0;
+        right: 1.5rem;
+        transform: translateY(-50%);
+        background: var(--brand-blue);
+        color: #ffffff;
+        font-size: 0.7rem;
+        font-weight: 700;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        padding: 0.3rem 0.85rem;
+        border-radius: 99px;
+    }
+
+    .package-deck-card.enterprise-tier-dark {
+        background: var(--brand-navy);
+        color: #ffffff;
+        border: 1px solid var(--brand-navy);
+    }
+
+    .action-route-anchor, .jmi-posmodule-btn-primary {
+        display: block;
+        width: 100%;
+        text-align: center;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 0.9rem;
+        padding: 0.75rem 1.25rem;
+        border-radius: 0.5rem;
+        transition: var(--transition);
+        border: 1px solid transparent;
+        cursor: pointer;
+    }
+
+    .action-route-anchor.style-secondary {
+        background: transparent;
+        border-color: var(--border-color);
+        color: var(--brand-blue);
+    }
+
+    .action-route-anchor.style-secondary:hover {
+        border-color: var(--brand-blue);
+        background: rgba(11, 79, 163, 0.03);
+    }
+
+    .action-route-anchor.style-primary, .jmi-posmodule-btn-primary {
+        background: var(--brand-blue);
+        color: #ffffff;
+    }
+
+    .action-route-anchor.style-primary:hover, .jmi-posmodule-btn-primary:hover {
+        background: #093f82;
+        color: #ffffff;
+    }
+
+    .action-route-anchor.style-light {
+        background: #ffffff;
+        color: var(--brand-navy);
+    }
+
+    .action-route-anchor.style-light:hover {
+        background: rgba(255, 255, 255, 0.9);
+    }
+
+    .feature-divider-label {
+        font-size: 0.72rem;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        padding-bottom: 0.35rem;
+        margin-bottom: 0.75rem;
+        border-bottom: 1px dashed var(--border-color);
+    }
+
+    .enterprise-tier-dark .feature-divider-label {
+        border-bottom-color: rgba(255, 255, 255, 0.15);
+    }
+
+    .condensed-matrix-box {
+        background: #ffffff;
+        border: 1px solid var(--border-color);
+        border-radius: 0.75rem;
+        overflow: hidden;
+        box-shadow: var(--shadow-sm);
+    }
+
+    .matrix-header-node {
+        background: var(--brand-navy);
+        color: #ffffff !important;
+        font-weight: 600;
+        font-size: 0.9rem;
+        padding: 1rem 1.25rem !important;
+        border: none !important;
+    }
+
+    .matrix-cell-node {
+        padding: 0.9rem 1.25rem !important;
+        border-bottom: 1px solid var(--border-color) !important;
+        font-size: 0.875rem;
+    }
+
+    .bg-brand-navy {
+        background-color: var(--brand-navy) !important;
+    }
+
+    /* === PROFESSIONAL SEGMENTED TOGGLE === */
+    .pricing-toggle-hub {
+        position: relative;
+        display: inline-flex;
+        background: #f1f5f9;
+        border: 1px solid #e2e8f0;
+        border-radius: 999px;
+        padding: 4px;
+        gap: 4px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    }
+
+    /* animated sliding background */
+    .pricing-toggle-indicator {
+        position: absolute;
+        top: 4px;
+        bottom: 4px;
+        left: 4px;
+        width: calc(50% - 4px);
+        background: #ffffff;
+        border-radius: 999px;
+        box-shadow: 0 6px 18px rgba(11, 79, 163, 0.12);
+        transition: all 0.25s ease;
+        z-index: 1;
+    }
+
+    /* buttons */
+    .pricing-toggle-hub .switch-node {
+        position: relative;
+        z-index: 2;
+        border: none;
+        background: transparent;
+        padding: 10px 22px;
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: #64748b;
+        border-radius: 999px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        white-space: nowrap;
+    }
+
+    /* hover */
+    .pricing-toggle-hub .switch-node:hover {
+        color: #0f172a;
+    }
+
+    /* active text */
+    .pricing-toggle-hub .switch-node.active-state {
+        color: #0B4FA3;
+    }
+
+    /* optional savings badge */
+    .pricing-toggle-hub .save-tag {
+        font-size: 0.72rem;
+        font-weight: 700;
+        color: #16a34a;
+        margin-left: 6px;
+    }
