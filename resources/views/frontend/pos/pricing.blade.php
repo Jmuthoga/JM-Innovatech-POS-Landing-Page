@@ -420,120 +420,116 @@
         </div>
     </section>
 
-<!-- EXPANDED 10-ROW HIGH-CONTRAST SYSTEM CAPABILITY MATRIX -->
+    <!-- EXPANDED 10-ROW HIGH-CONTRAST SYSTEM CAPABILITY MATRIX -->
     <section class="py-5 bg-white border-top border-bottom">
         <div class="container">
             <div class="text-center mb-4">
-                <h2 class="fw-bold text-brand-navy h3 mb-2">System Capability Matrix</h2>
-                <p class="text-muted small mx-auto" style="max-width: 500px;">
+                <h2 class="fw-bold text-brand-navy h3 mb-2">
+                    System Capability Matrix
+                </h2>
+                <p class="text-muted small mx-auto" style="max-width:500px;">
                     Core architectural modules and integration capacities across plan tiers.
                 </p>
             </div>
-            
-            <div class="condensed-matrix-box table-responsive">
-                <table class="table mb-0 w-100 align-middle">
+
+            <div class="matrix-scroll-wrapper">
+
+                <table class="table mb-0 align-middle capability-matrix">
                     <thead>
                         <tr>
-                            <!-- Added explicit dark colors and bolding to ensure structural text visibility -->
-                            <th class="matrix-header-node fw-bold text-dark" style="width: 40%; color: #0F172A !important; font-size: 0.95rem;">Core Capabilities</th>
-                            <th class="matrix-header-node text-center fw-bold text-dark" style="width: 15%; color: #0F172A !important; font-size: 0.95rem;">Lite</th>
-                            <th class="matrix-header-node text-center fw-bold text-dark" style="width: 15%; color: #0F172A !important; font-size: 0.95rem;">Basic</th>
-                            <th class="matrix-header-node text-center fw-bold text-dark" style="width: 15%; color: #0F172A !important; font-size: 0.95rem;">Business</th>
-                            <th class="matrix-header-node text-center fw-bold text-dark" style="width: 15%; color: #0F172A !important; font-size: 0.95rem;">Multi-Store</th>
+                            <th style="width:40%">Core Capabilities</th>
+                            <th class="text-center">Lite</th>
+                            <th class="text-center">Basic</th>
+                            <th class="text-center">Business</th>
+                            <th class="text-center">Multi-Store</th>
                         </tr>
                     </thead>
+
                     <tbody>
-                        <!-- ROW 1: SCALE & BRANCHES -->
+
                         <tr>
-                            <td class="matrix-cell-node fw-bold" style="color: #334155;"><i class="fas fa-network-wired text-muted me-2"></i> Supported Branch Network</td>
-                            <td class="matrix-cell-node text-center text-muted small">Main Only (0 Branches)</td>
-                            <td class="matrix-cell-node text-center text-muted small">Main Only (0 Branches)</td>
-                            <td class="matrix-cell-node text-center text-brand-blue fw-bold small">Main + 1 Branch</td>
-                            <td class="matrix-cell-node text-center text-success fw-bold small">Unlimited Branches</td>
+                            <td>Supported Branch Network</td>
+                            <td class="text-center">Main Only (0 Branches)</td>
+                            <td class="text-center">Main Only (0 Branches)</td>
+                            <td class="text-center">Main + 1 Branch</td>
+                            <td class="text-center">Unlimited Branches</td>
                         </tr>
 
-                        <!-- ROW 2: MPESA -->
                         <tr>
-                            <td class="matrix-cell-node fw-bold" style="color: #334155;"><i class="fas fa-credit-card text-muted me-2"></i> M-Pesa STK API Integration</td>
-                            <td class="matrix-cell-node text-center"><i class="fas fa-times text-danger opacity-50"></i></td>
-                            <td class="matrix-cell-node text-center text-success"><i class="fas fa-check-circle fs-5"></i></td>
-                            <td class="matrix-cell-node text-center text-success"><i class="fas fa-check-circle fs-5"></i></td>
-                            <td class="matrix-cell-node text-center text-success"><i class="fas fa-check-circle fs-5"></i></td>
+                            <td>M-Pesa STK API Integration</td>
+                            <td class="text-center">✖</td>
+                            <td class="text-center">✔</td>
+                            <td class="text-center">✔</td>
+                            <td class="text-center">✔</td>
                         </tr>
 
-                        <!-- ROW 3: eTIMS -->
                         <tr>
-                            <td class="matrix-cell-node fw-bold" style="color: #334155;"><i class="fas fa-calculator text-muted me-2"></i> KRA eTIMS Tax Compliance</td>
-                            <td class="matrix-cell-node text-center"><i class="fas fa-times text-danger opacity-50"></i></td>
-                            <td class="matrix-cell-node text-center"><i class="fas fa-times text-danger opacity-50"></i></td>
-                            <td class="matrix-cell-node text-center text-success"><i class="fas fa-check-circle fs-5"></i></td>
-                            <td class="matrix-cell-node text-center text-success"><i class="fas fa-check-circle fs-5"></i></td>
+                            <td>KRA eTIMS Tax Compliance</td>
+                            <td class="text-center">✖</td>
+                            <td class="text-center">✖</td>
+                            <td class="text-center">✔</td>
+                            <td class="text-center">✔</td>
                         </tr>
 
-                        <!-- ROW 4: INVENTORY & ALERTS -->
                         <tr>
-                            <td class="matrix-cell-node fw-bold" style="color: #334155;"><i class="fas fa-boxes text-muted me-2"></i> Expiry & Low-Stock Alerts</td>
-                            <td class="matrix-cell-node text-center text-muted small">Manual Audit</td>
-                            <td class="matrix-cell-node text-center text-success"><i class="fas fa-check-circle fs-5"></i></td>
-                            <td class="matrix-cell-node text-center text-success"><i class="fas fa-check-circle fs-5"></i></td>
-                            <td class="matrix-cell-node text-center text-success"><i class="fas fa-check-circle fs-5"></i></td>
+                            <td>Expiry & Low-Stock Alerts</td>
+                            <td class="text-center">Manual Audit</td>
+                            <td class="text-center">✔</td>
+                            <td class="text-center">✔</td>
+                            <td class="text-center">✔</td>
                         </tr>
 
-                        <!-- ROW 5: REPORTING -->
                         <tr>
-                            <td class="matrix-cell-node fw-bold" style="color: #334155;"><i class="fas fa-chart-pie text-muted me-2"></i> Profit Analytics & Shift Audits</td>
-                            <td class="matrix-cell-node text-center text-muted small">Basic Totals</td>
-                            <td class="matrix-cell-node text-center text-muted small">Standard Reports</td>
-                            <td class="matrix-cell-node text-center text-success fw-bold small">Automated Email Reports</td>
-                            <td class="matrix-cell-node text-center text-success fw-bold small">Consolidated HQ Desk</td>
+                            <td>Profit Analytics & Shift Audits</td>
+                            <td class="text-center">Basic Totals</td>
+                            <td class="text-center">Standard Reports</td>
+                            <td class="text-center">Automated Email Reports</td>
+                            <td class="text-center">Consolidated HQ Desk</td>
                         </tr>
 
-                        <!-- ROW 6: HARDWARE -->
                         <tr>
-                            <td class="matrix-cell-node fw-bold" style="color: #334155;"><i class="fas fa-print text-muted me-2"></i> POS Hardware Interfacing</td>
-                            <td class="matrix-cell-node text-center text-muted small">Scanners / Printers</td>
-                            <td class="matrix-cell-node text-center text-success fw-bold small">Scanners / Printers / Scales</td>
-                            <td class="matrix-cell-node text-center text-success fw-bold small">Scanners / Printers / Scales</td>
-                            <td class="matrix-cell-node text-center text-success fw-bold small">Scanners / Printers / Scales</td>
+                            <td>POS Hardware Interfacing</td>
+                            <td class="text-center">Scanners / Printers</td>
+                            <td class="text-center">Scanners / Printers / Scales</td>
+                            <td class="text-center">Scanners / Printers / Scales</td>
+                            <td class="text-center">Scanners / Printers / Scales</td>
                         </tr>
 
-                        <!-- ROW 7: CUSTOMER SMS RECIEPTS -->
                         <tr>
-                            <td class="matrix-cell-node fw-bold" style="color: #334155;"><i class="fas fa-sms text-muted me-2"></i> Instant SMS Receipt Dispatch</td>
-                            <td class="matrix-cell-node text-center"><i class="fas fa-times text-danger opacity-50"></i></td>
-                            <td class="matrix-cell-node text-center"><i class="fas fa-times text-danger opacity-50"></i></td>
-                            <td class="matrix-cell-node text-center text-success"><i class="fas fa-check-circle fs-5"></i></td>
-                            <td class="matrix-cell-node text-center text-success"><i class="fas fa-check-circle fs-5"></i></td>
+                            <td>Instant SMS Receipt Dispatch</td>
+                            <td class="text-center">✖</td>
+                            <td class="text-center">✖</td>
+                            <td class="text-center">✔</td>
+                            <td class="text-center">✔</td>
                         </tr>
 
-                        <!-- ROW 8: TILLS & CASHIERS -->
                         <tr>
-                            <td class="matrix-cell-node fw-bold" style="color: #334155;"><i class="fas fa-users-cog text-muted me-2"></i> Multi-Till & Cashier Controls</td>
-                            <td class="matrix-cell-node text-center text-muted small">Single User</td>
-                            <td class="matrix-cell-node text-center text-muted small">Max 2 Tills</td>
-                            <td class="matrix-cell-node text-center text-success fw-bold small">Unlimited Tills</td>
-                            <td class="matrix-cell-node text-center text-success fw-bold small">Unlimited Tills</td>
+                            <td>Multi-Till & Cashier Controls</td>
+                            <td class="text-center">Single User</td>
+                            <td class="text-center">Max 2 Tills</td>
+                            <td class="text-center">Unlimited Tills</td>
+                            <td class="text-center">Unlimited Tills</td>
                         </tr>
 
-                        <!-- ROW 9: CREDIT & SUPPLIER TRACKING -->
                         <tr>
-                            <td class="matrix-cell-node fw-bold" style="color: #334155;"><i class="fas fa-file-invoice-dollar text-muted me-2"></i> Supplier Ledgers & Credit Accounts</td>
-                            <td class="matrix-cell-node text-center"><i class="fas fa-times text-danger opacity-50"></i></td>
-                            <td class="matrix-cell-node text-center text-success"><i class="fas fa-check-circle fs-5"></i></td>
-                            <td class="matrix-cell-node text-center text-success"><i class="fas fa-check-circle fs-5"></i></td>
-                            <td class="matrix-cell-node text-center text-success"><i class="fas fa-check-circle fs-5"></i></td>
+                            <td>Supplier Ledgers & Credit Accounts</td>
+                            <td class="text-center">✖</td>
+                            <td class="text-center">✔</td>
+                            <td class="text-center">✔</td>
+                            <td class="text-center">✔</td>
                         </tr>
 
-                        <!-- ROW 10: INTER-STORE TRANSFER LOGISTICS -->
                         <tr>
-                            <td class="matrix-cell-node fw-bold" style="color: #334155;"><i class="fas fa-truck-loading text-muted me-2"></i> Inter-Branch Stock Transfers</td>
-                            <td class="matrix-cell-node text-center"><i class="fas fa-times text-danger opacity-50"></i></td>
-                            <td class="matrix-cell-node text-center"><i class="fas fa-times text-danger opacity-50"></i></td>
-                            <td class="matrix-cell-node text-center"><i class="fas fa-times text-danger opacity-50"></i></td>
-                            <td class="matrix-cell-node text-center text-success"><i class="fas fa-check-circle fs-5"></i></td>
+                            <td>Inter-Branch Stock Transfers</td>
+                            <td class="text-center">✖</td>
+                            <td class="text-center">✖</td>
+                            <td class="text-center">✔</td>
+                            <td class="text-center">✔</td>
                         </tr>
+
                     </tbody>
                 </table>
+
             </div>
         </div>
     </section>
