@@ -47,17 +47,8 @@ Route::prefix('pos')->group(function () {
     Route::get('/features', [PosSystemController::class, 'features'])->name('pos.features');
     Route::post('/contact', [PosSystemController::class, 'storeContact'])->name('pos.contact');
     Route::get('/pricing', [PosSystemController::class, 'pricing'])->name('pos.pricing');
-    Route::get('/customers', [PosSystemController::class, 'customers'])->name('pos.customers');
     Route::get('/about', [PosSystemController::class, 'about'])->name('pos.about');
     Route::get('/support', [PosSystemController::class, 'support'])->name('pos.support');
-    Route::get('/retail-pos', [PosSystemController::class, 'retailPos'])->name('pos.retail');
-    Route::get('/inventory-management', [PosSystemController::class, 'inventoryManagement'])->name('pos.inventory');
-    Route::get('/multi-branch', [PosSystemController::class, 'multiBranch'])->name('pos.multi_branch');
-    Route::get('/mpesa-integration', [PosSystemController::class, 'mpesaIntegration'])->name('pos.mpesa');
-    Route::get('/ecommerce-integration', [PosSystemController::class, 'ecommerceIntegration'])->name('pos.ecommerce');
-    Route::get('/barcode-support', [PosSystemController::class, 'barcodeSupport'])->name('pos.barcode');
-    Route::get('/receipt-printing', [PosSystemController::class, 'receiptPrinting'])->name('pos.receipt');
-    Route::get('/loyalty-system', [PosSystemController::class, 'loyaltySystem'])->name('pos.loyalty');
 });
 
 //CUSTOMER AUTHENTICATION (GUEST ONLY)

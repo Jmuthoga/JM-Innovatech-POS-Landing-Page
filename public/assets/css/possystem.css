@@ -231,3 +231,33 @@
         color: #16a34a;
         margin-left: 6px;
     }
+
+        .matrix-scroll-wrapper {
+        width: 100%;
+        overflow-x: auto;
+        overflow-y: hidden;
+        -webkit-overflow-scrolling: touch;
+        border-radius: 12px;
+    }
+
+    .matrix-scroll-wrapper::-webkit-scrollbar {
+        height: 8px;
+    }
+
+    .matrix-scroll-wrapper::-webkit-scrollbar-thumb {
+        background: #cbd5e1;
+        border-radius: 20px;
+    }
+
+    .capability-matrix {
+        min-width: 1200px;
+        width: 1200px;
+        border-collapse: collapse;
+    }
+
+    @media (max-width: 768px) {
+        .capability-matrix {
+            min-width: 1200px;
+            width: 1200px;
+        }
+    }

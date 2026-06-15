@@ -69,7 +69,7 @@
                                     </div>
                                 </a>
 
-                                <a href="{{ route('pos.retail') }}" class="mega-item">
+                                <a href="{{ route('pos.pricing') }}" class="mega-item">
                                     <div class="mega-icon">
                                         <i class="fas fa-cash-register"></i>
                                     </div>
@@ -84,7 +84,7 @@
                                     </div>
                                 </a>
 
-                                <a href="{{ route('pos.inventory') }}" class="mega-item">
+                                <a href="{{ route('pos.pricing') }}" class="mega-item">
                                     <div class="mega-icon">
                                         <i class="fas fa-boxes"></i>
                                     </div>
@@ -99,7 +99,7 @@
                                     </div>
                                 </a>
 
-                                <a href="{{ route('pos.multi_branch') }}" class="mega-item">
+                                <a href="{{ route('pos.pricing') }}" class="mega-item">
                                     <div class="mega-icon">
                                         <i class="fas fa-store"></i>
                                     </div>
@@ -123,28 +123,23 @@
                                     Integrations & Tools
                                 </div>
 
-                                <a href="{{ route('pos.mpesa') }}" class="side-link">
+                                <a href="{{ route('pos.pricing') }}" class="side-link">
                                     MPESA Integration
                                     <i class="fas fa-arrow-right"></i>
                                 </a>
 
-                                <a href="{{ route('pos.ecommerce') }}" class="side-link">
+                                <a href="{{ route('pos.pricing') }}" class="side-link">
                                     E-commerce Integration
                                     <i class="fas fa-arrow-right"></i>
                                 </a>
 
-                                <a href="{{ route('pos.barcode') }}" class="side-link">
+                                <a href="{{ route('pos.pricing') }}" class="side-link">
                                     Barcode & Scanner Support
                                     <i class="fas fa-arrow-right"></i>
                                 </a>
 
-                                <a href="{{ route('pos.receipt') }}" class="side-link">
+                                <a href="{{ route('pos.pricing') }}" class="side-link">
                                     Receipt Printing
-                                    <i class="fas fa-arrow-right"></i>
-                                </a>
-
-                                <a href="{{ route('pos.loyalty') }}" class="side-link">
-                                    Customer Loyalty System
                                     <i class="fas fa-arrow-right"></i>
                                 </a>
 
@@ -190,12 +185,6 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('pos.pricing') }}">
                         Pricing
-                    </a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('pos.customers') }}">
-                        Customers
                     </a>
                 </li>
 
