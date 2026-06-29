@@ -10,9 +10,9 @@
         <!-- LOGO -->
         <a class="navbar-brand fw-bold d-flex align-items-center" href="#">
             <div class="logo-box">
-                JM
+                <img src="{{ asset('assets/images/logo.png') }}" alt="Logo">
             </div>
-            JM Innovatech POS
+            Business Solutions
         </a>
 
         <!-- MOBILE TOGGLER -->
