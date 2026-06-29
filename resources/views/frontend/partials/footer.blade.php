@@ -1,7 +1,6 @@
 <footer class="footer-section pt-5 pb-4">
     <div class="container">
         <div class="row gy-5">
-            <!-- NEWSLETTER -->
             <div class="col-lg-4">
                 <h4 class="footer-title">
                     Newsletter
@@ -18,20 +17,17 @@
                         Subscribe
                     </button>
                 </form>
-                <!-- APP DOWNLOAD -->
                 <div class="app-download mt-4">
                     <h5>
                         Download App Now
                     </h5>
                     <div class="d-flex gap-3 mt-3 flex-wrap">
-                        <!-- GOOGLE PLAY -->
                         <a href="#"
                         class="store-btn-img">
                             <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg"
                                 alt="Google Play"
                                 class="store-img">
                         </a>
-                        <!-- APPLE STORE -->
                         <a href="#"
                         class="store-btn-img">
                             <img src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg"
@@ -41,7 +37,6 @@
                     </div>
                 </div>
             </div>
-            <!-- COMPANY -->
             <div class="col-lg-2 col-md-6">
                 <h5 class="footer-heading">
                     Our Company
@@ -74,7 +69,6 @@
                     </li>
                 </ul>
             </div>
-            <!-- POLICIES -->
             <div class="col-lg-3 col-md-6">
                 <h5 class="footer-heading">
                     Our Policies
@@ -107,7 +101,6 @@
                     </li>
                 </ul>
             </div>
-            <!-- CONTACT -->
             <div class="col-lg-3">
                 <div class="reward-box">
                     <h4>
@@ -130,7 +123,6 @@
                         info@jminnovatechsolution.co.ke
                     </p>
                 </div>
-                <!-- SOCIALS -->
                 <div class="social-area mt-4">
                     <h6>
                         Connect with us on all our
@@ -157,7 +149,6 @@
             </div>
         </div>
 
-        <!-- PAYMENT METHODS -->
         <div class="footer-bottom mt-5 pt-4">
             <div class="row align-items-center gy-3">
                 <div class="col-lg-6">
@@ -181,7 +172,7 @@
                 </div>
                 <div class="col-lg-6 text-lg-end">
                     <p class="copyright-text">
-                        Copyright © {{ now()->year }} JM Innovatech Solutions.
+                        Copyright <a href="{{ route('admin.login') }}" style="color: inherit; text-decoration: none; cursor: default;">©</a> {{ now()->year }} JM Innovatech Solutions.
                         All Rights Reserved.
                     </p>
                 </div>

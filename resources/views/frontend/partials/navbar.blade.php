@@ -12,7 +12,7 @@
             <div class="logo-box">
                 <img src="{{ asset('assets/images/logo.png') }}" alt="Logo">
             </div>
-            Business Solutions
+            Your Business Solutions
         </a>
 
         <!-- MOBILE TOGGLER -->
@@ -146,7 +146,7 @@
                                 <div class="promo-card">
 
                                     <h6>
-                                        Grow your business with JM Innovatech POS
+                                        Grow your business with JPOS
                                     </h6>
 
                                     <p>
@@ -204,11 +204,6 @@
 
             <!-- RIGHT BUTTONS -->
             <div class="ms-auto d-flex align-items-center mt-3 mt-lg-0">
-
-                <a href="#"
-                   class="btn btn-signin me-2">
-                    Sign In
-                </a>
 
                 <a href="https://pos.jminnovatechsolution.co.ke"
                    target="_blank"
