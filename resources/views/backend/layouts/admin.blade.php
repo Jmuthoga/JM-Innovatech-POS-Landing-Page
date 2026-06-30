@@ -18,6 +18,8 @@
             --jpos-green-light: #4caf50;
             --bg-light: #f8f9fa;
             --sidebar-width: 260px;
+            --sidebar-collapsed-width: 70px; /* Added missing variable */
+            --transition-speed: 0.25s;
         }
 
         body {
@@ -33,13 +35,23 @@
             align-items: stretch;
         }
 
+        /* --- FIXED SIDEBAR CONFIGURATION --- */
         #sidebar {
-            min-width: var(--sidebar-width);
-            max-width: var(--sidebar-width);
-            background: #1e293b;
+            width: var(--sidebar-width); /* Controlled via a single property */
+            background: var(--jpos-blue); /* Restored your correct theme brand blue */
             color: #fff;
             min-height: 100vh;
-            transition: all 0.3s;
+            transition: width var(--transition-speed) cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* --- LARGE SCREENS: COLLAPSED OVERRIDE CONFIGURATION --- */
+        @media (min-width: 992px) {
+            body.sidebar-collapsed #sidebar {
+                width: var(--sidebar-collapsed-width) !important;
+                /* Extra insurance against conflicting partial files */
+                min-width: var(--sidebar-collapsed-width) !important;
+                max-width: var(--sidebar-collapsed-width) !important;
+            }
         }
 
         #content-wrapper {
@@ -87,6 +99,7 @@
     </div>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 @stack('scripts')
 </body>
