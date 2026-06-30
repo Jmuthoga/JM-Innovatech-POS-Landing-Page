@@ -43,12 +43,12 @@
                 </h5>
                 <ul class="footer-links">
                     <li>
-                        <a href="#">
+                        <a href="{{ route('pos.about') }}">
                             About Us
                         </a>
                     </li>
                     <li>
-                        <a href="#">
+                        <a href="https://jminnovatechsolution.co.ke/careers" target="_blank">
                             Careers
                         </a>
                     </li>
@@ -111,7 +111,7 @@
                 <div class="footer-contact mt-4">
                     <p>
                         <i class="fas fa-phone-alt"></i>
-                        +254111184200
+                        +254791446968
                     </p>
                     <p>
                         <i class="fas fa-map-marker-alt"></i>
@@ -120,7 +120,7 @@
                     </p>
                     <p>
                         <i class="fas fa-envelope"></i>
-                        info@jminnovatechsolution.co.ke
+                       info@jpos.africa
                     </p>
                 </div>
                 <div class="social-area mt-4">
@@ -172,8 +172,19 @@
                 </div>
                 <div class="col-lg-6 text-lg-end">
                     <p class="copyright-text">
-                        Copyright <a href="{{ route('admin.login') }}" style="color: inherit; text-decoration: none; cursor: default;">©</a> {{ now()->year }} JM Innovatech Solutions.
-                        All Rights Reserved.
+                        Copyright
+                        <a href="{{ route('admin.login') }}" target="_blank" style="color: inherit; text-decoration: none; cursor: default;">©</a>
+                        {{ now()->year }} JPOS. All Rights Reserved.
+
+                        <span class="mx-2">|</span>
+
+                        Powered by
+                        <a href="https://jminnovatechsolution.co.ke"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        style="text-decoration: none;">
+                            JM Innovatech Solutions
+                        </a>
                     </p>
                 </div>
             </div>

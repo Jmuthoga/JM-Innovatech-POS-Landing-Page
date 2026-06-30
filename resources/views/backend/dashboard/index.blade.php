@@ -223,7 +223,7 @@
                         <div class="d-flex justify-content-between align-items-start mb-2">
                             <div>
                                 <h6 class="text-muted text-uppercase mb-1 small fw-bold" style="letter-spacing: 0.5px;">Gross Revenue</h6>
-                                <h3 class="mb-0 fw-bold text-dark" id="gross-sales-val">KES {{ number_format($grossSales ?? 4892400) }}</h3>
+                                <h3 class="mb-0 fw-bold text-dark" id="gross-sales-val">KES {{ number_format($grossSales ?? 489200) }}</h3>
                             </div>
                             <div class="icon-box bg-primary-subtle text-primary">
                                 <i class="bi bi-currency-exchange"></i>

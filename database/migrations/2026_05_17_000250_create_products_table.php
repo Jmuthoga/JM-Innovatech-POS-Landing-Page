@@ -18,13 +18,13 @@ return new class extends Migration
             $table->string('name');
             $table->string('slug')->unique();
             $table->text('description')->nullable();
-            $table->string('features')->nullable(); // e.g. "PRINT • COPY • SCAN"
+            $table->string('features')->nullable();
             $table->decimal('new_price', 10, 2);
             $table->decimal('old_price', 10, 2)->nullable();
             $table->integer('stock')->default(0);
             $table->string('image');
             $table->json('thumbnails')->nullable();
-            $table->json('variants')->nullable(); // JSON structure for array of color variants
+            $table->json('variants')->nullable(); 
             $table->timestamp('flash_sale_ends')->nullable();
 
             // UI Placement Flags
