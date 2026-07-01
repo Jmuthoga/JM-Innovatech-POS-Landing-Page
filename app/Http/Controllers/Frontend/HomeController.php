@@ -139,9 +139,14 @@ class HomeController extends Controller
             ? $productModel->flash_sale_ends->timestamp
             : null;
 
-        $product['thumbnails'] = !empty($productModel->thumbnails)
-            ? array_map(fn($t) => asset($t), $productModel->thumbnails)
-            : [asset($productModel->image)];
+        // Convert JSON string to an array safely if it isn't already cast
+        $thumbnailsArray = is_string($productModel->thumbnails) 
+            ? json_decode($productModel->thumbnails, true) 
+            : $productModel->thumbnails;
+
+        $product['thumbnails'] = !empty($thumbnailsArray) && is_array($thumbnailsArray)
+            ? array_map(fn($t) => asset('storage/' . $t), $thumbnailsArray)
+            : [asset('storage/' . $productModel->image)];
 
         $product['variants'] = $productModel->variants ?? [
             [
@@ -177,7 +182,7 @@ class HomeController extends Controller
             'new_price' => $p->new_price,
             'old_price' => $p->old_price,
             'features' => $p->features,
-            'image' => asset($p->image),
+            'image' => $p->image ? asset('storage/' . $p->image) : asset('images/no-image.png'),
         ];
     }
 

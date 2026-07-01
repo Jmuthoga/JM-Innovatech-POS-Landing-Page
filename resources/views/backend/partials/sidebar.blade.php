@@ -246,15 +246,47 @@
             </a>
 
             <div>
-                <a class="sidebar-link" onclick="toggleDropdown(this)" data-bs-toggle="tooltip" data-bs-placement="right" title="Products">
+                <a class="sidebar-link" onclick="toggleDropdown(this)" data-bs-toggle="tooltip" data-bs-placement="right" title="Catalog">
                     <i class="bi bi-box-seam"></i>
-                    <span class="ms-3 link-text">Products</span>
+                    <span class="ms-3 link-text">Catalog</span>
                     <i class="bi bi-chevron-right arrow-icon"></i>
                 </a>
+                
                 <ul class="sidebar-dropdown">
-                    <li><a href="#" class="sidebar-link">All Products</a></li>
-                    <li><a href="#" class="sidebar-link">Inventory</a></li>
-                    <li><a href="#" class="sidebar-link">Categories</a></li>
+                    
+                    <li class="has-sub-dropdown">
+                        <a class="sidebar-link" onclick="toggleSubDropdown(event, this)">
+                            <span class="link-text">Products</span>
+                            <i class="bi bi-chevron-right sub-arrow-icon ms-auto" style="font-size: 0.8rem;"></i>
+                        </a>
+                        <ul class="sidebar-sub-dropdown" style="display: none; list-style: none; padding-left: 1.5rem;">
+                            <li><a href="{{ route('admin.products.index') }}" class="sidebar-link">All Products</a></li>
+                            <li><a href="{{ route('admin.products.create') }}" class="sidebar-link">Add Product</a></li>
+                        </ul>
+                    </li>
+
+                    <li class="has-sub-dropdown">
+                        <a class="sidebar-link" onclick="toggleSubDropdown(event, this)">
+                            <span class="link-text">Brands</span>
+                            <i class="bi bi-chevron-right sub-arrow-icon ms-auto" style="font-size: 0.8rem;"></i>
+                        </a>
+                        <ul class="sidebar-sub-dropdown" style="display: none; list-style: none; padding-left: 1.5rem;">
+                            <li><a href="{{ route('admin.brands.index') }}" class="sidebar-link">All Brands</a></li>
+                            <li><a href="{{ route('admin.brands.create') }}" class="sidebar-link">Add Brand</a></li>
+                        </ul>
+                    </li>
+
+                    <li class="has-sub-dropdown">
+                        <a class="sidebar-link" onclick="toggleSubDropdown(event, this)">
+                            <span class="link-text">Categories</span>
+                            <i class="bi bi-chevron-right sub-arrow-icon ms-auto" style="font-size: 0.8rem;"></i>
+                        </a>
+                        <ul class="sidebar-sub-dropdown" style="display: none; list-style: none; padding-left: 1.5rem;">
+                            <li><a href="{{ route('admin.categories.index') }}" class="sidebar-link">All Categories</a></li>
+                            <li><a href="{{ route('admin.categories.create') }}" class="sidebar-link">Add Category</a></li>
+                        </ul>
+                    </li>
+
                 </ul>
             </div>
 
@@ -356,6 +388,22 @@
                 initTooltips();
             });
         });
+
+        function toggleSubDropdown(event, element) {
+            event.preventDefault();
+            event.stopPropagation(); // Prevents closing the parent menu
+            
+            const subDropdown = element.nextElementSibling;
+            const arrow = element.querySelector('.sub-arrow-icon');
+            
+            if (subDropdown.style.display === 'none' || subDropdown.style.display === '') {
+                subDropdown.style.display = 'block';
+                if (arrow) arrow.style.transform = 'rotate(90deg)';
+            } else {
+                subDropdown.style.display = 'none';
+                if (arrow) arrow.style.transform = 'rotate(0deg)';
+            }
+        }
     </script>
 </body>
 </html>

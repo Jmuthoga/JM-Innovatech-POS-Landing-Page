@@ -32,7 +32,7 @@
         #wrapper {
             display: flex;
             width: 100%;
-            align-items: stretch;
+            min-height: 100vh;
         }
 
         /* --- FIXED SIDEBAR CONFIGURATION --- */
@@ -55,10 +55,12 @@
         }
 
         #content-wrapper {
-            width: 100%;
+            flex: 1;
+            min-width: 0;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
+            overflow-x: hidden;
         }
 
         .main-content {

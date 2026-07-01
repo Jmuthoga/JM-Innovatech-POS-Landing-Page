@@ -197,18 +197,22 @@
                         @endforeach
 
                     </div>
+                </div>
+            </div>
 
-                    <div style="margin-top: 30px; border-top: 1px solid var(--border-color); padding-top: 20px;">
-                        <h5 style="font-size: 0.9rem; font-weight: 700; margin-bottom: 12px;">
-                            Key Highlights:
+            <div class="row mt-5">
+                <div class="col-12">
+                    <div class="description-card-wrapper shadow-sm">
+                        <h5 class="description-heading">
+                             Product Description
                         </h5>
-
-                        <p style="font-size: 0.85rem; color: var(--text-muted); margin: 0;">
-                            {{ $product['description'] }}
-                        </p>
+                        <div class="description-content-body">
+                            {!! $product['description'] !!}
+                        </div>
                     </div>
                 </div>
             </div>
+            
 
         </div>
     </div>

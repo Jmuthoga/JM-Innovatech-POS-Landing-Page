@@ -311,3 +311,131 @@
         align-items: center;
         justify-content: center;
     }
+
+/* --- Premium Dynamic Description Component Styling --- */
+.description-card-wrapper {
+    background: #ffffff;
+    border: 1px solid var(--border-color, #e2e8f0);
+    border-radius: 16px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+}
+
+.description-heading {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--brand-navy, #0f172a);
+    border-bottom: 2px solid #f1f5f9;
+    padding-bottom: 1rem;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+}
+
+/* Also safeguard your main Product Title from overflowing on small mobile viewports */
+.product-title {
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    word-break: break-word;
+    hyphens: auto;
+}
+
+/* Scoped overrides to format dynamic rich text markup safely */
+.description-content-body {
+    font-size: 0.925rem;
+    line-height: 1.7;
+    color: var(--text-muted, #475569);
+    
+    /* 🔥 Force automatic breaking of long strings/sentences on all screens */
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    word-break: break-word; 
+    hyphens: auto;
+}
+
+/* Ensure arbitrary inline elements inside the description wrap perfectly too */
+.description-content-body * {
+    max-width: 100%;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+}
+
+.description-content-body p {
+    margin-bottom: 1.2rem;
+}
+
+.description-content-body p:last-child {
+    margin-bottom: 0;
+}
+
+/* Ensure rich text links blend with your setup */
+.description-content-body a {
+    color: var(--brand-blue, #3b82f6);
+    text-decoration: underline;
+    font-weight: 500;
+}
+
+/* Clean up custom list item markers */
+.description-content-body ul, 
+.description-content-body ol {
+    margin-bottom: 1.5rem;
+    padding-left: 1.5rem;
+}
+
+.description-content-body ul {
+    list-style-type: disc;
+}
+
+.description-content-body ol {
+    list-style-type: decimal;
+}
+
+.description-content-body li {
+    margin-bottom: 0.5rem;
+}
+
+/* Responsive Rich Text Tables styling rules */
+.description-content-body table {
+    width: 100% !important;
+    max-width: 100%;
+    margin-bottom: 1.5rem;
+    border-collapse: collapse;
+    background-color: transparent;
+    font-size: 0.875rem;
+}
+
+.description-content-body table th,
+.description-content-body table td {
+    padding: 0.75rem;
+    vertical-align: top;
+    border: 1px solid #e2e8f0;
+}
+
+.description-content-body table th {
+    background-color: #f8fafc;
+    font-weight: 600;
+    color: #1e293b;
+    text-align: left;
+}
+
+/* Fluid responsive layout protection for arbitrary imagery uploads */
+.description-content-body img {
+    max-width: 100%;
+    height: auto !important;
+    border-radius: 8px;
+    margin: 1rem 0;
+}
+
+/* Media handling breakpoints for sleek sizing adjustments on small viewpoints */
+@media (max-width: 767.98px) {
+    .description-card-wrapper {
+        padding: 1.25rem;
+        border-radius: 12px;
+    }
+    .description-content-body table {
+        display: block;
+        width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+}
