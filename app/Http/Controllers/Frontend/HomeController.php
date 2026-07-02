@@ -165,7 +165,9 @@ class HomeController extends Controller
             ->get()
             ->map(fn($p) => [
                 'name' => $p->name,
-                'image' => asset($p->image),
+            'image' => $p->image
+            ? asset('storage/' . $p->image)
+            : asset('images/no-image.png'),
                 'new_price' => $p->new_price,
                 'url' => route('product.show', $p->id)
             ])->toArray();
