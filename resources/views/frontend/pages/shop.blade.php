@@ -321,11 +321,11 @@
 
                                 <!-- WHATSAPP ORDER -->
                                 <a href="https://wa.me/254791446968?text={{ urlencode(
-                                    "Hello JM Innovatech 👋 I want to order:\n\n" .
+                                    "Hello JPOS Systems 👋 I want to order this product:\n\n" .
                                     "Product: " . $product['name'] . "\n" .
                                     "Price: KES " . number_format($product['new_price']) . "\n" .
-                                    "Product ID: " . $product['id'] . "\n\n" .
-                                    "Kindly assist me with availability and delivery."
+                                    "Link: " . url()->current() . "\n\n" .
+                                    "Kindly confirm availability and delivery."
                                 ) }}"
                                 target="_blank"
                                 class="btn-whatsapp flex-fill d-flex align-items-center justify-content-center">

@@ -132,7 +132,7 @@
 
                         <!-- WHATSAPP ORDER -->
                         <a href="https://wa.me/254791446968?text={{ urlencode(
-                            "Hello JM Innovatech 👋 I want to order this product:\n\n" .
+                            "Hello JPOS Systems 👋 I want to order this product:\n\n" .
                             "Product: " . $product['name'] . "\n" .
                             "Price: KES " . number_format($product['new_price']) . "\n" .
                             "Link: " . url()->current() . "\n\n" .
@@ -142,7 +142,7 @@
                         target="_blank">
 
                             <i class="fab fa-whatsapp"></i>
-                            Order via WhatsApp
+                            Quick Order
                         </a>
 
                         <!-- WISHLIST (UNCHANGED FUNCTIONALITY PLACEHOLDER) -->
