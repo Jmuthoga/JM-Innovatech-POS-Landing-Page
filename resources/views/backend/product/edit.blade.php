@@ -1,86 +1,151 @@
 @extends('backend.layouts.admin')
 
-@section('title', 'JPOS Systems - Edit Product')
+@section('title', 'Edit Product')
 
 @push('styles')
   <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.20/summernote-lite.min.css" rel="stylesheet">
-  <style>
+<style>
     :root {
         --sidebar-width: var(--sidebar-width, 260px);
+        --sidebar-collapsed-width: var(--sidebar-collapsed-width, 70px);
         --transition-speed: .25s;
+        --page-bg: #f8fafc;
     }
+
+    /* ===============================
+       GLOBAL
+    =============================== */
+
+    *,
+    *::before,
+    *::after {
+        box-sizing: border-box;
+    }
+
+    html,
+    body {
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        overflow-x: hidden;
+        background: var(--page-bg);
+    }
+
+    /* ===============================
+       PAGE LAYOUT
+    =============================== */
 
     #main-wrapper {
         margin-left: var(--sidebar-width);
-        transition: margin-left var(--transition-speed) cubic-bezier(.4, 0, .2, 1);
         min-height: 100vh;
-        background: #f8fafc;
+        background: var(--page-bg);
+        transition: margin-left var(--transition-speed) cubic-bezier(.4,0,.2,1);
     }
 
     body.sidebar-collapsed #main-wrapper {
-        margin-left: var(--sidebar-collapsed-width, 70px);
+        margin-left: var(--sidebar-collapsed-width);
     }
 
     .main-content {
-        padding: 2rem;
-        margin-top: 10px;
+        width: 100%;
+        padding: 20px;
+        margin-top: 20px;
+    }
+
+    .container-fluid {
+        width: 100%;
+        max-width: 100%;
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    .row {
+        --bs-gutter-x: 1.5rem;
+        --bs-gutter-y: 1.5rem;
+    }
+
+    /* ===============================
+       CARDS
+    =============================== */
+
+    .card {
+        width: 100%;
+        border: 0;
+        border-radius: 16px;
+        background: #fff;
+        box-shadow: 0 4px 16px rgba(15,23,42,.06);
+    }
+
+    .card-body {
+        padding: 1.5rem;
     }
 
     .form-section-title {
-        font-size: 0.9rem;
+        font-size: .9rem;
+        font-weight: 700;
         text-transform: uppercase;
-        letter-spacing: 0.05rem;
+        letter-spacing: .06em;
         color: #64748b;
         border-bottom: 1px solid #e2e8f0;
-        padding-bottom: 0.5rem;
-        margin-bottom: 1.25rem;
+        padding-bottom: .75rem;
+        margin-bottom: 1.5rem;
     }
 
-    .card {
-        border: none;
-        border-radius: 16px;
-        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+    /* ===============================
+       FORM CONTROLS
+    =============================== */
+
+    .form-control,
+    .form-select {
+        min-height: 46px;
+        border: 1px solid #cbd5e1;
+        border-radius: 10px;
+        padding: .65rem .9rem;
+        font-size: .95rem;
+        transition: .2s;
     }
 
-    .form-control, .form-select {
-        border-color: #cbd5e1;
-        padding: 0.6rem 0.85rem;
-        border-radius: 8px;
-        font-size: 0.95rem;
-        transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-    }
-
-    .form-control:focus, .form-select:focus {
+    .form-control:focus,
+    .form-select:focus {
         border-color: #3b82f6;
-        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+        box-shadow: 0 0 0 .2rem rgba(59,130,246,.15);
     }
 
     .input-group-text {
-        background-color: #f8fafc;
-        border-color: #cbd5e1;
+        background: #f8fafc;
+        border: 1px solid #cbd5e1;
+        border-radius: 10px;
         color: #64748b;
-        border-radius: 8px;
     }
 
-    /* Seamless Summernote Integration */
+    /* ===============================
+       SUMMERNOTE
+    =============================== */
+
     .note-editor.note-frame {
         border: 1px solid #cbd5e1 !important;
-        border-radius: 8px !important;
+        border-radius: 10px !important;
         overflow: hidden;
     }
+
     .note-toolbar {
-        background-color: #f8fafc !important;
+        background: #f8fafc !important;
         border-bottom: 1px solid #e2e8f0 !important;
     }
-    .note-editor.note-frame .note-editing-area .note-editable { 
-        min-height: 250px; 
-        background: #fff;
-    }
-    .note-popover, .note-toolbar { 
-        z-index: 1055 !important; 
+
+    .note-editor .note-editable {
+        min-height: 260px;
     }
 
-    /* Image Preview Containers */
+    .note-toolbar,
+    .note-popover {
+        z-index: 1055 !important;
+    }
+
+    /* ===============================
+       IMAGE PREVIEW
+    =============================== */
+
     .preview-thumbnail-wrapper {
         position: relative;
         width: 80px;
@@ -88,124 +153,197 @@
     }
 
     .preview-thumbnail {
-        width: 80px;
-        height: 80px;
+        width: 100%;
+        height: 100%;
         object-fit: cover;
+        border-radius: 10px;
         border: 1px solid #e2e8f0;
-        border-radius: 8px;
-        background-color: #fff;
-        transition: transform 0.2s, box-shadow 0.2s;
+        background: #fff;
         cursor: pointer;
+        transition: .2s ease;
     }
 
     .preview-thumbnail:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+        transform: translateY(-3px);
         border-color: #3b82f6;
+        box-shadow: 0 8px 18px rgba(0,0,0,.12);
     }
 
-    /* Centered Screen Lightbox Overlay */
+    /* ===============================
+       LIGHTBOX
+    =============================== */
+
     .image-lightbox-overlay {
         position: fixed;
-        top: 0;
-        left: 0;
-        width: 100vw;
-        height: 100vh;
-        background-color: rgba(15, 23, 42, 0.8); 
-        backdrop-filter: blur(4px);
-        z-index: 99999;
+        inset: 0;
         display: flex;
-        align-items: center;
         justify-content: center;
+        align-items: center;
+        background: rgba(15,23,42,.8);
+        backdrop-filter: blur(5px);
         opacity: 0;
-        pointer-events: none;
-        transition: opacity 0.2s ease;
+        visibility: hidden;
+        transition: .2s;
+        z-index: 99999;
     }
 
     .image-lightbox-overlay.active {
         opacity: 1;
+        visibility: visible;
     }
 
     .image-lightbox-img {
         max-width: 85%;
         max-height: 85vh;
-        object-fit: contain;
         border-radius: 12px;
-        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-        transform: scale(0.95);
-        transition: transform 0.2s ease;
+        object-fit: contain;
+        transform: scale(.95);
+        transition: .2s;
     }
 
     .image-lightbox-overlay.active .image-lightbox-img {
         transform: scale(1);
     }
 
-    /* Professional Functional Turn On/Off Toggle Framework */
+    /* ===============================
+       BADGES
+    =============================== */
+
     .cursor-pointer {
         cursor: pointer;
     }
-    .p-2\.5 {
-        padding: 0.65rem 0.85rem !important;
-    }
+
     .transition-all {
-        transition: all 0.15s ease-in-out;
+        transition: .2s;
     }
-    
-    /* Inactive State (Default/Off State) */
+
+    .p-2\.5 {
+        padding: .65rem .9rem !important;
+    }
+
     .badge-toggle-card {
-        background-color: #fff;
-        border: 1px solid #cbd5e1 !important;
+        background: #fff;
+        border: 1px solid #cbd5e1;
     }
+
     .badge-toggle-card:hover {
-        background-color: #f8fafc;
-        border-color: #94a3b8 !important;
+        background: #f8fafc;
+        border-color: #94a3b8;
     }
+
     .badge-status-indicator {
-        font-size: 0.7rem;
-        text-transform: uppercase;
-        letter-spacing: 0.05rem;
-        padding: 0.2rem 0.5rem;
+        padding: .2rem .55rem;
         border-radius: 6px;
-        background-color: #f1f5f9;
-        color: #64748b;
+        font-size: .7rem;
         font-weight: 700;
+        letter-spacing: .05em;
+        background: #f1f5f9;
+        color: #64748b;
         border: 1px solid #e2e8f0;
     }
-    
-    /* Default Text Injectors for Inactive Flagging */
+
     .badge-status-indicator::after {
         content: "Inactive";
     }
-    
-    /* Active State (Checked/On State Mapping) */
+
     .badge-toggle-input:checked + .badge-toggle-card {
-        background-color: #f0fdf4;
-        border-color: #16a34a !important;
+        background: #f0fdf4;
+        border-color: #16a34a;
     }
+
     .badge-toggle-input:checked + .badge-toggle-card .badge-title-text {
-        color: #14532d !important;
+        color: #166534;
     }
+
     .badge-toggle-input:checked + .badge-toggle-card .badge-status-indicator {
-        background-color: #16a34a;
+        background: #16a34a;
         color: #fff;
-        border-color: #15803d;
+        border-color: #16a34a;
     }
-    
-    /* Modify Text Injector Context dynamically when Input Value updates */
+
     .badge-toggle-input:checked + .badge-toggle-card .badge-status-indicator::after {
         content: "Active";
     }
 
-    @media(max-width: 991.98px) {
+    /* ===============================
+       TABLET & MOBILE
+    =============================== */
+
+    @media (max-width: 991.98px) {
+
         #main-wrapper {
             margin-left: 0 !important;
+            width: 100%;
         }
+
         .main-content {
+            width: 100%;
+            padding: 10px;
+            margin-top: 20px;
+        }
+
+        .container-fluid {
+            width: 100%;
+            max-width: 100%;
+            padding-left: 0;
+            padding-right: 0;
+        }
+
+        .row {
+            margin-left: 0;
+            margin-right: 0;
+        }
+
+        .col-xl-8,
+        .col-xl-4,
+        .col-lg-12,
+        .col-md-12,
+        .col-12 {
+            width: 100%;
+            max-width: 100%;
+            flex: 0 0 100%;
+        }
+
+        .card {
+            width: 100%;
+            border-radius: 14px;
+        }
+
+        .card-body {
             padding: 1rem;
-            margin-top: 25px;
+        }
+
+        .preview-thumbnail-wrapper {
+            width: 70px;
+            height: 70px;
         }
     }
-  </style>
+
+    /* ===============================
+       SMALL PHONES
+    =============================== */
+
+    @media (max-width: 576px) {
+
+        .main-content {
+            padding: 10px;
+            margin-top: 20px;
+        }
+
+        .card {
+            border-radius: 12px;
+        }
+
+        .card-body {
+            padding: .9rem;
+        }
+
+        .preview-thumbnail-wrapper {
+            width: 60px;
+            height: 60px;
+        }
+    }
+</style>
 @endpush
 
 @section('content')

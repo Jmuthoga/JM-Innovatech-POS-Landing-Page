@@ -1,23 +1,35 @@
 @extends('backend.layouts.admin')
 
-@section('title', 'JPOS Systems Products')
+@section('title', 'Products')
 
 @section('content')
 <style>
     :root {
         --sidebar-width: var(--sidebar-width, 260px);
+        --sidebar-collapsed-width: var(--sidebar-collapsed-width, 70px);
         --transition-speed: .25s;
+        --page-bg: #f1f5f9;
+    }
+
+    /* ===============================
+       PAGE LAYOUT
+    =============================== */
+
+    html,
+    body {
+        overflow-x: hidden;
+        background: var(--page-bg);
     }
 
     #main-wrapper {
         margin-left: var(--sidebar-width);
-        transition: margin-left var(--transition-speed) cubic-bezier(.4, 0, .2, 1);
         min-height: 100vh;
-        background: #f1f5f9;
+        background: var(--page-bg);
+        transition: margin-left var(--transition-speed) cubic-bezier(.4, 0, .2, 1);
     }
 
     body.sidebar-collapsed #main-wrapper {
-        margin-left: var(--sidebar-collapsed-width, 70px);
+        margin-left: var(--sidebar-collapsed-width);
     }
 
     .main-content {
@@ -25,41 +37,170 @@
         margin-top: 10px;
     }
 
-    .card {
-        border: none;
-        border-radius: 12px;
-        box-shadow: 0 .125rem .5rem rgba(0, 0, 0, .08);
+    .container-fluid {
+        width: 100%;
+        max-width: 100%;
     }
 
+    /* ===============================
+       CARD
+    =============================== */
+
+    .card {
+        border: 0;
+        border-radius: 14px;
+        overflow: hidden;
+        box-shadow: 0 4px 18px rgba(15, 23, 42, .08);
+    }
+
+    .card-body {
+        padding: 1.25rem;
+    }
+
+    /* ===============================
+       TABLE
+    =============================== */
+
     .table-responsive {
-        overflow-x: auto;
         width: 100%;
+        overflow-x: auto;
+        overflow-y: hidden;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: thin;
     }
 
     #products-table {
         width: 100% !important;
+        min-width: 1100px;
+        border-collapse: collapse;
     }
 
     table.dataTable {
         width: 100% !important;
+        margin: 0 !important;
     }
 
     .dataTables_wrapper {
         width: 100%;
+        overflow: hidden;
+    }
+
+    .dataTables_scroll {
+        width: 100%;
+    }
+
+    .dataTables_scrollHead,
+    .dataTables_scrollBody {
+        width: 100% !important;
+    }
+
+    .dataTables_scrollBody {
+        overflow-x: auto !important;
+        overflow-y: auto !important;
+    }
+
+    /* ===============================
+       DATATABLE CONTROLS
+    =============================== */
+
+    .dataTables_length,
+    .dataTables_filter,
+    .dataTables_info,
+    .dataTables_paginate {
+        margin-top: .5rem;
     }
 
     .dataTables_filter input {
         margin-left: .5rem;
+        border-radius: 8px;
+        border: 1px solid #d1d5db;
+        padding: .4rem .75rem;
     }
 
-    @media(max-width: 991.98px) {
+    .dataTables_length select {
+        border-radius: 8px;
+        border: 1px solid #d1d5db;
+        padding: .35rem 2rem .35rem .5rem;
+    }
+
+    /* ===============================
+       MOBILE & TABLET
+    =============================== */
+
+    @media (max-width: 991.98px) {
+
         #main-wrapper {
             margin-left: 0 !important;
+            width: 100%;
         }
 
         .main-content {
-            padding: 1rem;
-            margin-top: 25px;
+            padding: .75rem;
+            margin-top: 20px;
+        }
+
+        .container-fluid {
+            padding-left: 0;
+            padding-right: 0;
+            max-width: 100%;
+        }
+
+        .card {
+            border-radius: 0;
+            box-shadow: none;
+        }
+
+        .card-body {
+            padding: .75rem;
+        }
+
+        .table-responsive {
+            width: 100%;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        #products-table {
+            min-width: 1100px;
+        }
+
+        .dataTables_wrapper {
+            width: 100%;
+        }
+
+        .dataTables_filter,
+        .dataTables_length,
+        .dataTables_info,
+        .dataTables_paginate {
+            width: 100%;
+            text-align: left !important;
+            margin-bottom: .75rem;
+        }
+
+        .dataTables_filter input {
+            width: 100%;
+            margin-left: 0;
+            margin-top: .5rem;
+        }
+    }
+
+    /* ===============================
+       SMALL PHONES
+    =============================== */
+
+    @media (max-width: 576px) {
+
+        .main-content {
+            padding: .5rem;
+            margin-top: 30px;
+        }
+
+        .card-body {
+            padding: .5rem;
+        }
+
+        #products-table {
+            min-width: 1000px;
         }
     }
 </style>
