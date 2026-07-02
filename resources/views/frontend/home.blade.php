@@ -111,15 +111,7 @@
                         </form>
 
                         <!-- WHATSAPP -->
-                        <a href="https://wa.me/254791446968?text={{ urlencode(
-                            "Hello JPOS Systems👋 I want to order this product:\n\n" .
-                            "Product: " . $product['name'] . "\n" .
-                            "Price: KES " . number_format($product['new_price']) . "\n" .
-                            "Link: " . url()->current() . "\n\n" .
-                            "Kindly confirm availability and delivery."
-                        ) }}" 
-                        target="_blank" 
-                        class="btn-whatsapp flex-fill d-flex align-items-center justify-content-center">
+                        <a href="https://wa.me/254791446968?text={{ urlencode("Hello JM Innovatech 👋 I am interested in:\n\nProduct: " . $deal['name'] . "\nPrice: KES " . number_format($deal['new_price']) . "\n\nKindly assist me with availability and ordering.") }}" target="_blank" class="btn-whatsapp flex-fill d-flex align-items-center justify-content-center">
                             <i class="fab fa-whatsapp"></i>
                         </a>
                     </div>
@@ -238,15 +230,7 @@
                             </button>
                         </form>
 
-                        <a href="https://wa.me/254791446968?text={{ urlencode(
-                            "Hello JPOS Systems👋 I want to order this product:\n\n" .
-                            "Product: " . $product['name'] . "\n" .
-                            "Price: KES " . number_format($product['new_price']) . "\n" .
-                            "Link: " . url()->current() . "\n\n" .
-                            "Kindly confirm availability and delivery."
-                        ) }}"
-                        target="_blank" 
-                        class="btn-whatsapp flex-fill d-flex align-items-center justify-content-center">
+                        <a href="https://wa.me/254791446968?text={{ urlencode("Hello JM Innovatech 👋 I want to order:\n\nProduct: " . $item['name'] . "\nPrice: KES " . number_format($item['new_price']) . "\n\nKindly confirm availability.") }}" target="_blank" class="btn-whatsapp flex-fill d-flex align-items-center justify-content-center">
                             <i class="fab fa-whatsapp"></i>
                         </a>
                     </div>
@@ -321,15 +305,7 @@
                             </button>
                         </form>
 
-                        <a href="https://wa.me/254791446968?text={{ urlencode(
-                            "Hello JPOS Systems👋 I want to order this product:\n\n" .
-                            "Product: " . $product['name'] . "\n" .
-                            "Price: KES " . number_format($product['new_price']) . "\n" .
-                            "Link: " . url()->current() . "\n\n" .
-                            "Kindly confirm availability and delivery."
-                        ) }}" 
-                        target="_blank" 
-                        class="btn-whatsapp flex-fill d-flex align-items-center justify-content-center">
+                        <a href="https://wa.me/254791446968?text={{ urlencode("Hello JM Innovatech 👋 I want to order:\n\nProduct: " . $printer['name'] . "\nPrice: KES " . number_format($printer['new_price']) . "\n\nKindly confirm availability and delivery.") }}" target="_blank" class="btn-whatsapp flex-fill d-flex align-items-center justify-content-center">
                             <i class="fab fa-whatsapp"></i>
                         </a>
                     </div>
@@ -433,15 +409,7 @@
                             </button>
                         </form>
 
-                        <a href="https://wa.me/254791446968?text={{ urlencode(
-                            "Hello JPOS Systems👋 I want to order this product:\n\n" .
-                            "Product: " . $product['name'] . "\n" .
-                            "Price: KES " . number_format($product['new_price']) . "\n" .
-                            "Link: " . url()->current() . "\n\n" .
-                            "Kindly confirm availability and delivery."
-                        ) }}" 
-                        target="_blank" 
-                        class="btn-whatsapp flex-fill d-flex align-items-center justify-content-center">
+                        <a href="https://wa.me/254791446968?text={{ urlencode("Hello JM Innovatech 👋 I want to order:\n\nProduct: " . $item['name'] . "\nPrice: KES " . number_format($item['new_price']) . "\n\nKindly confirm availability.") }}" target="_blank" class="btn-whatsapp flex-fill d-flex align-items-center justify-content-center">
                             <i class="fab fa-whatsapp"></i>
                         </a>
                     </div>
@@ -516,15 +484,7 @@
                             </button>
                         </form>
 
-                        <a href="https://wa.me/254791446968?text={{ urlencode(
-                            "Hello JPOS Systems👋 I want to order this product:\n\n" .
-                            "Product: " . $product['name'] . "\n" .
-                            "Price: KES " . number_format($product['new_price']) . "\n" .
-                            "Link: " . url()->current() . "\n\n" .
-                            "Kindly confirm availability and delivery."
-                        ) }}"
-                        target="_blank" 
-                        class="btn-whatsapp flex-fill d-flex align-items-center justify-content-center">
+                        <a href="https://wa.me/254791446968?text={{ urlencode("Hello JM Innovatech 👋 I want to order:\n\nProduct: " . $toner['name'] . "\nPrice: KES " . number_format($toner['new_price']) . "\n\nKindly assist me with availability.") }}" target="_blank" class="btn-whatsapp flex-fill d-flex align-items-center justify-content-center">
                             <i class="fab fa-whatsapp"></i>
                         </a>
                     </div>

@@ -321,7 +321,7 @@
 
                                 <!-- WHATSAPP ORDER -->
                                 <a href="https://wa.me/254791446968?text={{ urlencode(
-                                    "Hello JPOS Systems 👋 I want to order this product:\n\n" .
+                                    "Hello JM Innovatech 👋 I want to order this product:\n\n" .
                                     "Product: " . $product['name'] . "\n" .
                                     "Price: KES " . number_format($product['new_price']) . "\n" .
                                     "Link: " . url()->current() . "\n\n" .
