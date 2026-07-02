@@ -87,12 +87,6 @@
         @include('backend.partials.navbar')
 
         <main class="main-content">
-            @if(session('success'))
-                <div class="alert alert-success alert-dismissible fade show admin-card mb-4" role="alert">
-                    <i class="bi bi-check-circle-fill me-2 text-success"></i> {{ session('success') }}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-            @endif
 
             @yield('content')
         </main>
