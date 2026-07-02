@@ -252,7 +252,9 @@ class HomeController extends Controller
                 'name' => $product->name, 
                 'price' => $product->new_price, 
                 'old_price' => $product->old_price, 
-                'image' => asset($product->image), 
+                'image' => $product->image
+                    ? asset('storage/' . $product->image)
+                    : asset('images/no-image.png'),
                 'qty' => 1
             ];
         }
