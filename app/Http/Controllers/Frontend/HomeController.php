@@ -126,7 +126,7 @@ class HomeController extends Controller
         ]);
     }
 
-    public function product($id)
+    public function product(Product $product)
     {
         $productModel = $product->load(['category', 'brand']);
 
