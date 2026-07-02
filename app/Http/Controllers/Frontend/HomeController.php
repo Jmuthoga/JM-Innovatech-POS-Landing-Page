@@ -128,7 +128,7 @@ class HomeController extends Controller
 
     public function product($id)
     {
-        $productModel = Product::with(['category', 'brand'])->findOrFail($id);
+        $productModel = $product->load(['category', 'brand']);
 
         $product = $this->transformProduct($productModel);
 
@@ -159,7 +159,7 @@ class HomeController extends Controller
             ? round((($productModel->old_price - $productModel->new_price) / $productModel->old_price) * 100)
             : 0;
 
-        $related_products = Product::where('id', '!=', $id)
+        $related_products = Product::where('id', '!=', $productModel->id)
             ->where('category_id', $productModel->category_id)
             ->take(16)
             ->get()
@@ -169,7 +169,7 @@ class HomeController extends Controller
             ? asset('storage/' . $p->image)
             : asset('images/no-image.png'),
                 'new_price' => $p->new_price,
-                'url' => route('product.show', $p->id)
+                'url' => route('product.show', $p)
             ])->toArray();
 
         return view('frontend.pages.product', compact('product', 'discount', 'related_products'));

@@ -8,7 +8,7 @@ use App\Http\Controllers\Frontend\PosSystemController;
 // FRONTEND HOME ROUTES
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/shop', [HomeController::class, 'shop'])->name('shop');
-Route::get('/product/{id}', [HomeController::class, 'product'])->name('product.show');
+Route::get('/product/{product:slug}', [HomeController::class, 'product'])->name('product.show');
 
  //MINI CART ACTIONS (ALLOWED WITHOUT LOGIN)
 Route::post('/cart/add', [HomeController::class, 'addToCart'])->name('cart.add');
