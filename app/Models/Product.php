@@ -49,6 +49,20 @@ class Product extends Model
     protected static function boot()
     {
         parent::boot();
-        static::creating(fn($model) => $model->slug = Str::slug($model->name) . '-' . rand(100, 999));
+
+        static::creating(function ($product) {
+            $product->slug = Str::slug($product->name);
+        });
+
+        static::updating(function ($product) {
+            if ($product->isDirty('name')) {
+                $product->slug = Str::slug($product->name);
+            }
+        });
+    }
+
+    public function getRouteKeyName()
+    {
+        return 'slug';
     }
 }

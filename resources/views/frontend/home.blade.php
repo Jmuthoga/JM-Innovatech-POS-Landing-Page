@@ -83,7 +83,7 @@
                     </button>
                 </form>
 
-                <a href="{{ route('product.show', $deal['id']) }}" class="deal-image">
+                <a href="{{ route('product.show', $deal['slug']) }}" class="deal-image">
                     <img src="{{ $deal['image'] }}" alt="">
                 </a>
 
@@ -203,7 +203,7 @@
                     </button>
                 </form>
 
-                <a href="{{ route('product.show', $item['id']) }}" class="deal-image">
+                <a href="{{ route('product.show', $item['slug']) }}" class="deal-image">
                     <img src="{{ $item['image'] }}" alt="{{ $item['name'] }}">
                 </a>
 
@@ -276,7 +276,7 @@
                     </button>
                 </form>
 
-                <a href="{{ route('product.show', $printer['id']) }}" class="deal-image">
+                <a href="{{ route('product.show', $printer['slug']) }}" class="deal-image">
                     <img src="{{ $printer['image'] }}" alt="{{ $printer['name'] }}">
                 </a>
 
@@ -455,7 +455,7 @@
                     </button>
                 </form>
 
-                <a href="{{ route('product.show', $toner['id']) }}" class="deal-image">
+                <a href="{{ route('product.show', $toner['slug']) }}" class="deal-image">
                     <img src="{{ $toner['image'] }}" alt="{{ $toner['name'] }}">
                 </a>
 

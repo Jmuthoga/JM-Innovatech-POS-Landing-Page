@@ -88,7 +88,7 @@
                     <div style="max-height: calc(6 * 76px); overflow-y: auto; padding-right: 5px;">
 
                         @foreach($latestProducts as $latest)
-                        <a href="{{ route('product.show', $latest['id']) }}" class="sidebar-product" style="display: flex; align-items: center; gap: 12px; padding: 8px 0; border-bottom: 1px solid var(--border-color, #e2e8f0); text-decoration: none;">
+                        <a href="{{ route('product.show', $latest['slug']) }}" class="sidebar-product" style="display: flex; align-items: center; gap: 12px; padding: 8px 0; border-bottom: 1px solid var(--border-color, #e2e8f0); text-decoration: none;">
                             
                             <img src="{{ $latest['image'] }}" alt="{{ $latest['name'] }}" style="width: 60px; height: 60px; object-fit: cover; border-radius: 6px;">
 
@@ -285,7 +285,7 @@
                         </form>
 
                         @if(isset($product['id']))
-                            <a href="{{ route('product.show', $product['id']) }}" class="deal-image">
+                            <a href="{{ route('product.show', $product['slug']) }}" class="deal-image">
                                 <img src="{{ $product['image'] }}" alt="{{ $product['name'] }}">
                             </a>
                         @endif
@@ -293,7 +293,7 @@
                         <div class="deal-content">
                             <div class="deal-category">{{ $product['brand'] ?? '' }}</div>
                             <h4 class="deal-name">
-                                <a href="{{ route('product.show', $product['id'] ?? 0) }}" style="text-decoration:none; color:inherit;">
+                                <a href="{{ route('product.show', $product['slug']) }}" style="text-decoration:none; color:inherit;">
                                     {{ $product['name'] }}
                                 </a>
                             </h4>

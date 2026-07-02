@@ -175,19 +175,22 @@ class HomeController extends Controller
         return view('frontend.pages.product', compact('product', 'discount', 'related_products'));
     }
 
-    private function transformProduct($p) {
+    private function transformProduct($p)
+    {
         return [
             'id' => $p->id,
+            'slug' => $p->slug,
             'name' => $p->name,
             'category' => $p->category->name ?? 'Uncategorized',
             'brand' => $p->brand->name ?? 'Generic',
             'new_price' => $p->new_price,
             'old_price' => $p->old_price,
             'features' => $p->features,
-            'image' => $p->image ? asset('storage/' . $p->image) : asset('images/no-image.png'),
+            'image' => $p->image
+                ? asset('storage/'.$p->image)
+                : asset('images/no-image.png'),
         ];
     }
-
     private function calculateCartTotals($promoCode = '')
     {
         $shipping = ['standard_fee' => 250, 'free_shipping_minimum' => 50000];
