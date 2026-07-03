@@ -194,39 +194,79 @@
                         </div>
 
                         <div class="flex-grow-1 mb-4">
-                            <div class="feature-divider-label text-success">Included in plan</div>
+                            <div class="feature-divider-label text-success">Included in this plan</div>
                             <ul class="list-unstyled mb-4 small">
                                 <li class="mb-2 d-flex align-items-start gap-2 fw-bold">
                                     <i class="fas fa-check-circle text-success mt-1"></i>
-                                    <span>1 Isolated Business Profile</span>
+                                    <span>1 Business Account</span>
                                 </li>
                                 <li class="mb-2 d-flex align-items-start gap-2">
                                     <i class="fas fa-check-circle text-success mt-1"></i>
-                                    <span>Manual Cash & Credit Ledgers</span>
+                                    <span>Unlimited Products</span>
                                 </li>
                                 <li class="mb-2 d-flex align-items-start gap-2">
                                     <i class="fas fa-check-circle text-success mt-1"></i>
-                                    <span>Standard USB Barcode Reading</span>
+                                    <span>Unlimited Sales</span>
                                 </li>
                                 <li class="mb-2 d-flex align-items-start gap-2">
                                     <i class="fas fa-check-circle text-success mt-1"></i>
-                                    <span>Basic Daily Sales Reports</span>
+                                    <span>Cash and Credit Records</span>
+                                </li>
+                                <li class="mb-2 d-flex align-items-start gap-2">
+                                    <i class="fas fa-check-circle text-success mt-1"></i>
+                                    <span>USB Barcode Scanner Support</span>
+                                </li>
+                                <li class="mb-2 d-flex align-items-start gap-2">
+                                    <i class="fas fa-check-circle text-success mt-1"></i>
+                                    <span>Customer Management</span>
+                                </li>
+                                <li class="mb-2 d-flex align-items-start gap-2">
+                                    <i class="fas fa-check-circle text-success mt-1"></i>
+                                    <span>Supplier Management</span>
+                                </li>
+                                <li class="mb-2 d-flex align-items-start gap-2">
+                                    <i class="fas fa-check-circle text-success mt-1"></i>
+                                    <span>Daily Sales Reports</span>
+                                </li>
+                                <li class="mb-2 d-flex align-items-start gap-2">
+                                    <i class="fas fa-check-circle text-success mt-1"></i>
+                                    <span>Stock Management</span>
+                                </li>
+                                <li class="mb-2 d-flex align-items-start gap-2">
+                                    <i class="fas fa-check-circle text-success mt-1"></i>
+                                    <span>Monitor Your Business Anywhere</span>
+                                </li>
+                                <li class="mb-2 d-flex align-items-start gap-2">
+                                    <i class="fas fa-check-circle text-success mt-1"></i>
+                                    <span>PWA Mobile App Support</span>
+                                </li>
+                                <li class="mb-2 d-flex align-items-start gap-2">
+                                    <i class="fas fa-check-circle text-success mt-1"></i>
+                                    <span>Free Software Updates</span>
                                 </li>
                             </ul>
 
-                            <div class="feature-divider-label text-danger">Not part of plan</div>
+                            <div class="feature-divider-label text-danger">Not included</div>
                             <ul class="list-unstyled mb-0 small text-muted opacity-65">
                                 <li class="mb-2 d-flex align-items-start gap-2 text-danger fw-bold">
                                     <i class="fas fa-ban text-danger mt-1"></i>
-                                    <span>No Extra Branches Supported</span>
+                                    <span>More than 1 Branch</span>
                                 </li>
                                 <li class="mb-2 d-flex align-items-start gap-2">
                                     <i class="fas fa-ban text-danger mt-1"></i>
-                                    <span>No Automated M-Pesa Syncer</span>
+                                    <span>Automatic M-Pesa Payments</span>
                                 </li>
                                 <li class="mb-2 d-flex align-items-start gap-2">
                                     <i class="fas fa-ban text-danger mt-1"></i>
-                                    <span>No KRA eTIMS Payloads</span>
+                                    <span>KRA eTIMS Support</span>
+                                </li>
+                                <li class="mb-2 d-flex align-items-start gap-2">
+                                    <i class="fas fa-ban text-danger mt-1"></i>
+                                    <span>Multi-Branch Management</span>
+                                </li>
+                                <li class="mb-2 d-flex align-items-start gap-2">
+                                    <i class="fas fa-ban text-danger mt-1"></i>
+                                    <span>Priority Support</span>
                                 </li>
                             </ul>
                         </div>
@@ -256,39 +296,75 @@
                         </div>
 
                         <div class="flex-grow-1 mb-4">
-                            <div class="feature-divider-label text-success">Included in plan</div>
+                            <div class="feature-divider-label text-success">Included in this plan</div>
                             <ul class="list-unstyled mb-4 small">
                                 <li class="mb-2 d-flex align-items-start gap-2 fw-bold">
                                     <i class="fas fa-check-circle text-success mt-1"></i>
-                                    <span>1 Main Business Instance</span>
+                                    <span>1 Business Account</span>
+                                </li>
+                                <li class="mb-2 d-flex align-items-start gap-2">
+                                    <i class="fas fa-check-circle text-success mt-1"></i>
+                                    <span>Unlimited Products</span>
+                                </li>
+                                <li class="mb-2 d-flex align-items-start gap-2">
+                                    <i class="fas fa-check-circle text-success mt-1"></i>
+                                    <span>Unlimited Sales</span>
                                 </li>
                                 <li class="mb-2 d-flex align-items-start gap-2 fw-bold text-brand-blue">
                                     <i class="fas fa-check-circle text-success mt-1"></i>
-                                    <span>M-Pesa STK Push Integration</span>
+                                    <span>M-Pesa STK Push Payments</span>
                                 </li>
                                 <li class="mb-2 d-flex align-items-start gap-2">
                                     <i class="fas fa-check-circle text-success mt-1"></i>
-                                    <span>Instant SMS Receipt Dispatch</span>
+                                    <span>Low Stock Alerts</span>
                                 </li>
                                 <li class="mb-2 d-flex align-items-start gap-2">
                                     <i class="fas fa-check-circle text-success mt-1"></i>
-                                    <span>Smart Re-order & Expiry Alarms</span>
+                                    <span>Expiry Date Alerts</span>
                                 </li>
                                 <li class="mb-2 d-flex align-items-start gap-2">
                                     <i class="fas fa-check-circle text-success mt-1"></i>
-                                    <span>Gross Profit Margin Analytics</span>
+                                    <span>Profit Reports</span>
+                                </li>
+                                <li class="mb-2 d-flex align-items-start gap-2">
+                                    <i class="fas fa-check-circle text-success mt-1"></i>
+                                    <span>Customer Management</span>
+                                </li>
+                                <li class="mb-2 d-flex align-items-start gap-2">
+                                    <i class="fas fa-check-circle text-success mt-1"></i>
+                                    <span>Supplier Management</span>
+                                </li>
+                                <li class="mb-2 d-flex align-items-start gap-2">
+                                    <i class="fas fa-check-circle text-success mt-1"></i>
+                                    <span>Monitor Your Business Anywhere</span>
+                                </li>
+                                <li class="mb-2 d-flex align-items-start gap-2">
+                                    <i class="fas fa-check-circle text-success mt-1"></i>
+                                    <span>PWA Mobile App Support</span>
+                                </li>
+                                <li class="mb-2 d-flex align-items-start gap-2">
+                                    <i class="fas fa-check-circle text-success mt-1"></i>
+                                    <span>Free Software Updates</span>
                                 </li>
                             </ul>
 
-                            <div class="feature-divider-label text-danger">Not part of plan</div>
+                            <div class="feature-divider-label text-danger">Not included</div>
                             <ul class="list-unstyled mb-0 small text-muted opacity-65">
+                                <li class="mb-2 d-flex align-items-start gap-2">
+                                    <i class="fas fa-ban text-danger mt-1"></i>
+                                    <span>SMS Receipt Sending</span>
+                                </li>
                                 <li class="mb-2 d-flex align-items-start gap-2 text-danger fw-bold">
                                     <i class="fas fa-ban text-danger mt-1"></i>
-                                    <span>No Extra Branches Supported</span>
+                                    <span>More than 1 Branch</span>
                                 </li>
                                 <li class="mb-2 d-flex align-items-start gap-2">
                                     <i class="fas fa-ban text-danger mt-1"></i>
-                                    <span>No KRA eTIMS Tax Compliance</span>
+                                    <span>KRA eTIMS Support</span>
+                                </li>
+                                <li class="mb-2 d-flex align-items-start gap-2">
+                                    <i class="fas fa-ban text-danger mt-1"></i>
+                                    <span>Multi-Branch Management</span>
                                 </li>
                             </ul>
                         </div>
@@ -319,39 +395,71 @@
                         </div>
 
                         <div class="flex-grow-1 mb-4">
-                            <div class="feature-divider-label text-success">Included in plan</div>
+                            <div class="feature-divider-label text-success">Included in this plan</div>
                             <ul class="list-unstyled mb-4 small">
                                 <li class="mb-2 d-flex align-items-start gap-2 fw-bold text-brand-blue">
                                     <i class="fas fa-check-circle text-success mt-1"></i>
-                                    <span>1 Main Store + 1 Extra Branch</span>
+                                    <span>1 Main Store + 1 Branch</span>
                                 </li>
                                 <li class="mb-2 d-flex align-items-start gap-2">
                                     <i class="fas fa-check-circle text-success mt-1"></i>
-                                    <span>Automated M-Pesa Ledger Sync</span>
+                                    <span>Unlimited Products</span>
+                                </li>
+                                <li class="mb-2 d-flex align-items-start gap-2">
+                                    <i class="fas fa-check-circle text-success mt-1"></i>
+                                    <span>Unlimited Sales</span>
+                                </li>
+                                <li class="mb-2 d-flex align-items-start gap-2">
+                                    <i class="fas fa-check-circle text-success mt-1"></i>
+                                    <span>Automatic M-Pesa Payments</span>
                                 </li>
                                 <li class="mb-2 d-flex align-items-start gap-2 fw-bold">
                                     <i class="fas fa-check-circle text-success mt-1"></i>
-                                    <span>KRA eTIMS Middleware Compliance</span>
+                                    <span>KRA eTIMS Support</span>
                                 </li>
                                 <li class="mb-2 d-flex align-items-start gap-2">
                                     <i class="fas fa-check-circle text-success mt-1"></i>
-                                    <span>Stock Loss Alarms & User Roles</span>
+                                    <span>SMS Receipt Sending</span>
                                 </li>
                                 <li class="mb-2 d-flex align-items-start gap-2">
                                     <i class="fas fa-check-circle text-success mt-1"></i>
-                                    <span>Supplier Credit & Invoicing Modules</span>
+                                    <span>Low Stock & Stock Loss Alerts</span>
                                 </li>
                                 <li class="mb-2 d-flex align-items-start gap-2">
                                     <i class="fas fa-check-circle text-success mt-1"></i>
-                                    <span>End-of-Shift Automated Mail Audits</span>
+                                    <span>User Roles & Permissions</span>
+                                </li>
+                                <li class="mb-2 d-flex align-items-start gap-2">
+                                    <i class="fas fa-check-circle text-success mt-1"></i>
+                                    <span>Supplier Credit Management</span>
+                                </li>
+                                <li class="mb-2 d-flex align-items-start gap-2">
+                                    <i class="fas fa-check-circle text-success mt-1"></i>
+                                    <span>Customer Management</span>
+                                </li>
+                                <li class="mb-2 d-flex align-items-start gap-2">
+                                    <i class="fas fa-check-circle text-success mt-1"></i>
+                                    <span>Monitor Your Business Anywhere</span>
+                                </li>
+                                <li class="mb-2 d-flex align-items-start gap-2">
+                                    <i class="fas fa-check-circle text-success mt-1"></i>
+                                    <span>PWA Mobile App Support</span>
+                                </li>
+                                <li class="mb-2 d-flex align-items-start gap-2">
+                                    <i class="fas fa-check-circle text-success mt-1"></i>
+                                    <span>Free Software Updates</span>
                                 </li>
                             </ul>
 
-                            <div class="feature-divider-label text-danger">Not part of plan</div>
+                            <div class="feature-divider-label text-danger">Not included</div>
                             <ul class="list-unstyled mb-0 small text-muted opacity-65">
                                 <li class="mb-2 d-flex align-items-start gap-2">
                                     <i class="fas fa-ban text-danger mt-1"></i>
-                                    <span>No Multi-Store Complex Logistics</span>
+                                    <span>More than 2 Branches</span>
+                                </li>
+                                <li class="mb-2 d-flex align-items-start gap-2">
+                                    <i class="fas fa-ban text-danger mt-1"></i>
+                                    <span>Advanced Multi-Store Management</span>
                                 </li>
                             </ul>
                         </div>
@@ -381,7 +489,7 @@
                         </div>
 
                         <div class="flex-grow-1 mb-4">
-                            <div class="feature-divider-label text-success">Included in plan</div>
+                            <div class="feature-divider-label text-success">Included in this plan</div>
                             <ul class="list-unstyled mb-0 small text-light opacity-90">
                                 <li class="mb-2 d-flex align-items-start gap-2 fw-bold text-brand-green">
                                     <i class="fas fa-check-circle text-success mt-1"></i>
@@ -389,23 +497,87 @@
                                 </li>
                                 <li class="mb-2 d-flex align-items-start gap-2">
                                     <i class="fas fa-check-circle text-success mt-1"></i>
-                                    <span>Inter-Store Stock Logistics Routing</span>
+                                    <span>Unlimited Products</span>
                                 </li>
                                 <li class="mb-2 d-flex align-items-start gap-2">
                                     <i class="fas fa-check-circle text-success mt-1"></i>
-                                    <span>Consolidated Business HQ Metrics</span>
+                                    <span>Unlimited Sales</span>
+                                </li>
+                                <li class="mb-2 d-flex align-items-start gap-2 fw-bold">
+                                    <i class="fas fa-check-circle text-success mt-1"></i>
+                                    <span>Unlimited Branches</span>
                                 </li>
                                 <li class="mb-2 d-flex align-items-start gap-2">
                                     <i class="fas fa-check-circle text-success mt-1"></i>
-                                    <span>Tiered Price Profiles & Discounts</span>
+                                    <span>Automatic M-Pesa Payments</span>
                                 </li>
                                 <li class="mb-2 d-flex align-items-start gap-2">
                                     <i class="fas fa-check-circle text-success mt-1"></i>
-                                    <span>Dedicated Isolated Cloud Hosting</span>
+                                    <span>KRA eTIMS Support</span>
                                 </li>
                                 <li class="mb-2 d-flex align-items-start gap-2">
                                     <i class="fas fa-check-circle text-success mt-1"></i>
-                                    <span>24/7 Dedicated Priority Account Desk</span>
+                                    <span>SMS Receipt Sending</span>
+                                </li>
+                                <li class="mb-2 d-flex align-items-start gap-2">
+                                    <i class="fas fa-check-circle text-success mt-1"></i>
+                                    <span>Customer Management</span>
+                                </li>
+                                <li class="mb-2 d-flex align-items-start gap-2">
+                                    <i class="fas fa-check-circle text-success mt-1"></i>
+                                    <span>Supplier Management</span>
+                                </li>
+                                <li class="mb-2 d-flex align-items-start gap-2">
+                                    <i class="fas fa-check-circle text-success mt-1"></i>
+                                    <span>Supplier Credit Management</span>
+                                </li>
+                                <li class="mb-2 d-flex align-items-start gap-2">
+                                    <i class="fas fa-check-circle text-success mt-1"></i>
+                                    <span>Stock Management</span>
+                                </li>
+                                <li class="mb-2 d-flex align-items-start gap-2">
+                                    <i class="fas fa-check-circle text-success mt-1"></i>
+                                    <span>Low Stock & Expiry Alerts</span>
+                                </li>
+                                <li class="mb-2 d-flex align-items-start gap-2">
+                                    <i class="fas fa-check-circle text-success mt-1"></i>
+                                    <span>User Roles & Permissions</span>
+                                </li>
+                                <li class="mb-2 d-flex align-items-start gap-2">
+                                    <i class="fas fa-check-circle text-success mt-1"></i>
+                                    <span>Inter-Branch Stock Transfer</span>
+                                </li>
+                                <li class="mb-2 d-flex align-items-start gap-2">
+                                    <i class="fas fa-check-circle text-success mt-1"></i>
+                                    <span>Business Reports & Analytics</span>
+                                </li>
+                                <li class="mb-2 d-flex align-items-start gap-2">
+                                    <i class="fas fa-check-circle text-success mt-1"></i>
+                                    <span>Custom Prices & Discounts</span>
+                                </li>
+                                <li class="mb-2 d-flex align-items-start gap-2">
+                                    <i class="fas fa-check-circle text-success mt-1"></i>
+                                    <span>Monitor Your Business Anywhere</span>
+                                </li>
+                                <li class="mb-2 d-flex align-items-start gap-2">
+                                    <i class="fas fa-check-circle text-success mt-1"></i>
+                                    <span>PWA Mobile App Support</span>
+                                </li>
+                                <li class="mb-2 d-flex align-items-start gap-2">
+                                    <i class="fas fa-check-circle text-success mt-1"></i>
+                                    <span>Dedicated Cloud Hosting</span>
+                                </li>
+                                <li class="mb-2 d-flex align-items-start gap-2">
+                                    <i class="fas fa-check-circle text-success mt-1"></i>
+                                    <span>Priority 24/7 Support</span>
+                                </li>
+                                <li class="mb-2 d-flex align-items-start gap-2">
+                                    <i class="fas fa-check-circle text-success mt-1"></i>
+                                    <span>Free Software Updates</span>
+                                </li>
+                                <li class="mb-2 d-flex align-items-start gap-2">
+                                    <i class="fas fa-check-circle text-success mt-1"></i>
+                                    <span>Free Feature Upgrades</span>
                                 </li>
                             </ul>
                         </div>
