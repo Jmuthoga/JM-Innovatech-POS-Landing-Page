@@ -2,13 +2,9 @@
 
 namespace App\Console\Commands;
 
-use Illuminate\Console\Command;
 use App\Models\Product;
-use Spatie\Sitemap\Sitemap;
-use Spatie\Sitemap\Tags\Url;
+use Illuminate\Console\Command;
 
-#[Signature('app:generate-sitemap')]
-#[Description('Command description')]
 class GenerateSitemap extends Command
 {
     protected $signature = 'app:generate-sitemap';
@@ -17,7 +13,10 @@ class GenerateSitemap extends Command
 
     public function handle()
     {
-        $sitemap = Sitemap::create();
+        $baseUrl = config('app.url');
+
+        $xml = '<?xml version="1.0" encoding="UTF-8"?>' . PHP_EOL;
+        $xml .= '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' . PHP_EOL;
 
         /*
         |--------------------------------------------------------------------------
@@ -25,37 +24,48 @@ class GenerateSitemap extends Command
         |--------------------------------------------------------------------------
         */
 
-        $sitemap->add(
-            Url::create('/')
-                ->setPriority(1.0)
-                ->setChangeFrequency(Url::CHANGE_FREQUENCY_DAILY)
-        );
+        $pages = [
+            [
+                'loc' => '/',
+                'priority' => '1.0',
+                'changefreq' => 'daily',
+            ],
+            [
+                'loc' => '/shop',
+                'priority' => '0.9',
+                'changefreq' => 'daily',
+            ],
+            [
+                'loc' => '/pos/features',
+                'priority' => '0.8',
+                'changefreq' => 'weekly',
+            ],
+            [
+                'loc' => '/pos/pricing',
+                'priority' => '0.9',
+                'changefreq' => 'weekly',
+            ],
+            [
+                'loc' => '/pos/about',
+                'priority' => '0.7',
+                'changefreq' => 'monthly',
+            ],
+            [
+                'loc' => '/pos/support',
+                'priority' => '0.7',
+                'changefreq' => 'monthly',
+            ],
+        ];
 
-        $sitemap->add(
-            Url::create('/shop')
-                ->setPriority(0.9)
-                ->setChangeFrequency(Url::CHANGE_FREQUENCY_DAILY)
-        );
+        foreach ($pages as $page) {
 
-        $sitemap->add(
-            Url::create('/pos/features')
-                ->setPriority(0.8)
-        );
+            $xml .= "  <url>\n";
+            $xml .= "    <loc>{$baseUrl}{$page['loc']}</loc>\n";
+            $xml .= "    <changefreq>{$page['changefreq']}</changefreq>\n";
+            $xml .= "    <priority>{$page['priority']}</priority>\n";
+            $xml .= "  </url>\n";
 
-        $sitemap->add(
-            Url::create('/pos/pricing')
-                ->setPriority(0.9)
-        );
-
-        $sitemap->add(
-            Url::create('/pos/about')
-                ->setPriority(0.6)
-        );
-
-        $sitemap->add(
-            Url::create('/pos/support')
-                ->setPriority(0.6)
-        );
+        }
 
         /*
         |--------------------------------------------------------------------------
@@ -63,26 +73,20 @@ class GenerateSitemap extends Command
         |--------------------------------------------------------------------------
         */
 
-        Product::all()->each(function ($product) use ($sitemap) {
+        foreach (Product::all() as $product) {
 
-            $sitemap->add(
+            $xml .= "  <url>\n";
+            $xml .= "    <loc>{$baseUrl}/product/{$product->slug}</loc>\n";
+            $xml .= "    <lastmod>{$product->updated_at->toAtomString()}</lastmod>\n";
+            $xml .= "    <changefreq>weekly</changefreq>\n";
+            $xml .= "    <priority>0.9</priority>\n";
+            $xml .= "  </url>\n";
 
-                Url::create("/product/{$product->slug}")
-                    ->setLastModificationDate($product->updated_at)
-                    ->setPriority(0.9)
-                    ->setChangeFrequency(Url::CHANGE_FREQUENCY_WEEKLY)
+        }
 
-            );
+        $xml .= '</urlset>';
 
-        });
-
-        /*
-        |--------------------------------------------------------------------------
-        | Write XML
-        |--------------------------------------------------------------------------
-        */
-
-        $sitemap->writeToFile(public_path('sitemap.xml'));
+        file_put_contents(public_path('sitemap.xml'), $xml);
 
         $this->info('Sitemap generated successfully!');
     }
