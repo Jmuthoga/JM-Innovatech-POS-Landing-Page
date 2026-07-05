@@ -380,7 +380,7 @@
                     </button>
                 </form>
 
-                <a href="{{ route('product.show', $item['id']) }}" class="deal-image">
+                <a href="{{ route('product.show', $item['slug']) }}" class="deal-image">
                     <img src="{{ $item['image'] }}" alt="{{ $item['name'] }}">
                 </a>
 
