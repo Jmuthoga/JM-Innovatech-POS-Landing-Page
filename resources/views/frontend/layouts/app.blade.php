@@ -82,44 +82,6 @@
     <link rel="stylesheet" href="{{ asset('assets/css/features.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/possystem.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/aboutus.css') }}">
-
-    <style>
-        body {
-            font-family: 'Segoe UI', sans-serif;
-        }
-
-        .hero {
-            min-height: 100vh;
-            background: linear-gradient(135deg,#0d6efd,#001f3f);
-            color: white;
-            display: flex;
-            align-items: center;
-        }
-
-        .feature-card {
-            border: none;
-            border-radius: 15px;
-            transition: 0.3s;
-        }
-
-        .feature-card:hover {
-            transform: translateY(-10px);
-        }
-
-        .pricing-card {
-            border-radius: 20px;
-        }
-
-        .screenshot img {
-            border-radius: 15px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
-        }
-
-        footer {
-            background: #001f3f;
-            color: white;
-        }
-    </style>
 </head>
 <body>
 
@@ -128,6 +90,18 @@
     @yield('content')
 
     @include('frontend.partials.footer')
+
+    @if(session('success_modal'))
+        <div id="successPopup" class="success-popup">
+            <div class="success-popup-content">
+                <div class="success-icon">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+
+                <h5>{{ session('success_modal') }}</h5>
+            </div>
+        </div>
+    @endif
 
 @stack('scripts')
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
@@ -138,6 +112,36 @@
 <script>
     AOS.init();
 </script>
+
+@if(session('success_modal'))
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+
+        setTimeout(function(){
+
+            const popup=document.getElementById('successPopup');
+
+            if(popup){
+
+                popup.style.transition='opacity .3s';
+
+                popup.style.opacity='0';
+
+                setTimeout(function(){
+
+                    popup.remove();
+
+                },300);
+
+            }
+
+        },2000);
+
+    });
+</script>
+@endif
+
+</body>
 
 </body>
 </html>

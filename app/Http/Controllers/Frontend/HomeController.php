@@ -264,29 +264,74 @@ class HomeController extends Controller
             ];
         }
         session()->put('cart', $cart);
-        return redirect()->back()->with('success', 'Product added to cart successfully.');
+        return back()->with(
+            'success_modal',
+            $product->name . ' has been added to your cart.'
+        );
     }
 
     public function increaseCart($id) {
         $cart = session()->get('cart', []);
         if (isset($cart[$id])) $cart[$id]['qty']++;
         session()->put('cart', $cart);
-        return back();
+        return back()->with(
+            'success_modal',
+            $cart[$id]['name'] . ' quantity has been increased.'
+        );
     }
 
-    public function decreaseCart($id) {
+    public function decreaseCart($id)
+    {
         $cart = session()->get('cart', []);
+
         if (isset($cart[$id])) {
+
+            // Save the product name before modifying the cart
+            $productName = $cart[$id]['name'];
+
             $cart[$id]['qty']--;
-            if ($cart[$id]['qty'] <= 0) unset($cart[$id]);
+
+            if ($cart[$id]['qty'] <= 0) {
+
+                unset($cart[$id]);
+
+                session()->put('cart', $cart);
+
+                return back()->with(
+                    'success_modal',
+                    $productName . ' has been removed from your cart.'
+                );
+            }
+
+            session()->put('cart', $cart);
+
+            return back()->with(
+                'success_modal',
+                $productName . ' quantity has been decreased.'
+            );
         }
-        session()->put('cart', $cart);
+
         return back();
     }
 
-    public function removeFromCart($id) {
+    public function removeFromCart($id)
+    {
         $cart = session()->get('cart', []);
-        if (isset($cart[$id])) { unset($cart[$id]); session()->put('cart', $cart); }
+
+        if (isset($cart[$id])) {
+
+            $productName = $cart[$id]['name'];
+
+            unset($cart[$id]);
+
+            session()->put('cart', $cart);
+
+            return back()->with(
+                'success_modal',
+                $productName . ' has been removed from your cart.'
+            );
+        }
+
         return back();
     }
 
@@ -313,7 +358,10 @@ class HomeController extends Controller
 
         session()->put('wishlist', $wishlist);
 
-        return back()->with('success', 'Added to wishlist');
+        return back()->with(
+            'success_modal',
+            $request->name . ' has been added to your wishlist.'
+        );
     }
 
     public function removeFromWishlist($id)
@@ -321,11 +369,20 @@ class HomeController extends Controller
         $wishlist = session()->get('wishlist', []);
 
         if (isset($wishlist[$id])) {
+
+            $productName = $wishlist[$id]['name'];
+
             unset($wishlist[$id]);
+
             session()->put('wishlist', $wishlist);
+
+            return back()->with(
+                'success_modal',
+                $productName . ' has been removed from your wishlist.'
+            );
         }
 
-        return back()->with('success', 'Removed from wishlist');
+        return back();
     }
 
     public function moveWishlistToCart($id)
@@ -356,7 +413,10 @@ class HomeController extends Controller
         session()->put('wishlist', $wishlist);
         session()->put('cart', $cart);
 
-        return back()->with('success', 'Item moved to cart');
+        return back()->with(
+            'success_modal',
+            $item['name'] . ' has been added to your cart.'
+        );
     }
 
     public function moveAllWishlistToCart()
@@ -383,7 +443,10 @@ class HomeController extends Controller
         session()->put('cart', $cart);
         session()->forget('wishlist');
 
-        return back()->with('success', 'Wishlist moved to cart');
+        return back()->with(
+            'success_modal',
+            'All wishlist items have been added to your cart.'
+        );
     }
 
     public function applyPromo(Request $request)

@@ -680,3 +680,64 @@
     @media (max-width: 480px) {
         .deals-grid, .pos-grid { grid-template-columns: repeat(2, 1fr); }
     }
+
+            body {
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        .hero {
+            min-height: 100vh;
+            background: linear-gradient(135deg,#0d6efd,#001f3f);
+            color: white;
+            display: flex;
+            align-items: center;
+        }
+
+        .feature-card {
+            border: none;
+            border-radius: 15px;
+            transition: 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .pricing-card {
+            border-radius: 20px;
+        }
+
+        .screenshot img {
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+        }
+
+        footer {
+            background: #001f3f;
+            color: white;
+        }
+
+        .success-popup{
+            position:fixed;
+            inset:0;
+            background:rgba(0,0,0,.25);
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            z-index:999999;
+        }
+
+        .success-popup-content{
+            background:#fff;
+            border-radius:18px;
+            padding:30px 40px;
+            min-width:350px;
+            text-align:center;
+            box-shadow:0 20px 60px rgba(0,0,0,.2);
+        }
+
+        .success-icon{
+            font-size:55px;
+            color:#25D366;
+            margin-bottom:15px;
+        }
